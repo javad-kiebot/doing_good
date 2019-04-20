@@ -3,7 +3,7 @@ import "../assests/sass/main.scss";
 
 // Root structure
 const App = (props) => (
-    <div className="row mt-5">
+    <div>
         { props.children }
     </div>
 );

@@ -2,30 +2,33 @@ import React, { Component } from "react";
 import { Link } from 'react-router';
 import doingGoodHero from "../../assests/images/home/DoingGood_logo_HERO.png";
 
-class OrgSignUp extends Component {
+
+class UserSignUp extends Component {
     constructor(props){
         super(props);
         this.credentials = {
-            orgname: '',
-            website: '',
+            firstname: '',
+            lastname: '',
             city : '',
             state:'',
             email :'',
             password:'',
             phone:'',
-            role : 'charity',
+            role : 'member',
             aboutme:''
         };
         this.state = {
-            orgnameValid : false,
-            siteValid : false,
+            firstnameValid : false,
+            lastnameValid : false,
             emailValid: false,
             passwordValid : false,
             phoneValid:false,
             allValid : false,
             highlightclass:''
         };
-        this.handleValidateName = this.handleValidateName.bind(this);
+
+        this.handleValidateFirstName = this.handleValidateFirstName.bind(this);
+        this.handleValidateLastName = this.handleValidateLastName.bind(this);
         this.handleValidateEmail = this.handleValidateEmail.bind(this);
         this.handleValidatePassword = this.handleValidatePassword.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -33,31 +36,47 @@ class OrgSignUp extends Component {
         this.goToHomePage = this.goToHomePage.bind(this);
         this.goToLogin = this.goToLogin.bind(this);
 
-        this.orgError = 'Please enter Organization name';
+        this.firstnameError = 'Please enter first name';
+        this.lastnameError = 'Please enter last name';
         this.emailError = 'Please enter email';
         this.passwordError = 'Please enter password';
+        this.phoneError = 'Please enter phone number';
     }
 
-    handleValidateName(data) {
+    handleValidateFirstName(data) {
         if(!data.target.value) {
-            this.setState({orgnameValid: false});
-            this.orgError = 'Enter Organization Name';
+            this.setState({firstnameValid: false});
+            this.firstnameError = 'Enter Organization Name';
         }
         else {
-            this.orgError = '';
-            this.setState({orgnameValid: true});
+            this.firstnameError = '';
+            this.setState({firstnameValid: true});
+        }
+    }
+
+    handleValidateLastName(data){
+        if(!data.target.value) {
+            this.setState({lastnameValid: false});
+            this.lastnameError = 'Enter Organization Name';
+        }
+        else {
+            this.lastnameError = '';
+            this.setState({lastnameValid: true});
         }
     }
 
     handleValidateEmail(data){
         var tempVal = data.target.value;
-        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(tempVal)) { // OR if (/^[0-9]{1,10}$/.test(+tempVal) && tempVal.length<=10)
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(tempVal)) {
             this.setState({emailValid: true});
             this.emailError = '';
         }
         else{
             this.setState({emailValid: false});
             this.emailError = 'Enter valid Email ID'
+        }
+        if(!tempVal){
+            this.emailError = 'Enter Email ID'
         }
     }
 
@@ -79,7 +98,6 @@ class OrgSignUp extends Component {
 
     handleValidatePassword (data){
         var passw = /^(([a-zA-Z]+\d+)|(\d+[a-zA-Z]+))[a-zA-Z0-9]*$/;
-        //   console.log('regex ',passw);
         var tempVal = data.target.value;
         if(tempVal.match(passw))
         {
@@ -90,19 +108,20 @@ class OrgSignUp extends Component {
         else
         {
             this.setState({passwordValid: false});
-            this.passwordError = 'Password should be of minimum 6 character-long';
-            //this.credentials.password = data.target.value;
+            this.passwordError = 'Password should be of minimum 6 character lengths including alphanumeric numbers and atleast one special character.';
+            this.credentials.password = data.target.value;
         }
     }
 
     handleChange(data){
         switch(data.target.name) {
-            case 'orgname':
-                this.credentials.orgname = data.target.value;
-                this.handleValidateName(data);
+            case 'firstname':
+                this.credentials.firstname = data.target.value;
+                this.handleValidateFirstName(data);
                 break;
-            case 'website':
-                this.credentials.website = data.target.value;
+            case 'lastname':
+                this.credentials.lastname = data.target.value;
+                this.handleValidateLastName(data);
                 break;
             case 'city':
                 this.credentials.city = data.target.value;
@@ -116,6 +135,7 @@ class OrgSignUp extends Component {
                 break;
             case 'phone':
                 this.credentials.phone = data.target.value;
+                this.handleValidatePhone(data);
                 break;
             case 'password':
                 this.credentials.password = data.target.value;
@@ -125,22 +145,25 @@ class OrgSignUp extends Component {
                 this.credentials.aboutme = data.target.vaue;
                 break;
         }
+
     }
 
     handleSubmit(e){
-        if(this.state.orgnameValid  && this.state.emailValid && this.state.passwordValid )
-        {
+        console.log("djkahsdkjhadk");
+        if(this.state.firstnameValid  && this.state.lastnameValid  && this.state.emailValid
+            && this.state.passwordValid){
             this.state.allValid = true;
         }
         // else{
-        //     this.state.allValid = false;
-        //     this.state.orgnameValid ? "" : this.setState({highlightclass:"highlight"});
+        //     this.setState({allValid: false});
+        //     this.state.firstnameValid ? "" : this.setState({highlightclass:"highlight"});
+        //     this.state.lastnameValid ? "" : this.setState({highlightclass:"highlight"});
         //     this.state.emailValid ? "" : this.setState({highlightclass:"highlight"});
         //     this.state.passwordValid ? "" : this.setState({highlightclass:"highlight"});
         // }
         if(this.state.allValid === true){
             e.preventDefault();
-            this.props.signUpUserActions.signupOrg(this.credentials);
+            this.props.signUpUserActions.signupUser(this.credentials);
             this.setState({credentials: {}});
         }
     }
@@ -155,52 +178,51 @@ class OrgSignUp extends Component {
 
     render() {
         return (
-            <div className="d-flex align-items-center justify-content-center login-wrapper signup-page2">
+            <div className="d-flex align-items-center justify-content-center login-wrapper signup-page">
                 <div className="card">
                     <div className="card-body">
                         <form>
                             <div className="row mb-2">
                                 <div className="col-4">
-                                    <img src={doingGoodHero} onClick={this.goToHomePage} alt="logo" width="80"/>
+                                    <img src={doingGoodHero} onClick={this.goToHomePage} width="80"/>
                                 </div>
-                                <div className=" col-8 d-flex justify-content-end align-items-center">
+                                <div className="col-8 d-flex justify-content-end align-items-center">
                                     <Link to="/">Have an account? Login</Link>
                                 </div>
                             </div>
                             <div className="form-group mb-2">
-                                <label>Organization Name*</label>
-                                <input className="form-control" type="text"
-                                       onChange={this.handleChange} name="orgname" placeholder={this.orgError}/>
+                                <label>First Name*</label>
+                                <input name="firstname" className="form-control" onChange={this.handleChange} type="text" required placeholder={this.firstnameError}/>
                             </div>
                             <div className="form-group mb-2">
-                                <label>Website</label>
-                                <input className="form-control" type="text" onChange={this.handleChange} name="website" placeholder="Please enter website"/>
+                                <label>Last Name*</label>
+                                <input name="lastname" className="form-control" onChange={this.handleChange} type="text" required placeholder={this.lastnameError}/>
                             </div>
                             <div className="form-group mb-2">
                                 <label>City</label>
-                                <input className="form-control" type="text" onChange={this.handleChange} name="city" placeholder="Please enter City"/>
+                                <input name="city" className="form-control" onChange={this.handleChange} type="text" placeholder="Please enter City"/>
                             </div>
                             <div className="form-group mb-2">
                                 <label>State</label>
-                                <input className="form-control" type="text" onChange={this.handleChange} name="state" placeholder="Please enter State"/>
+                                <input name="state" className="form-control" onChange={this.handleChange} type="text" placeholder="Please enter State"/>
                             </div>
                             <div className="form-group mb-2">
                                 <label>Email*</label>
-                                <input className="form-control" type="email" onChange={this.handleChange} name="email" placeholder={this.emailError}/>
+                                <input name="email" className="form-control" onChange={this.handleChange} type="email" required placeholder={this.emailError}/>
                             </div>
                             <div className="form-group mb-2">
                                 <label>Password*</label>
-                                <input className="form-control" type="text" onChange={this.handleChange} name="password" placeholder={this.passwordError}/>
+                                <input name="password" className="form-control" onChange={this.handleChange} type="text" required placeholder={this.passwordError}/>
                             </div>
                             <div className="form-group mb-2">
                                 <label>Phone Number</label>
-                                <input className="form-control" type="text" onChange={this.handleChange} placeholder="Please enter phone number"/>
+                                <input name="phonenumber" className="form-control" onChange={this.handleChange} type="text" placeholder="Please enter phone number"/>
                             </div>
                             <div className="form-group mb-3">
-                                <label>About Organization</label>
-                                <textarea className="form-control" placeholder="About organization" onChange={this.handleChange}/>
+                                <label>About Me</label>
+                                <textarea name="aboutme" className="form-control" onChange={this.handleChange} placeholder="About me" />
                             </div>
-                            <button className="btn btn-primary btn-block fw-600 py-2" onClick={this.handleSubmit} type="button">Sign Up</button>
+                            <button name="signupbutton" className="btn btn-primary btn-block fw-600 py-2" onClick={this.handleSubmit} type="button">Sign Up</button>
                         </form>
                     </div>
                 </div>
@@ -209,4 +231,8 @@ class OrgSignUp extends Component {
     }
 }
 
-export default OrgSignUp;
+UserSignUp.propTypes = {
+
+};
+
+export default UserSignUp;
