@@ -8,6 +8,7 @@ import UserSignUpContainer from "./container/UserSignUpContainer";
 import ConfirmSignUp from "./components/confirmSignup";
 import OrgSignUpContainer from "./container/OrgSignUpContainer";
 import SearchPostingContainer from "./container/SearchPostingContainer";
+import LandingPageContainer from "./container/LandingPageContainer";
 
 export default (
         <Route path="/" component={App}>
@@ -17,5 +18,6 @@ export default (
             <Route path="orgsignup" component={OrgSignUpContainer} />
             <Route path="confirmsignup" component={ConfirmSignUp} />
             <Route path="searchposting" component={SearchPostingContainer} />
+            <Route path="landingpage" component={LandingPageContainer} />
         </Route>
 );
