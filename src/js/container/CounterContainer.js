@@ -3,75 +3,142 @@ import { connect } from "react-redux";
 import Counter from '../components/Counter';
 import {addCounter} from "../actions/index";
 
+import Autosuggest from 'react-autosuggest';
 
-let list = ["1","2","3","4","5","6","7","8","9","10"];
-class CounterContainer extends Component {
-    constructor(props) {
-        super(props);
+
+const languages = [
+    {
+        name: 'C',
+        year: 1972
+    },
+    {
+        name: 'C#',
+        year: 2000
+    },
+    {
+        name: 'C++',
+        year: 1983
+    },
+    {
+        name: 'Clojure',
+        year: 2007
+    },
+    {
+        name: 'Elm',
+        year: 2012
+    },
+    {
+        name: 'Go',
+        year: 2009
+    },
+    {
+        name: 'Haskell',
+        year: 1990
+    },
+    {
+        name: 'Java',
+        year: 1995
+    },
+    {
+        name: 'Javascript',
+        year: 1995
+    },
+    {
+        name: 'Perl',
+        year: 1987
+    },
+    {
+        name: 'PHP',
+        year: 1995
+    },
+    {
+        name: 'Python',
+        year: 1991
+    },
+    {
+        name: 'Ruby',
+        year: 1995
+    },
+    {
+        name: 'Scala',
+        year: 2003
+    }
+];
+
+// https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
+function escapeRegexCharacters(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function getSuggestions(value) {
+    const escapedValue = escapeRegexCharacters(value.trim());
+
+    if (escapedValue === '') {
+        return [];
+    }
+
+    const regex = new RegExp('^' + escapedValue, 'i');
+
+    return languages.filter(language => regex.test(language.name));
+}
+
+function getSuggestionValue(suggestion) {
+    return suggestion.name;
+}
+
+function renderSuggestion(suggestion) {
+    return (
+        <span>{suggestion.name}</span>
+    );
+}
+
+class CounterContainer extends React.Component {
+    constructor() {
+        super();
+
         this.state = {
-            isMore:true,
-            showResults:false,
-            list: list.slice(0,6)
+            value: '',
+            suggestions: []
         };
-        this.incrementCount = this.incrementCount.bind(this);
-        this.moreClick = this.moreClick.bind(this);
-        this.lessClick = this.lessClick.bind(this);
-        this.onPressButton = this.onPressButton.bind(this);
-    }
-    moreClick() {
-        this.setState({
-            isMore: !this.state.isMore,
-            list: ["1","2","3","4","5","6","7","8","9","10"]
-        });
-    }
-    lessClick(){
-        this.setState({
-            isMore: !this.state.isMore,
-            list: this.state.list.slice(0,6)
-        });
     }
 
-    incrementCount(count){
-        this.props.addCounter(count);
-    }
-    onPressButton(){
+    onChange(event, { newValue, method }){
         this.setState({
-            showResults: !this.state.showResults
+            value: newValue
         });
-    }
+    };
+
+    onSuggestionsFetchRequested ({ value }) {
+        this.setState({
+            suggestions: getSuggestions(value)
+        });
+    };
+
+    onSuggestionsClearRequested () {
+        this.setState({
+            suggestions: []
+        });
+    };
 
     render() {
+        const { value, suggestions } = this.state;
+        const inputProps = {
+            placeholder: "Type 'c'",
+            value,
+            onChange: this.onChange
+        };
+
         return (
-            <div>
-                <Counter incrementCount = {this.incrementCount} count = {this.props.count}/>
-                <div>
-                    {this.state.list.map(item => (
-                        <button key={item} onClick={ this.onPressButton }>{item}
-                        </button>
-                    ))}
-                    <p> { this.state.showResults ? 'show this content': null }</p>
-                </div>
-                <div onClick = { this.state.isMore ?  this.moreClick : this.lessClick}>{ this.state.isMore ? "More" : "Less" }</div>
-            </div>
+            <Autosuggest
+                suggestions={suggestions}
+                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                getSuggestionValue={getSuggestionValue}
+                renderSuggestion={renderSuggestion}
+                inputProps={inputProps} />
         );
     }
 }
 
-
-CounterContainer.propTypes = {
-
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        addCounter: count => dispatch(addCounter(count))
-    };
-};
-
-const mapStateToProps = (state) => {
-    var {count} = state.counterReducer;
-    return { count};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CounterContainer);
+export default CounterContainer
 

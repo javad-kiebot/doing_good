@@ -11,7 +11,7 @@ class LoginContainer extends Component {
 
     render() {
         return (
-            <div className="login-backgroundImage">
+            <div>
               <Login
                   loginActions={this.props.loginAction}
                   token={this.props.token}

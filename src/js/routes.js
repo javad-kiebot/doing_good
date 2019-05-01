@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from "./App";
-import OrgSignUp from "./components/OrgSignUp";
 import LoginContainer from "./container/LoginContainer";
 import ForgotPasswordContainer from "./container/ForgotPasswordContainer";
 import UserSignUpContainer from "./container/UserSignUpContainer";

@@ -1,10 +1,51 @@
-.img-fluid{
-    width:100%
+@import "fonts";
+@import "variables";
+@import "mobile";
+
+
+.img-fluid {
+    width: 100% !important;
+    height: auto;
 }
+
 .bg-primary {
     background-color: #db4c26!important;
 }
 .btn-primary{
     background-color: #db4c26!important;
     border: 0;
+}
+
+.btn-block{
+    background-color: #402666;
+    border:0;
+}
+
+
+
+//@media (min-width: 486px) and (max-width:768px) {
+//.searchPosting{
+//        min-width:486px;
+//        max-width:768px
+//    }
+//}
+//
+//@media (min-width: 486px) and (max-width:768px) {
+//   .searchPosting {
+//        min-width:486px;
+//        max-width:768px
+//    }
+//}
+
+@media (min-width: 768px) and (max-width: 992px) {
+    .searchPosting{
+        min-width:768px;
+        max-width:992px
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1300px) {
+    .img_guitar {
+        height:400px !important;
+    }
 }

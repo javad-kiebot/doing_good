@@ -12,9 +12,7 @@ class SearchPostingContainer extends Component {
 
     render() {
         return (
-            <div>
                <SearchPosting/>
-            </div>
         );
     }
 }

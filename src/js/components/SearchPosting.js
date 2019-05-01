@@ -19,9 +19,9 @@ class SearchPosting extends Component {
     render(){
         return(
            <div>
-                <div>
-                    <img src={ guitar } className="img-fluid" alt="Search banner" />
-                </div>
+               <div>
+                <img src={ guitar } className="img-fluid img_guitar" alt="Search banner" />
+               </div>
                 <div className="dg-search bg-primary px-2 py-4">
                     <div className="container-fluid">
                         <div className="row">
@@ -251,7 +251,7 @@ class SearchPosting extends Component {
                                 <p>Rate:</p>
                                 <p>Rate Type:perhour</p>
                                 <p>Please <Link to="/">Login</Link> to Continue.</p>
-                                <p></p>
+                                <br/>
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>

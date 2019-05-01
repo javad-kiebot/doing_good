@@ -174,12 +174,12 @@ body {
 
 .login-wrapper{
     background-image: url('../images/dashboard/sky_wide-min.jpg');
-    background-position: center center;
+    background-position: 50%;
     background-size: cover;
     background-repeat: no-repeat;
     min-height: 100vh;
     padding: 0 12px;
-    width: 100%;
+    //width: 100%;
     .card{
         width: 380px;
         border: 7px solid #ddd;
@@ -230,4 +230,38 @@ body {
     font-size: 16px;
     color: rgb(64, 38, 102);
 }
+
+//@media (min-width: 486px) and (max-width:768px) {
+//body{
+//        min-width:486px;
+//        max-width:768px
+//    }
+//}
+//
+//@media (min-width: 486px) and (max-width:768px) {
+//    #app {
+//        min-width:486px;
+//        max-width:768px
+//    }
+//}
+//
+//@media (min-width: 768px) and (max-width: 992px) {
+//    #app {
+//        min-width:768px;
+//        max-width:992px
+//    }
+//}
+//
+////@media (min-width: 992px) {
+////    #app {
+////        max-width:960px
+////    }
+////}
+//
+//@media (min-width: 992px) and (max-width: 1140px) {
+//    #app {
+//        max-width:1140px
+//    }
+//}
+
 
