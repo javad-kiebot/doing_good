@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Login from "../components/Login";
 import {bindActionCreators} from "redux";
-import loginActions from "../actions/loginActions";
 import SearchPosting from "../components/SearchPosting";
+import action from "../actions/searchPostingActions";
 
 class SearchPostingContainer extends Component {
     constructor(props) {
@@ -12,26 +11,26 @@ class SearchPostingContainer extends Component {
 
     render() {
         return (
-               <SearchPosting/>
+            <div>
+               <SearchPosting
+                   showModalFlag={this.props.showModalFlag}
+                   hideModalFlag={this.props.hideModalFlag}
+                   actions={this.props.actions}
+               />
+            </div>
         );
     }
 }
 
 function mapStateToProps(state) {
-    return {
-        token:state.loginReducer.token,
-        user: state.loginReducer.user,
-        // WorkRequests:state.landingpage.WorkRequests,
-        // loadInterestShownWRData:state.landingpage.loadInterestShownWRData
-    };
+    return {state};
 }
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
     return {
-        loginAction: bindActionCreators(loginActions, dispatch),
-        // landingpageactions:bindActionCreators(landingpageactions,dispatch)
+        actions: bindActionCreators(...action, dispatch),
     };
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPostingContainer);
 

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from 'react-router';
+import ReactModal from 'react-modal';
 import doingGood from "../../assests/images/home/DoingGood_logo_HERO_RGB.png";
 import guitar from "../../assests/images/home/teach_guitar-bright.jpg";
 import skateImg from "../../assests/images/search/skateboard_teach-min.jpg";
@@ -12,10 +13,23 @@ import dgfb from "../../assests/images/home/dg-fb.png";
 import dgtwitter from "../../assests/images/home/dg-twitter.png";
 import "../../assests/sass/searchPosting.scss";
 
+ReactModal.setAppElement('#app');
+
 class SearchPosting extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        this.onPostServiceRequest=this.onPostServiceRequest.bind(this);
+        this.handleCloseModal=this.handleCloseModal.bind(this);
     }
+
+    onPostServiceRequest(){
+        this.props.actions.postServiceRequestAction();
+    }
+
+    handleCloseModal () {
+        this.props.actions.postServiceRequestActionClose();
+    }
+
     render(){
         return(
            <div>
@@ -78,13 +92,14 @@ class SearchPosting extends Component {
                                 <div className="card bg-light pb-3">
                                     <div className="card-body">
                                         <p className="content text-info font-weight-bold">Did not find what you want?</p>
-                                        <a href="#"
-                                           className="btn btn-info btn-shadow btn-block text-uppercase py-2 mb-3 font-weight-bold">Post
-                                            a work request</a>
+                                        <button
+                                           className="btn btn-info btn-shadow btn-block text-uppercase py-2 mb-3 font-weight-bold"
+                                           onClick={this.onPostServiceRequest}
+                                        >Post a work request</button>
                                         <p className="content text-info font-weight-bold">Want to donate your service<br/> or good?</p>
-                                        <a href="#"
+                                        <button
                                            className="btn btn-primary btn-shadow btn-block text-uppercase py-2 font-weight-bold">Post a
-                                            service or good</a>
+                                            service or good</button>
                                     </div>
                                 </div>
                             </div>
@@ -260,6 +275,14 @@ class SearchPosting extends Component {
                         </div>
                     </div>
                 </div>
+                   <ReactModal
+                       isOpen={this.props.showModalFlag}
+                       contentLabel="Minimal Modal Example"
+                   >
+                       Model open
+                       <button onClick={this.handleCloseModal}>Close Modal</button>
+                   </ReactModal>
+
            </div>
     );
     }
