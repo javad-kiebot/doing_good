@@ -12,6 +12,9 @@ import dginsta from "../../assests/images/home/dg-insta.png";
 import dgfb from "../../assests/images/home/dg-fb.png";
 import dgtwitter from "../../assests/images/home/dg-twitter.png";
 import "../../assests/sass/searchPosting.scss";
+import GoodsAndServicesModal from "./GoodsAndServicesModal";
+import ShowInterestModal from "./ShowInterestModal";
+
 
 ReactModal.setAppElement('#app');
 
@@ -20,19 +23,60 @@ class SearchPosting extends Component {
         super(props);
         this.onPostServiceRequest=this.onPostServiceRequest.bind(this);
         this.handleCloseModal=this.handleCloseModal.bind(this);
+        console.log("prop" + props.showModalFlag);
+        this.state = {
+            showOfferedModal: false,
+            showInterestModal:false,
+            showWantedModal:false,
+            radiusSelected:'',
+            dateIndex:0
+        };
+
+        this.handleOfferedOpenModal = this.handleOfferedOpenModal.bind(this);
+        this.handleCloseModal = this.handleCloseModal.bind(this);
+        this.handleWantedOpenModal = this.handleWantedOpenModal.bind(this);
+        this.handleShowIntersrOpenModal = this.handleShowIntersrOpenModal.bind(this);
+        this.onRadiusChange = this.onRadiusChange.bind(this);
+        this.onOrgChange = this.onOrgChange.bind(this);
     }
 
-    onPostServiceRequest(){
-        this.props.actions.postServiceRequestAction();
+    handleOfferedOpenModal () {
+        this.setState({ showOfferedModal: true });
+    }
+    handleWantedOpenModal () {
+        this.setState({ showWantedModal: true });
+    }
+
+    handleShowIntersrOpenModal (event) {
+        const id=parseInt(event.target.id.split("_")[1]);
+        this.setState({ showInterestModal: true, dateIndex: id});
     }
 
     handleCloseModal () {
-        this.props.actions.postServiceRequestActionClose();
+        this.setState({ showModal: false,
+            showInterestModal:false,
+            showWantedModal:false});
+    }
+
+    onPostServiceRequest(){
+        this.props.searchPostingAction.postServiceRequestAction();
+    }
+
+    onRadiusChange(event){
+        this.setState({ radiusSelected: event.target.value });
+    }
+    onOrgChange(event){
+        this.setState({ orgSelected: event.target.value });
     }
 
     render(){
+        const radiusArray= ['5 miles','10 miles', '20 miles','25 miles', '50 miles', '100 miles','500 miles'];
+        const orgArray= ['Child care','Child care', 'Child care','Child care', 'Child care', 'Child care','Child care'];
         return(
            <div>
+               {
+                   console.log(this.props.allPostData.offeredGoodOrService)
+               }
                <div>
                 <img src={ guitar } className="img-fluid img_guitar" alt="Search banner" />
                </div>
@@ -47,27 +91,31 @@ class SearchPosting extends Component {
                             <div className="col-sm">
                                 <div className="form-group m-0">
                                     <select className="form-control">
-                                        <option>Select org</option>
-                                        <option>Select org</option>
-                                        <option>Select org</option>
+                                        <option>Service Required</option>
+                                        <option>Service Offered</option>
+
                                     </select>
                                 </div>
                             </div>
                             <div className="col-sm">
                                 <div className="form-group m-0">
-                                    <select className="form-control">
-                                        <option>Select org</option>
-                                        <option>Select org</option>
-                                        <option>Select org</option>
+                                    <select className="form-control" value={this.state.orgSelected} onChange={this.onOrgChange}>
+                                        <option>Select Org</option>
+                                        {orgArray.map((org)=>
+                                            <option>{org}</option>
+                                        )}
+
                                     </select>
                                 </div>
                             </div>
                             <div className="col-sm">
                                 <div className="form-group m-0">
-                                    <select className="form-control">
-                                        <option>Select org</option>
-                                        <option>Select org</option>
-                                        <option>Select org</option>
+                                    <select className="form-control" value={this.state.radiusSelected} onChange={this.onRadiusChange}>
+                                        <option>Select Radius</option>
+                                        {radiusArray.map((rules)=>
+                                        <option>{rules}</option>
+                                        )}
+
                                     </select>
                                 </div>
                             </div>
@@ -77,8 +125,8 @@ class SearchPosting extends Component {
                                 </div>
                             </div>
                             <div className="col-sm">
-                                <button className="btn btn-default">Search</button>
-                                <button className="btn btn-default">Reset</button>
+                                <button className="btn btn-default goodsAndServicesButton goodsAndServicesButtonRight" >Reset</button>
+                                <button className="btn btn-default goodsAndServicesButton">Search</button>
                             </div>
                         </div>
                     </div>
@@ -94,12 +142,24 @@ class SearchPosting extends Component {
                                         <p className="content text-info font-weight-bold">Did not find what you want?</p>
                                         <button
                                            className="btn btn-info btn-shadow btn-block text-uppercase py-2 mb-3 font-weight-bold"
-                                           onClick={this.onPostServiceRequest}
+                                           onClick={this.handleOfferedOpenModal}
                                         >Post a work request</button>
+                                        <GoodsAndServicesModal
+                                            showModal={this.state.showOfferedModal}
+                                            handleCloseModal={this.handleCloseModal}
+                                            searchPostingAction={this.props.searchPostingAction}
+                                            postType={'OFFERED'}
+                                        />
                                         <p className="content text-info font-weight-bold">Want to donate your service<br/> or good?</p>
                                         <button
-                                           className="btn btn-primary btn-shadow btn-block text-uppercase py-2 font-weight-bold">Post a
+                                           className="btn btn-primary btn-shadow btn-block text-uppercase py-2 font-weight-bold" onClick={this.handleWantedOpenModal}>Post a
                                             service or good</button>
+                                        <GoodsAndServicesModal
+                                            showModal={this.state.showWantedModal}
+                                            handleCloseModal={this.handleCloseModal}
+                                            searchPostingAction={this.props.searchPostingAction}
+                                            postType={'WANTED'}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -108,101 +168,51 @@ class SearchPosting extends Component {
                                     <div className="card-body">
                                         <p className="font-weight-bold text-center">All DoingGood Services & Goods Results and Other
                                             Postings</p>
-                                        <ul className="list-inline row">
-                                            <li className="list-inline-item col-8 col-sm-7">
-                                                <div className="bg-white rounded"><span className="">&bull;</span> Bike for sale</div>
-                                            </li>
-                                            <li className="list-inline-item col"><a href="javascript:void(0)" data-toggle="modal"
-                                                                                    data-target="#postServices"
-                                                                                    className="btn btn-primary btn-block font-weight-bold">Select</a>
-                                            </li>
-                                        </ul>
-                                        <ul className="list-inline row">
-                                            <li className="list-inline-item col-8 col-sm-7">
-                                                <div className="bg-white rounded"><span className="">&bull;</span> Stationary</div>
-                                            </li>
-                                            <li className="list-inline-item col"><a href="javascript:void(0)" data-toggle="modal"
-                                                                                    data-target="#postServices"
-                                                                                    className="btn btn-primary btn-block font-weight-bold">Select</a>
-                                            </li>
-                                        </ul>
+                                            {this.props.allPostData.offeredGoodOrService.map((posts, index) => {
+                                                return(
+                                                    <ul className="list-inline row">
+                                                    <li className="list-inline-item col-8 col-sm-7">
+                                                        <div className="bg-white rounded">
+                                                            <span className="">&bull;</span>{posts.description}
+                                                        </div>
+                                                    </li>
+                                                        <li className="list-inline-item col">
+                                                            <a href="javascript:void(0)" data-toggle="modal"
+                                                               data-target="#postServices"
+                                                               className="btn btn-info btn-block font-weight-bold" id={`data_ ${index}`}  onClick={this.handleShowIntersrOpenModal}>Select
+                                                            </a>
+                                                            <ShowInterestModal
+                                                                showInterestModal={this.state.showInterestModal}
+                                                                handleCloseModal={this.handleCloseModal}
+                                                                posts={this.props.allPostData ? this.props.allPostData.offeredGoodOrService[this.state.dateIndex] : {}}
+                                                            />
+                                                        </li>
+                                                    </ul>
+                                                    );
+                                            })}
+
                                         <p className="font-weight-bold text-center">Goods and Services Wanted</p>
-                                        <ul className="list-inline row">
-                                            <li className="list-inline-item col-8 col-sm-7">
-                                                <div className="bg-secondary text-white rounded"><span className="">&bull;</span> iPad
-                                                </div>
-                                            </li>
-                                            <li className="list-inline-item col"><a href="javascript:void(0)" data-toggle="modal"
-                                                                                    data-target="#postServices"
-                                                                                    className="btn btn-info btn-block font-weight-bold">Select</a>
-                                            </li>
-                                        </ul>
-                                        <ul className="list-inline row">
-                                            <li className="list-inline-item col-8 col-sm-7">
-                                                <div className="bg-secondary text-white rounded"><span className="">&bull;</span> Need
-                                                    Painter
-                                                </div>
-                                            </li>
-                                            <li className="list-inline-item col"><a href="javascript:void(0)" data-toggle="modal"
-                                                                                    data-target="#postServices"
-                                                                                    className="btn btn-info btn-block font-weight-bold">Select</a>
-                                            </li>
-                                        </ul>
-                                        <ul className="list-inline row">
-                                            <li className="list-inline-item col-8 col-sm-7">
-                                                <div className="bg-secondary text-white rounded"><span className="">&bull;</span> Want a
-                                                    babysitter
-                                                </div>
-                                            </li>
-                                            <li className="list-inline-item col"><a href="javascript:void(0)" data-toggle="modal"
-                                                                                    data-target="#postServices"
-                                                                                    className="btn btn-info btn-block font-weight-bold">Select</a>
-                                            </li>
-                                        </ul>
-                                        <ul className="list-inline row">
-                                            <li className="list-inline-item col-8 col-sm-7">
-                                                <div className="bg-secondary text-white rounded"><span
-                                                    className="">&bull;</span> Babysitter required
-                                                </div>
-                                            </li>
-                                            <li className="list-inline-item col"><a href="javascript:void(0)" data-toggle="modal"
-                                                                                    data-target="#postServices"
-                                                                                    className="btn btn-info btn-block font-weight-bold">Select</a>
-                                            </li>
-                                        </ul>
-                                        <ul className="list-inline row">
-                                            <li className="list-inline-item col-8 col-sm-7">
-                                                <div className="bg-secondary text-white rounded"><span className="">&bull;</span> Otis
-                                                    looking for painter
-                                                </div>
-                                            </li>
-                                            <li className="list-inline-item col"><a href="javascript:void(0)" data-toggle="modal"
-                                                                                    data-target="#postServices"
-                                                                                    className="btn btn-info btn-block font-weight-bold">Select</a>
-                                            </li>
-                                        </ul>
-                                        <ul className="list-inline row">
-                                            <li className="list-inline-item col-8 col-sm-7">
-                                                <div className="bg-secondary text-white rounded"><span className="">&bull;</span> Need
-                                                    painter
-                                                </div>
-                                            </li>
-                                            <li className="list-inline-item col"><a href="javascript:void(0)" data-toggle="modal"
-                                                                                    data-target="#postServices"
-                                                                                    className="btn btn-info btn-block font-weight-bold">Select</a>
-                                            </li>
-                                        </ul>
-                                        <ul className="list-inline row">
-                                            <li className="list-inline-item col-8 col-sm-7">
-                                                <div className="bg-secondary text-white rounded"><span className="">&bull;</span> Need a
-                                                    Mac
-                                                </div>
-                                            </li>
-                                            <li className="list-inline-item col"><a href="javascript:void(0)" data-toggle="modal"
-                                                                                    data-target="#postServices"
-                                                                                    className="btn btn-info btn-block font-weight-bold">Select</a>
-                                            </li>
-                                        </ul>
+                                        {this.props.allPostData.wantedGoodOrService.map((posts, index) => {
+                                            return(<ul className="list-inline row">
+                                                <li className="list-inline-item col-8 col-sm-7">
+                                                    <div className="bg-secondary text-white rounded"><span
+                                                        className="">&bull;</span> {posts.description}
+                                                    </div>
+                                                </li>
+                                                <li className="list-inline-item col">
+                                                    <a href="javascript:void(0)"
+                                                        data-toggle="modal"
+                                                        data-target="#postServices"
+                                                        className="btn btn-info btn-block font-weight-bold" id={`goodsdata_ ${index}`} onClick={this.handleShowIntersrOpenModal}>Select
+                                                    </a>
+                                                    <ShowInterestModal
+                                                        showInterestModal={this.state.showInterestModal}
+                                                        handleCloseModal={this.handleCloseModal}
+                                                        posts={posts}
+                                                    />
+                                                </li>
+                                            </ul>);
+                                        })}
                                     </div>
                                 </div>
                             </div>
@@ -275,14 +285,6 @@ class SearchPosting extends Component {
                         </div>
                     </div>
                 </div>
-                   <ReactModal
-                       isOpen={this.props.showModalFlag}
-                       contentLabel="Minimal Modal Example"
-                   >
-                       Model open
-                       <button onClick={this.handleCloseModal}>Close Modal</button>
-                   </ReactModal>
-
            </div>
     );
     }

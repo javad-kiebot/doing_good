@@ -1,16 +1,19 @@
-import {POSTSERVICEREQUEST, POSTSERVICEREQUESTCLOSE} from "../actions/searchPostingActions";
+import {POSTSERVICEREQUEST, POSTSERVICEREQUESTCLOSE, ALLSERVICEREQUEST} from "../actions/searchPostingActions";
 
 const initialState = {
     showModalFlag:false,
-    hideModalFlag:true
+    hideModalFlag:true,
+    allPostData: {}
 };
 
 const postRequestServiceReducer = (state=initialState, action) => {
     switch (action.type) {
         case POSTSERVICEREQUEST:
-            return {showModalFlag: true};
+            return {...state,showModalFlag: true};
             case POSTSERVICEREQUESTCLOSE:
-            return {hideModalFlag: false};
+            return {...state,hideModalFlag: false};
+            case ALLSERVICEREQUEST:
+            return {...state,allPostData: action.data};
         default:
             return state;
     }

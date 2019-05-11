@@ -21,7 +21,27 @@
     border:0;
 }
 
+.ReactModal__Content{
+    overflow: auto;
+}
 
+.skill-text {
+    color: #402666;
+}
+.goodsAndServices {
+    width:4%;
+}
+
+.goodsAndServicesButton{
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+    float: right;
+}
+
+.goodsAndServicesButtonRight{
+    margin-left: 5px;
+}
 
 //@media (min-width: 486px) and (max-width:768px) {
 //.searchPosting{
