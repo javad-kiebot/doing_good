@@ -29,7 +29,8 @@ class SearchPosting extends Component {
             showInterestModal:false,
             showWantedModal:false,
             radiusSelected:'',
-            dateIndex:0
+            dateIndex:0,
+            zipdisabled:false
         };
 
         this.handleOfferedOpenModal = this.handleOfferedOpenModal.bind(this);
@@ -53,20 +54,24 @@ class SearchPosting extends Component {
     }
 
     handleCloseModal () {
-        this.setState({ showModal: false,
+        this.setState({ showOfferedModal: false,
             showInterestModal:false,
             showWantedModal:false});
     }
 
     onPostServiceRequest(){
-        this.props.searchPostingAction.postServiceRequestAction();
+        this.props.searchPostingAction.allPostingServiceAction();
     }
 
     onRadiusChange(event){
         this.setState({ radiusSelected: event.target.value });
     }
     onOrgChange(event){
-        this.setState({ orgSelected: event.target.value });
+        if(event.target.value === "Select Org") {
+            this.setState({orgSelected: event.target.value, zipdisabled: false});
+        }else{
+            this.setState({orgSelected: event.target.value, zipdisabled:true });
+        }
     }
 
     render(){
@@ -110,7 +115,7 @@ class SearchPosting extends Component {
                             </div>
                             <div className="col-sm">
                                 <div className="form-group m-0">
-                                    <select className="form-control" value={this.state.radiusSelected} onChange={this.onRadiusChange}>
+                                    <select className="form-control" value={this.state.radiusSelected} onChange={this.onRadiusChange} disabled={this.state.zipdisabled}>
                                         <option>Select Radius</option>
                                         {radiusArray.map((rules)=>
                                         <option>{rules}</option>
@@ -121,12 +126,12 @@ class SearchPosting extends Component {
                             </div>
                             <div className="col-sm">
                                 <div className="form-group m-0">
-                                    <input className="form-control" type="text" placeholder="Zip Code"/>
+                                    <input className="form-control" type="text" placeholder="Zip Code" disabled={this.state.zipdisabled}/>
                                 </div>
                             </div>
                             <div className="col-sm">
                                 <button className="btn btn-default goodsAndServicesButton goodsAndServicesButtonRight" >Reset</button>
-                                <button className="btn btn-default goodsAndServicesButton">Search</button>
+                                <button className="btn btn-default goodsAndServicesButton" onClick={this.onPostServiceRequest}>Search</button>
                             </div>
                         </div>
                     </div>
@@ -260,31 +265,31 @@ class SearchPosting extends Component {
                     </div>
                 </div>
 
-                <div id="postServices" className="modal fade" tabIndex="-1" role="dialog">
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title">Show Interest</h5>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <p className="font-weight-bold">Post Details</p>
-                                <p>Goods/Service:bike for sale</p>
-                                <p>Description:Mens bike for sale, comfort bike. </p>
-                                <p>Rate:</p>
-                                <p>Rate Type:perhour</p>
-                                <p>Please <Link to="/">Login</Link> to Continue.</p>
-                                <br/>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary">Save</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {/*<div id="postServices" className="modal fade" tabIndex="-1" role="dialog">*/}
+                    {/*<div className="modal-dialog" role="document">*/}
+                        {/*<div className="modal-content">*/}
+                            {/*<div className="modal-header">*/}
+                                {/*<h5 className="modal-title">Show Interest</h5>*/}
+                                {/*<button type="button" className="close" data-dismiss="modal" aria-label="Close">*/}
+                                    {/*<span aria-hidden="true">&times;</span>*/}
+                                {/*</button>*/}
+                            {/*</div>*/}
+                            {/*<div className="modal-body">*/}
+                                {/*<p className="font-weight-bold">Post Details</p>*/}
+                                {/*<p>Goods/Service:bike for sale</p>*/}
+                                {/*<p>Description:Mens bike for sale, comfort bike. </p>*/}
+                                {/*<p>Rate:</p>*/}
+                                {/*<p>Rate Type:perhour</p>*/}
+                                {/*<p>Please <Link to="/">Login</Link> to Continue.</p>*/}
+                                {/*<br/>*/}
+                            {/*</div>*/}
+                            {/*<div className="modal-footer">*/}
+                                {/*<button type="button" className="btn btn-default" data-dismiss="modal">Close</button>*/}
+                                {/*<button type="button" className="btn btn-primary">Save</button>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
+                {/*</div>*/}
            </div>
     );
     }

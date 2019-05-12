@@ -8,6 +8,7 @@ class GoodsAndServicesModal extends React.Component {
     constructor () {
         super();
         this.state = {
+            insideshowModal:props.showModal,
             goodsSelected:'',
             servicesSelected:'',
             goods:'',
@@ -38,7 +39,8 @@ class GoodsAndServicesModal extends React.Component {
                 this.state.minimum,
                 this.state.maximum,
                 this.state.rateType,
-            this.props.postType)
+            this.props.postType);
+        this.setState({ insideshowModal: false})
     }
 
     goodsSelected(event){
@@ -79,7 +81,7 @@ class GoodsAndServicesModal extends React.Component {
         };
         return (
             <ReactModal
-                isOpen={this.props.showModal}
+                isOpen={this.state.insideshowModal}
                 contentLabel="Minimal Modal Example"
                 style={customStyles}
             >

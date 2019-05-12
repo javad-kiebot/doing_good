@@ -8,6 +8,14 @@ import photoIcon from "../../assests/images/dashboard/Photo_icon.png";
 import addphotoIcon from "../../assests/images/dashboard/add photo icon.png";
 import "../../assests/sass/editVolunteerProfile.scss";
 import loginActions from "../actions/loginActions";
+import paint_fence from "../../assests/images/dashboard/paint_fence.jpg";
+import tennis from "../../assests/images/dashboard/tennis.jpg";
+import kitchen_teach from "../../assests/images/dashboard/kitchen_teach.jpg";
+import cloud6 from "../../assests/images/dashboard/couch6_enlarged.jpg";
+import rake_leaves from "../../assests/images/dashboard/Rake_leaves.jpg";
+import dginsta from "../../assests/images/home/dg-insta.png";
+import dgfb from "../../assests/images/home/dg-fb.png";
+import dgtwitter from "../../assests/images/home/dg-twitter.png";
 
 class EditVolunteerProfile extends Component{
 
@@ -17,7 +25,6 @@ class EditVolunteerProfile extends Component{
 
     render(){
         return(
-            <div>
                 <div className="fullwidth">
                     <Container>
                         <Row>
@@ -47,9 +54,6 @@ class EditVolunteerProfile extends Component{
                         </Col>
                         <Col><h3>Thank you for</h3><img src={doingGoodHero} width="auto" height="70px" className="imgcenter"/></Col>
                     </Row>
-                </div>
-
-
                 <div className="show-grid orangeBar">
                     <label>DoingGood Member Dashboard</label>
                     <span className="pull-right">
@@ -120,23 +124,63 @@ class EditVolunteerProfile extends Component{
                 {/*
                     Post Buttons
                 */}
-                <div class="container cardwidth-button">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12">
+                <div className="container cardwidth-button">
+                    <div className="row">
+                        <div className="col-md-6 col-sm-12">
                             <button className="btn btn-primary buttonShadow">
-                                POST YOUR NEW<br></br>
+                                POST YOUR NEW<br/>
                                 SERVICES OR GOODS TO DONATE
                             </button>
                         </div>
-                        <div class="col-md-6 col-sm-12">
+                        <div className="col-md-6 col-sm-12">
                             <button className="btn btn-info buttonShadow button-pupple">
-                                POST A WANTED<br></br>
+                                POST A WANTED<br/>
                                 SERVICES OR GOODS TO PURCHASE
                             </button>
                         </div>
                     </div>
                 </div>
-            </div>
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="fiveimages col-sm col-12">
+                                <img src={ paint_fence } alt="image" className="img-fluid"/>
+                            </div>
+                            <div className="fiveimages col-sm col-12">
+                                <img src={tennis} alt="image" className="img-fluid"/>
+                            </div>
+                            <div className="fiveimages col-sm col-12">
+                                <img src={kitchen_teach} alt="image" className="img-fluid"/>
+                            </div>
+                            <div className="fiveimages col-sm col-12">
+                                <img src={cloud6} alt="image" className="img-fluid"/>
+                            </div>
+                            <div className="fiveimages col-sm col-12">
+                                <img src={rake_leaves} alt="image" className="img-fluid"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="container-fluid dg-footer bg-primary py-3">
+                        <div className="row">
+                            <div className="col-sm-3 col-3 d-flex align-items-center"><a href="#"
+                                                                                         className="font-weight-bold text-white">JOIN</a>
+                            </div>
+                            <div className="col-sm-3 col-4 d-flex align-items-center"><a href="#"
+                                                                                         className="font-weight-bold text-white">Login</a>
+                            </div>
+                            <div className="col-sm-3 col-5 d-flex align-items-center"><a href="#" className="font-weight-bold text-white">About
+                                DoingGood</a></div>
+                            <div className="col-sm-3 col-12">
+                                <ul className="list-inline mb-0">
+                                    <li className="list-inline-item"><a href="#"><img src={dginsta} alt="logo" width="30"/></a>
+                                    </li>
+                                    <li className="list-inline-item"><a href="#"><img src={dgfb} alt="logo" width="30"/></a></li>
+                                    <li className="list-inline-item"><a href="#"><img src={dgtwitter} alt="logo" width="30"/></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         )
     }
 }
