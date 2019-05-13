@@ -32,13 +32,13 @@ class Login extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        console.log("login sucessful");
         if(!this.credentials.email || !this.credentials.password){
             toastr.error('Error ', 'Either login or password field is empty');
             return;
         }
         let token = this.props.token;
         this.props.loginActions.loginUser(this.credentials);
+        console.log(this.props.session)
     }
 
     redirectForgotPassword(e){
@@ -61,6 +61,7 @@ class Login extends Component {
     render() {
         return (
             <div className="d-flex align-items-center justify-content-center login-wrapper">
+                {console.log(this.props.session)}
                 <div className="card">
                     <div className="card-body">
                         <h2 className="title text-center mt-0 mb-4">DoingGood</h2>

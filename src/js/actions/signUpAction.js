@@ -82,7 +82,7 @@ let signUpUserActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'https://gamma.valueaddsofttech.com:4000/users',
+            url: 'http://13.127.249.79:9500/api/member/registration',
             data: {
                 "volunteerdetails":volunteerdetails,
                 "firstname":orgcreds.firstname,

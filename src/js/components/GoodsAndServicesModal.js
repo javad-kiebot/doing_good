@@ -5,10 +5,9 @@ import { Form, Button } from 'react-bootstrap'
 
 
 class GoodsAndServicesModal extends React.Component {
-    constructor () {
-        super();
+    constructor (props) {
+        super(props);
         this.state = {
-            insideshowModal:props.showModal,
             goodsSelected:'',
             servicesSelected:'',
             goods:'',
@@ -40,7 +39,6 @@ class GoodsAndServicesModal extends React.Component {
                 this.state.maximum,
                 this.state.rateType,
             this.props.postType);
-        this.setState({ insideshowModal: false})
     }
 
     goodsSelected(event){
@@ -81,7 +79,7 @@ class GoodsAndServicesModal extends React.Component {
         };
         return (
             <ReactModal
-                isOpen={this.state.insideshowModal}
+                isOpen={this.props.showModal}
                 contentLabel="Minimal Modal Example"
                 style={customStyles}
             >
