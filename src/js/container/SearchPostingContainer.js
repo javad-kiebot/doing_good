@@ -1,37 +1,52 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Login from "../components/Login";
 import {bindActionCreators} from "redux";
-import loginActions from "../actions/loginActions";
 import SearchPosting from "../components/SearchPosting";
+import searchPostingActions from "../actions/searchPostingActions";
 
 class SearchPostingContainer extends Component {
     constructor(props) {
         super(props);
+        this.onPostServiceRequestModal=this.onPostServiceRequestModal.bind(this);
+    }
+
+    onPostServiceRequestModal(){
+        this.props.searchPostingAction.postServiceRequestAction();
+    }
+
+    componentWillMount(){
+        console.log("sfkjfkhsf" + this.props.showModalFlag);
+        Promise.resolve(this.props.searchPostingAction.allPostingServiceAction());
     }
 
     render() {
         return (
-               <SearchPosting/>
+            <div>
+                {console.log(this.props.allPostData)}
+                {this.props.allPostData && this.props.allPostData.offeredGoodOrService &&
+                    <SearchPosting
+                        searchPostingAction={this.props.searchPostingAction}
+                        onPostServiceRequestModal={this.onPostServiceRequestModal}
+                        allPostData={this.props.allPostData}
+                        showModalFlag={this.props.showModalFlag}
+                        hideModalFlag={this.props.hideModalFlag}
+                    />
+                }
+            </div>
         );
     }
 }
 
 function mapStateToProps(state) {
-    return {
-        token:state.loginReducer.token,
-        user: state.loginReducer.user,
-        // WorkRequests:state.landingpage.WorkRequests,
-        // loadInterestShownWRData:state.landingpage.loadInterestShownWRData
-    };
+    return {showModalFlag: state.postRequestServiceReducer.showModalFlag, allPostData: state.postRequestServiceReducer.allPostData
+        };
 }
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
     return {
-        loginAction: bindActionCreators(loginActions, dispatch),
-        // landingpageactions:bindActionCreators(landingpageactions,dispatch)
+        searchPostingAction: bindActionCreators(searchPostingActions, dispatch),
     };
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPostingContainer);
 

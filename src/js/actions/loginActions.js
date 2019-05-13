@@ -2,6 +2,7 @@ import axios from 'axios';
 import {browserHistory} from 'react-router';
 var jwtDecode = require('jwt-decode');
 import {toastr} from 'react-redux-toastr'
+import {hashHistory} from "react-router";
 
 let loginActions = {
     gotousersignup:function() {
@@ -12,11 +13,12 @@ let loginActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'https://gamma.valueaddsofttech.com:4000/authentication',
+            url: 'http://13.127.249.79:9500/api/user/authenticate',
             data: {
-                "email" : userCredentials.email,
+                "username" : userCredentials.email,
+                "rememberMe": true,
                 "password" : userCredentials.password,
-                "strategy":userCredentials.strategy
+
             },
             headers: {
                 'Content-Type': 'application/json'
@@ -25,9 +27,9 @@ let loginActions = {
         return (dispatch) => {
             axios(request)
                 .then(response => {
-                    if (response.status === 201) {
+                    if (response.status === 200) {
                         var loginResponse = response.data;
-                        if(response.data.user.status === 'inactive'){
+                        if(response.userStatusCode === 'INACT'){
                             toastr.error('Error ', 'User has not activated the account');
                             return;
                         }
@@ -40,13 +42,13 @@ let loginActions = {
                         });
                         window.localStorage.setItem("sessionUser", JSON.stringify(response.data.user));
                         window.localStorage.setItem("sessionUserToken", JSON.stringify(response.data.accessToken));
-                        if(loginResponse.user.role === 'member'){
-                            browserHistory.push('/memberdashboard');
+                        if(loginResponse.userRole === 'MEMBER'){
+                            hashHistory.push('/editVoluteerProfile');
                         }
-                        if(loginResponse.user.role === 'charity'){
+                        if(loginResponse.userRole === 'charity'){
                             browserHistory.push('/charity/charityorganizerdashboard');
                         }
-                        if(loginResponse.user.role === 'admin'){
+                        if(loginResponse.userRole === 'admin'){
                             browserHistory.push('/admindashboard/authorizecharities');
                         }
                     }

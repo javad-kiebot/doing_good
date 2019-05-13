@@ -132,12 +132,12 @@ class OrgSignUp extends Component {
         {
             this.state.allValid = true;
         }
-        // else{
-        //     this.state.allValid = false;
-        //     this.state.orgnameValid ? "" : this.setState({highlightclass:"highlight"});
-        //     this.state.emailValid ? "" : this.setState({highlightclass:"highlight"});
-        //     this.state.passwordValid ? "" : this.setState({highlightclass:"highlight"});
-        // }
+        else{
+            this.state.allValid = false;
+            this.state.orgnameValid ? "" : this.setState({highlightclass:"highlight"});
+            this.state.emailValid ? "" : this.setState({highlightclass:"highlight"});
+            this.state.passwordValid ? "" : this.setState({highlightclass:"highlight"});
+        }
         if(this.state.allValid === true){
             e.preventDefault();
             this.props.signUpUserActions.signupOrg(this.credentials);
@@ -169,8 +169,8 @@ class OrgSignUp extends Component {
                             </div>
                             <div className="form-group mb-2">
                                 <label>Organization Name*</label>
-                                <input className="form-control" type="text"
-                                       onChange={this.handleChange} name="orgname" placeholder={this.orgError}/>
+                                <input type="text"
+                                       onChange={this.handleChange} name="orgname" placeholder={this.orgError} class={this.state.orgnameValid ? 'form-control' : this.state.highlightclass + " form-control"}/>
                             </div>
                             <div className="form-group mb-2">
                                 <label>Website</label>
@@ -186,11 +186,11 @@ class OrgSignUp extends Component {
                             </div>
                             <div className="form-group mb-2">
                                 <label>Email*</label>
-                                <input className="form-control" type="email" onChange={this.handleChange} name="email" placeholder={this.emailError}/>
+                                <input type="email" onChange={this.handleChange} name="email" placeholder={this.emailError}  className={this.state.emailValid ? 'form-control' : this.state.highlightclass + " form-control"}/>
                             </div>
                             <div className="form-group mb-2">
                                 <label>Password*</label>
-                                <input className="form-control" type="text" onChange={this.handleChange} name="password" placeholder={this.passwordError}/>
+                                <input type="text" onChange={this.handleChange} name="password" placeholder={this.passwordError} className={this.state.passwordValid ? 'form-control' : this.state.highlightclass + " form-control"}/>
                             </div>
                             <div className="form-group mb-2">
                                 <label>Phone Number</label>

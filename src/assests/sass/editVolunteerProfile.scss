@@ -1,0 +1,171 @@
+@import "fonts";
+@import "variables";
+@import "mobile";
+
+.fullwidth{
+  padding-top: 2%;
+}
+.cardwidth{
+  padding:2%
+}
+.cardwidth-button{
+  padding: 0 2% 2% 2%;
+}
+.card{
+  background-color: rgb(228,233,236);
+  margin: 1%;
+}
+.btnPostOrange{
+  background: #db4c26;
+  border-radius: 5px;
+  height: 50px;
+  width:100%;
+  display: block;
+  margin:20px auto;
+}
+.textcenter {
+  top: 5px;
+  text-align: center;
+  font-size: 20px;
+  color: #402666;
+  display: block;
+  margin: 20px auto;
+}
+.logoutText{
+  color: rgb(219, 76, 38);
+  font-size: 20px;
+  text-decoration: underline;
+}
+
+.addphotobtn{
+  position: relative;
+  cursor: pointer;
+  margin-left: 85%;
+  bottom: -52px;
+  z-index: 2;
+}
+.Photo_icon {
+
+}
+.welcomeMessage {
+  font-size: 24px;
+}
+.bgWelcomeMessage {
+  background-image: url(../images/dashboard/sky_wide-min.jpg);
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center bottom;
+  margin: 0;
+  padding:1%;
+}
+.orangeBar{
+  background:#db4c26;
+  height:80px;
+  color:#ffffff;
+  font-size: 20px;
+  padding: 1%;
+  font-weight: bold;
+}
+.White-anchor{
+  color: white;
+}
+.White-anchor:hover {
+  color: white;
+}
+@media (max-width: 468px) {
+  .Photo_icon{
+    position: relative;
+    width:110px;
+    height:auto;
+    float:left;
+  }
+  .buttonShadow{
+    margin: 2%;
+    width: 100% !important;
+  }
+}
+@media (min-width: 468px) {
+  .Photo_icon{
+    position: relative;
+    width:110px;
+    height:auto;
+    margin-left: 80px;
+    float:right;
+    margin-top: -40px;
+  }
+}
+.cardlabel{
+  background-color: #fff;
+  overflow: auto;
+  box-shadow: 3px 6px #929597;
+  text-align: left;
+  margin-top: 10px;
+  align-items: left;
+  color: #402666;
+  font-weight: bolder;
+  padding: 5px;
+}
+.buttonShadow{
+  box-shadow: 3px 6px #929597;
+  border-radius: 15px;
+  width: 70%;
+}
+.button-pupple{
+background-color: rgb(64, 38, 102);
+}
+.cardlabel-Opportunities{
+  background-color: #fff;
+  overflow: auto;
+  box-shadow: 3px 6px #929597;
+  text-align: left;
+  margin-top: 10px;
+  align-items: left;
+  color: #DB4C26;
+  padding: 8px;
+}
+
+.cardLabel-raised{
+  background-color: #fff;
+  overflow: auto;
+  text-align: left;
+  margin-top: 10px;
+  align-items: left;
+  color: #DB4C26;
+  padding: 4px;
+}
+.nobullet{
+  list-style-type: none;
+  padding: 0px !important;
+}
+.span-raised{
+  background: #DB4C26;
+  padding: 5px;
+  float: right;
+  text-align: center;
+  color: white;
+  width: 23%;
+}
+.cardtitle{
+  font-weight: 700;
+  font-size: 14px;
+}
+.cardlabel-Orange{
+  color: #DB4C26;
+  font-weight: bold;
+}
+.label-black{
+  color: black;
+}
+.row{
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+.fiveimages {
+  padding: 5px;
+}
+.fiveimages img {
+  width: 100%;
+  height: 180px;
+}
+

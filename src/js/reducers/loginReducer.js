@@ -3,7 +3,8 @@ const initialState = {
     password: '',
     session: {user:{}},
     user:{},
-    token:''
+    token:'',
+    loginUserDetails:{}
 };
 
 
@@ -14,6 +15,7 @@ let loginReducer = function(user = initialState, action) {
             return Object.assign({}, user, {token:action.data});
 
         case 'LOGGED_IN':
+            debugger;
             return Object.assign({}, user, {user: action.user,token:action.token,session:action.data});
 
         case 'UPDATE_LOGGED_IN':
@@ -21,6 +23,9 @@ let loginReducer = function(user = initialState, action) {
 
         case 'LOAD_LOGIN':
             return Object.assign({}, user, {user: action.data,token:action.token});
+
+        case 'LOG_IN_USER':
+            return {...state,loginUserDetails: action.data};
 
         default:
             return user;

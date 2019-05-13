@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
+import {reducer as toastrReducer} from 'react-redux-toastr';
 import loginReducer from "./loginReducer";
+import postRequestServiceReducer from "./postRequestReducer";
 
 
 // Combine all reducers as root reducer
-export default combineReducers({loginReducer});
+export default combineReducers({toastr: toastrReducer,loginReducer, postRequestServiceReducer});

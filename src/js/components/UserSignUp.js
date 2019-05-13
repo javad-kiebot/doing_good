@@ -154,13 +154,13 @@ class UserSignUp extends Component {
             && this.state.passwordValid){
             this.state.allValid = true;
         }
-        // else{
-        //     this.setState({allValid: false});
-        //     this.state.firstnameValid ? "" : this.setState({highlightclass:"highlight"});
-        //     this.state.lastnameValid ? "" : this.setState({highlightclass:"highlight"});
-        //     this.state.emailValid ? "" : this.setState({highlightclass:"highlight"});
-        //     this.state.passwordValid ? "" : this.setState({highlightclass:"highlight"});
-        // }
+        else{
+            this.setState({allValid: false});
+            this.state.firstnameValid ? "" : this.setState({highlightclass:"highlight"});
+            this.state.lastnameValid ? "" : this.setState({highlightclass:"highlight"});
+            this.state.emailValid ? "" : this.setState({highlightclass:"highlight"});
+            this.state.passwordValid ? "" : this.setState({highlightclass:"highlight"});
+        }
         if(this.state.allValid === true){
             e.preventDefault();
             this.props.signUpUserActions.signupUser(this.credentials);
@@ -192,11 +192,11 @@ class UserSignUp extends Component {
                             </div>
                             <div className="form-group mb-2">
                                 <label>First Name*</label>
-                                <input name="firstname" className="form-control" onChange={this.handleChange} type="text" required placeholder={this.firstnameError}/>
+                                <input name="firstname" onChange={this.handleChange} type="text" required placeholder={this.firstnameError} className={this.state.firstnameValid ? 'form-control' : this.state.highlightclass +" form-control"}/>
                             </div>
                             <div className="form-group mb-2">
                                 <label>Last Name*</label>
-                                <input name="lastname" className="form-control" onChange={this.handleChange} type="text" required placeholder={this.lastnameError}/>
+                                <input name="lastname" className="form-control" onChange={this.handleChange} type="text" required placeholder={this.lastnameError} className={this.state.lastnameValid ? 'form-control' : this.state.highlightclass +" form-control"}/>
                             </div>
                             <div className="form-group mb-2">
                                 <label>City</label>
@@ -208,11 +208,11 @@ class UserSignUp extends Component {
                             </div>
                             <div className="form-group mb-2">
                                 <label>Email*</label>
-                                <input name="email" className="form-control" onChange={this.handleChange} type="email" required placeholder={this.emailError}/>
+                                <input name="email" onChange={this.handleChange} type="email" required placeholder={this.emailError} className={this.state.emailValid ? 'form-control' : this.state.highlightclass+" form-control"}/>
                             </div>
                             <div className="form-group mb-2">
                                 <label>Password*</label>
-                                <input name="password" className="form-control" onChange={this.handleChange} type="text" required placeholder={this.passwordError}/>
+                                <input name="password" onChange={this.handleChange} type="text" required placeholder={this.passwordError} className={this.state.passwordValid ? 'form-control' : this.state.highlightclass+" form-control"}/>
                             </div>
                             <div className="form-group mb-2">
                                 <label>Phone Number</label>
