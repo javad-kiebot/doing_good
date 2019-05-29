@@ -49,7 +49,7 @@ class ForgotPassword extends Component {
                             <button className="btn btn-success btn-block fw-600 py-2 mb-4" onClick={this.handleSubmit} type="button">Forgot Password</button>
                         </form>
                         <div className="form-group">
-                            <Link to="/" className="pull-right btn btn-link"
+                            <Link to="/login" className="pull-right btn btn-link"
                                   style={{"color": "rgb(0, 169, 157)", "margin-top": "-12px", "margin-right": "-10px"}}>
                                 Back to Login
                             </Link>

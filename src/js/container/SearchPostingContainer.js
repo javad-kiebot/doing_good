@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import {bindActionCreators} from "redux";
 import SearchPosting from "../components/SearchPosting";
 import searchPostingActions from "../actions/searchPostingActions";
+import organizationReducer from "../reducers/organizationReducer";
+import organizationActions from "../actions/organizationActions";
 
 class SearchPostingContainer extends Component {
     constructor(props) {
@@ -15,14 +17,12 @@ class SearchPostingContainer extends Component {
     }
 
     componentWillMount(){
-        console.log("sfkjfkhsf" + this.props.showModalFlag);
         Promise.resolve(this.props.searchPostingAction.allPostingServiceAction());
     }
 
     render() {
         return (
             <div>
-                {console.log(this.props.allPostData)}
                 {this.props.allPostData && this.props.allPostData.offeredGoodOrService &&
                     <SearchPosting
                         searchPostingAction={this.props.searchPostingAction}
@@ -30,6 +30,8 @@ class SearchPostingContainer extends Component {
                         allPostData={this.props.allPostData}
                         showModalFlag={this.props.showModalFlag}
                         hideModalFlag={this.props.hideModalFlag}
+                        organizationAction={this.props.organizationAction}
+                        getAllOrgs={this.props.getAllOrgs}
                     />
                 }
             </div>
@@ -38,13 +40,16 @@ class SearchPostingContainer extends Component {
 }
 
 function mapStateToProps(state) {
-    return {showModalFlag: state.postRequestServiceReducer.showModalFlag, allPostData: state.postRequestServiceReducer.allPostData
+    return {showModalFlag: state.postRequestServiceReducer.showModalFlag,
+        allPostData: state.postRequestServiceReducer.allPostData,
+        getAllOrgs:state.organizationReducer.getAllOrgs
         };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         searchPostingAction: bindActionCreators(searchPostingActions, dispatch),
+        organizationAction: bindActionCreators(organizationActions, dispatch),
     };
 };
 

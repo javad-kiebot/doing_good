@@ -23,16 +23,17 @@ class SearchPosting extends Component {
         super(props);
         this.onPostServiceRequest=this.onPostServiceRequest.bind(this);
         this.handleCloseModal=this.handleCloseModal.bind(this);
-        console.log("prop" + props.showModalFlag);
         this.state = {
             showOfferedModal: false,
             showInterestModal:false,
             showWantedModal:false,
             radiusSelected:'',
             dateIndex:0,
-            zipdisabled:false
-        };
+            zipdisabled:false,
+            orgArray: props.getAllOrgs
 
+        };
+        this.props.organizationAction.getAllOrgsAction();
         this.handleOfferedOpenModal = this.handleOfferedOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleWantedOpenModal = this.handleWantedOpenModal.bind(this);
@@ -79,9 +80,6 @@ class SearchPosting extends Component {
         const orgArray= ['Child care','Child care', 'Child care','Child care', 'Child care', 'Child care','Child care'];
         return(
            <div>
-               {
-                   console.log(this.props.allPostData.offeredGoodOrService)
-               }
                <div>
                 <img src={ guitar } className="img-fluid img_guitar" alt="Search banner" />
                </div>
@@ -106,8 +104,8 @@ class SearchPosting extends Component {
                                 <div className="form-group m-0">
                                     <select className="form-control" value={this.state.orgSelected} onChange={this.onOrgChange}>
                                         <option>Select Org</option>
-                                        {orgArray.map((org)=>
-                                            <option>{org}</option>
+                                        {this.props.getAllOrgs.map((org)=>
+                                            <option>{org.organizationName}</option>
                                         )}
 
                                     </select>
@@ -176,7 +174,7 @@ class SearchPosting extends Component {
                                             {this.props.allPostData.offeredGoodOrService.map((posts, index) => {
                                                 return(
                                                     <ul className="list-inline row">
-                                                    <li className="list-inline-item col-8 col-sm-7">
+                                                    <li className="list-inline-item col">
                                                         <div className="bg-white rounded">
                                                             <span className="">&bull;</span>{posts.description}
                                                         </div>
@@ -264,32 +262,6 @@ class SearchPosting extends Component {
                         </div>
                     </div>
                 </div>
-
-                {/*<div id="postServices" className="modal fade" tabIndex="-1" role="dialog">*/}
-                    {/*<div className="modal-dialog" role="document">*/}
-                        {/*<div className="modal-content">*/}
-                            {/*<div className="modal-header">*/}
-                                {/*<h5 className="modal-title">Show Interest</h5>*/}
-                                {/*<button type="button" className="close" data-dismiss="modal" aria-label="Close">*/}
-                                    {/*<span aria-hidden="true">&times;</span>*/}
-                                {/*</button>*/}
-                            {/*</div>*/}
-                            {/*<div className="modal-body">*/}
-                                {/*<p className="font-weight-bold">Post Details</p>*/}
-                                {/*<p>Goods/Service:bike for sale</p>*/}
-                                {/*<p>Description:Mens bike for sale, comfort bike. </p>*/}
-                                {/*<p>Rate:</p>*/}
-                                {/*<p>Rate Type:perhour</p>*/}
-                                {/*<p>Please <Link to="/">Login</Link> to Continue.</p>*/}
-                                {/*<br/>*/}
-                            {/*</div>*/}
-                            {/*<div className="modal-footer">*/}
-                                {/*<button type="button" className="btn btn-default" data-dismiss="modal">Close</button>*/}
-                                {/*<button type="button" className="btn btn-primary">Save</button>*/}
-                            {/*</div>*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
-                {/*</div>*/}
            </div>
     );
     }

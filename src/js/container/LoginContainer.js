@@ -19,7 +19,6 @@ class LoginContainer extends Component {
                   token={this.props.token}
                   session={this.props.session}
               />
-                {console.log(this.props.session)}
             </div>
         );
     }

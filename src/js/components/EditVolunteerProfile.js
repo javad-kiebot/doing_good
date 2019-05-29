@@ -67,7 +67,7 @@ class EditVolunteerProfile extends Component{
                             <Col><button className="btn btnPostOrange" onClick={this.gotosearchpostings}><span style={{'fontFamily':'Gotham-Book','fontSize':'16','color':'white'}}>Search Postings</span></button>
                             </Col>
                             <Col><Link to="/editVoluteerProfile" className="current"><span className="textcenter">My Dashboard</span></Link></Col>
-                            <Col><Link to= "/" className="current"><span className="textcenter logoutText">Logout</span></Link></Col>
+                            <Col><Link to= "/login" className="current"><span className="textcenter logoutText">Logout</span></Link></Col>
                         </Row>
                     </Container>
                     <Row className="bgWelcomeMessage">
@@ -92,9 +92,9 @@ class EditVolunteerProfile extends Component{
                 <div className="show-grid orangeBar">
                     <label>DoingGood Member Dashboard</label>
                     <span className="pull-right">
-                            <a href="#" className="White-anchor">
+                            <Link to="/completebasicprofile" className="White-anchor">
                             <u>Complete your basic profile</u>
-                            </a></span>
+                            </Link></span>
                 </div>
                 {/*
                     Card Readers Starts

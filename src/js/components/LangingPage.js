@@ -19,14 +19,24 @@ import youCan from "../../assests/images/home/you_can.png";
 import dginsta from "../../assests/images/home/dg-insta.png";
 import dgfb from "../../assests/images/home/dg-fb.png";
 import dgtwitter from "../../assests/images/home/dg-twitter.png";
+import GoodsAndServicesModal from "./GoodsAndServicesModal";
 
 
 class LandingPage extends Component {
     constructor() {
         super();
+        this.state = {
+            showOfferedModal: false,
+        };
+        this.handleCloseModal=this.handleCloseModal.bind(this);
+        this.handleOfferedOpenModal=this.handleOfferedOpenModal.bind(this);
     }
-
-
+    handleOfferedOpenModal () {
+        this.setState({ showOfferedModal: true });
+    }
+    handleCloseModal () {
+        this.setState({ showOfferedModal: false});
+    }
     render() {
         return (
             <div>
@@ -47,7 +57,7 @@ class LandingPage extends Component {
                                     <a className="nav-link" href="#">Start Doing Good</a>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/">Member Login</Link>
+                                    <Link className="nav-link" to="/login">Member Login</Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/searchposting">Search Postings</Link>
@@ -58,18 +68,18 @@ class LandingPage extends Component {
                 </div>
                 <div className="container-fluid d-none d-sm-block">
                     <div className="d-flex flex-row justify-content-around align-items-center py-3">
-                        <div><img src={doingGoodImg} alt="logo" width="120"/></div>
+                        <div><Link to='/landingpage'><img src={doingGoodImg} alt="logo" width="120"/></Link></div>
                         <div>
                             <div
                                 className="text-uppercase border-primary border rounded text-center f-18 py-1 px-2 font-weight-bold">
-                                <a href="#">
+                                <Link to="/usersignup">
                                     <div className="text-info">Start</div>
                                     <div className="text-primary">Doing good</div>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                         <div>
-                            <Link to="/" className="font-weight-bold f-16 text-center">
+                            <Link to="/login" className="font-weight-bold f-16 text-center">
                                 <div className="text-info text-uppercase">Member</div>
                                 <div className="text-primary">Login</div>
                             </Link>
@@ -84,7 +94,7 @@ class LandingPage extends Component {
                 <div className="container dg-about">
                     <div className="row">
                         <div className=" d-flex align-items-center col-sm-2 col-xs-12 ">
-                            <img src={doingGoodImg} alt="logo" width="200" className=" d-none d-sm-block"/>
+                            <img src={doingGoodImg} alt="logo" width="100%" className=" d-none d-sm-block"/>
                         </div>
                         <div className="d-flex align-items-center col-sm-10 col-xs-12">
                             <p className="m-0"><span className="text-primary">DoingGood</span> is a platform that
@@ -97,9 +107,9 @@ class LandingPage extends Component {
                     <div className="text-center row">
                         <div className="col-sm col-12 d-flex flex-column align-items-center justify-content-center">
                             <div><img src={itsEasy} alt="ITS_EASY" width="120"/></div>
-                            <button className="btn btn-primary btn-shadow btn-pill font-weight-bold px-5 py-2 mt-3">GET
-                                STARTED
-                            </button>
+                            <Link to="/usersignup"><button className="btn btn-primary btn-shadow btn-pill font-weight-bold px-5 py-2 mt-3"> GET
+                                                                                                                          STARTED
+                            </button></Link>
                         </div>
                         <div className="col-sm col-3">
                             <img src={oldDonate} alt="logo" width="130"/>
@@ -134,9 +144,13 @@ class LandingPage extends Component {
                         <div
                             className="col-sm-4 col-xs-12 d-flex flex-column align-items-center justify-content-center">
                             <div
-                                className="btn btn-primary btn-shadow btn-pill text-uppercase py-2 px-5 font-weight-bold">Post
+                                className="btn btn-primary btn-shadow btn-pill text-uppercase py-2 px-5 font-weight-bold" onClick={this.handleOfferedOpenModal}>Post
                                 your Service or goods
                             </div>
+                            <GoodsAndServicesModal
+                                showModal={this.state.showOfferedModal}
+                                handleCloseModal={this.handleCloseModal}
+                            />
                         </div>
                     </div>
                     <div className="row">
@@ -153,7 +167,7 @@ class LandingPage extends Component {
                         <div
                             className="col-sm-4 col-xs-12 d-flex flex-column align-items-center justify-content-center">
                             <div
-                                className="btn btn-primary btn-shadow btn-pill text-uppercase py-2 px-5 font-weight-bold">POST
+                                className="btn btn-primary btn-shadow btn-pill text-uppercase py-2 px-5 font-weight-bold" onClick={this.handleOfferedOpenModal}>POST
                                 A SERVICE OR GOODS
                             </div>
                         </div>
@@ -196,10 +210,10 @@ class LandingPage extends Component {
                         </div>
                         <div
                             className="col-sm-4 col-xs-12 d-flex flex-column align-items-center justify-content-center">
-                            <div
+                            <Link to="/orgsignup"><div
                                 className="btn btn-primary btn-shadow btn-pill text-uppercase py-2 px-5 font-weight-bold">Organization
                                 Sign-up
-                            </div>
+                            </div></Link>
                         </div>
                     </div>
                 </div>
@@ -223,10 +237,10 @@ class LandingPage extends Component {
                     <div className="row">
                         <div className=" col-sm-2 col-xs-12">
                             <img src={youCan} alt="logo" width="170"/><br/>
-                            <div
+                            <Link to="/usersignup"><div
                                 className="btn btn-primary btn-shadow btn-pill text-uppercase py-2 px-5 mt-3 font-weight-bold">Join
                                 Now
-                            </div>
+                            </div></Link>
                         </div>
                         <div className="col-sm-10 col-xs-12">
                             <ul className="list-inline">
@@ -273,10 +287,10 @@ class LandingPage extends Component {
                 <div className="container-fluid dg-footer bg-primary py-3">
                     <div className="row">
                         <div className="col-sm-3 col-3 d-flex align-items-center">
-                            <a href="#" className="font-weight-bold text-white">JOIN</a>
+                            <Link to="/usersignup" className="font-weight-bold text-white">JOIN</Link>
                         </div>
                         <div className="col-sm-3 col-4 d-flex align-items-center">
-                            <a href="#" className="font-weight-bold text-white">Login</a>
+                            <Link to="/login" className="font-weight-bold text-white">Login</Link>
                         </div>
                         <div className="col-sm-3 col-5 d-flex align-items-center">
                             <a href="/about.html" className="font-weight-bold text-white">About

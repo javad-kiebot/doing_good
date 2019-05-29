@@ -73,8 +73,8 @@ class GoodsAndServicesModal extends React.Component {
                 left                  : '20%',
                 right                 : '20%',
                 bottom                : 'auto',
-                height: '90%',
-                overlfow: 'scroll'
+                height                 : '100vh',
+                overflow             : 'auto'
             }
         };
         return (
@@ -108,7 +108,6 @@ class GoodsAndServicesModal extends React.Component {
                     </Form.Group>
                     <button className="btn btn-default goodsAndServicesButton goodsAndServicesButtonRight" onClick={this.handleSubmit} type="button">Save</button>
                     <button className="btn btn-default goodsAndServicesButton" onClick={this.props.handleCloseModal}>Close</button>
-
                 </Form>
                            </ReactModal>
         );

@@ -9,11 +9,13 @@ import OrgSignUpContainer from "./container/OrgSignUpContainer";
 import SearchPostingContainer from "./container/SearchPostingContainer";
 import LandingPageContainer from "./container/LandingPageContainer";
 import EditVolunteerProfile from "./components/EditVolunteerProfile";
+import CompleteBasicProfile from "./components/CompleteBasicProfile";
 
 
 export default (
         <Route path="/" component={App}>
-            <IndexRoute component={LoginContainer} />
+            <IndexRoute component={LandingPageContainer} />
+            <Route path="login" component={LoginContainer} />
             <Route path="forgotpassword" component={ForgotPasswordContainer} />
             <Route path="usersignup" component={UserSignUpContainer} />
             <Route path="orgsignup" component={OrgSignUpContainer} />
@@ -21,5 +23,6 @@ export default (
             <Route path="searchposting" component={SearchPostingContainer} />
             <Route path="landingpage" component={LandingPageContainer} />
             <Route path="editVoluteerProfile" component={EditVolunteerProfile} />
+            <Route path="completebasicprofile" component={CompleteBasicProfile} />
         </Route>
 );

@@ -164,7 +164,7 @@ class OrgSignUp extends Component {
                                     <img src={doingGoodHero} onClick={this.goToHomePage} alt="logo" width="80"/>
                                 </div>
                                 <div className=" col-8 d-flex justify-content-end align-items-center">
-                                    <Link to="/">Have an account? Login</Link>
+                                    <Link to="/login">Have an account? Login</Link>
                                 </div>
                             </div>
                             <div className="form-group mb-2">
