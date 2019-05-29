@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { hashHistory }from "react-router";
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import { Container, Row, Col} from 'react-bootstrap'
@@ -18,7 +19,6 @@ import dgfb from "../../assests/images/home/dg-fb.png";
 import dgtwitter from "../../assests/images/home/dg-twitter.png";
 import GoodsAndServicesModal from "./GoodsAndServicesModal";
 import searchPostingActions from "../actions/searchPostingActions";
-import { hashHistory }from "react-router";
 import EditUserProfile from "./EditUserProfile";
 
 class EditVolunteerProfile extends Component{

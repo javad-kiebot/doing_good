@@ -44,9 +44,9 @@ let forgotActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'https://gamma.valueaddsofttech.com:4000/api/forgotpassword',
+            url: 'http://13.127.249.79:9500/api/user/forgetPassword',
             data: {
-                "email" : credentails.email,
+                "userName" : credentails.email
             },
             headers: {
                 'Content-Type': 'application/json'
