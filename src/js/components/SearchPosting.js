@@ -75,11 +75,15 @@ class SearchPosting extends Component {
         }
     }
 
+
     render(){
         const radiusArray= ['5 miles','10 miles', '20 miles','25 miles', '50 miles', '100 miles','500 miles'];
         const orgArray= ['Child care','Child care', 'Child care','Child care', 'Child care', 'Child care','Child care'];
         return(
            <div>
+               {
+                   console.log(this.props.allPostData.offeredGoodOrService)
+               }
                <div>
                 <img src={ guitar } className="img-fluid img_guitar" alt="Search banner" />
                </div>
@@ -106,6 +110,7 @@ class SearchPosting extends Component {
                                         <option>Select Org</option>
                                         {this.props.getAllOrgs.map((org)=>
                                             <option>{org.organizationName}</option>
+
                                         )}
 
                                     </select>

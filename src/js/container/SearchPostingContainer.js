@@ -32,6 +32,7 @@ class SearchPostingContainer extends Component {
                         hideModalFlag={this.props.hideModalFlag}
                         organizationAction={this.props.organizationAction}
                         getAllOrgs={this.props.getAllOrgs}
+
                     />
                 }
             </div>
@@ -50,6 +51,7 @@ const mapDispatchToProps = dispatch => {
     return {
         searchPostingAction: bindActionCreators(searchPostingActions, dispatch),
         organizationAction: bindActionCreators(organizationActions, dispatch),
+
     };
 };
 
