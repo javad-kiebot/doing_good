@@ -47072,9 +47072,9 @@ var forgotActions = {
         var request = {
             method: 'post',
             responseType: 'json',
-            url: 'https://gamma.valueaddsofttech.com:4000/api/forgotpassword',
+            url: 'http://13.127.249.79:9500/api/user/forgetPassword',
             data: {
-                "email": credentails.email
+                "userName": credentails.email
             },
             headers: {
                 'Content-Type': 'application/json'
@@ -48108,6 +48108,7 @@ var SearchPostingContainer = function (_Component) {
                     hideModalFlag: this.props.hideModalFlag,
                     organizationAction: this.props.organizationAction,
                     getAllOrgs: this.props.getAllOrgs
+
                 })
             );
         }
@@ -48127,6 +48128,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return {
         searchPostingAction: (0, _redux.bindActionCreators)(_searchPostingActions2.default, dispatch),
         organizationAction: (0, _redux.bindActionCreators)(_organizationActions2.default, dispatch)
+
     };
 };
 
@@ -48297,6 +48299,7 @@ var SearchPosting = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 null,
+                console.log(this.props.allPostData.offeredGoodOrService),
                 _react2.default.createElement(
                     'div',
                     null,
@@ -60751,9 +60754,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(15);
 
-var _redux = __webpack_require__(14);
-
 var _reactRouter = __webpack_require__(12);
+
+var _redux = __webpack_require__(14);
 
 var _reactBootstrap = __webpack_require__(46);
 

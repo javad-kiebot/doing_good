@@ -84,18 +84,25 @@ let signUpUserActions = {
             responseType: 'json',
             url: 'http://13.127.249.79:9500/api/member/registration',
             data: {
-                "volunteerdetails":volunteerdetails,
-                "firstname":orgcreds.firstname,
-                "lastname":orgcreds.lastname,
-                "city":orgcreds.city,
-                "state":orgcreds.state,
-                "mobilenumber" : orgcreds.phone,
-                "email" : orgcreds.email,
-                "password" : orgcreds.password,
-                "role": orgcreds.role,
-                "status": 'inactive',
-                "total_amt":0
+                "about": "string",
+                "city": orgcreds.city,
+                "email": orgcreds.email,
+                "organizationName": "string",
+                "password": orgcreds.password,
+                "phoneNumber": orgcreds.phone,
+                "state": orgcreds.state,
+                "website": "string"
             },
+
+            // "about": "string",
+            // "city": orgcreds.city,
+            // "email": orgcreds.email,
+            // "organizationName": "string",
+            // "password": orgcreds.password,
+            // "phoneNumber": orgcreds.phone,
+            // "state": orgcreds.state,
+            // "website": "string"
+
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -103,7 +110,7 @@ let signUpUserActions = {
         return (dispatch) => {
             axios(request)
                 .then(response => {
-                    if (response.status === 201) {
+                    if (response.status === 200) {
                         var signupResponse = response.data;
                         hashHistory.push("/confirmsignup");
                         dispatch({
@@ -123,15 +130,16 @@ let signUpUserActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: '/users',
+            url: 'http://13.127.249.79:9500/api/member/registration',
             data: {
-                "firstname" : userCredentials.firstName,
-                "lastname" : userCredentials.lastName,
-                "mobilenumber" : userCredentials.cell,
-                "email" : userCredentials.email,
-                "password" : userCredentials.password,
-                "role": userCredentials.userRole,
-                "status": 'inactive'
+                "about": "string",
+                "city": userCredentials.city,
+                "email": userCredentials.email,
+                "organizationName": "string",
+                "password": userCredentials.password,
+                "phoneNumber": userCredentials.phone,
+                "state": userCredentials.state,
+                "website": "string"
 
             },
             headers: {
@@ -141,7 +149,7 @@ let signUpUserActions = {
         return (dispatch) => {
             axios(request)
                 .then(response => {
-                    if (response.status === 201) {
+                    if (response.status === 200) {
                         var signupResponse = response.data;
                         hashHistory.push("/confirmsignup");
                         dispatch({

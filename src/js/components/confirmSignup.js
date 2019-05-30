@@ -10,7 +10,7 @@ class ConfirmSignUp extends Component {
     }
 
     redirectSignup (){
-        hashHistory.push('/');
+        hashHistory.push('/login');
     }
     render() {
         return (
