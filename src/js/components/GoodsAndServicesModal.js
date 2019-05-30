@@ -88,8 +88,8 @@ class GoodsAndServicesModal extends React.Component {
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label className="skill-text">Services/Goods Required</Form.Label>
                         <div>
-                            <input className="goodsAndServices" type="radio" name="goodRequired" onChange={this.goodsSelected} />Goods
-                            <input className="goodsAndServices" type="radio" name="goodRequired" onChange={this.servicesSelected} />Services
+                            <input className="goodsAndServices" type="radio" name="goodRequired" onChange={this.goodsSelected} value='GOOD'/>Goods
+                            <input className="goodsAndServices" type="radio" name="goodRequired" onChange={this.servicesSelected} value='SERVICE' />Services
                         </div>
                         <Form.Label >Goods/Service:</Form.Label>
                         <Form.Control type="text" onChange={this.goods} />
@@ -103,7 +103,7 @@ class GoodsAndServicesModal extends React.Component {
                         <Form.Control type="text" onChange={this.maximum} />
                         <Form.Label>Rate Type</Form.Label>
                         <div>
-                            <input type="radio" className="goodsAndServices" name="rateType" onChange={this.rateType}/>Per Item
+                            <input type="radio" className="goodsAndServices" name="rateType" onChange={this.rateType} value='PERITEM'/>Per Item
                         </div>
                     </Form.Group>
                     <button className="btn btn-default goodsAndServicesButton goodsAndServicesButtonRight" onClick={this.handleSubmit} type="button">Save</button>

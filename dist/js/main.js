@@ -2846,12 +2846,13 @@ var searchPostingActions = {
             data: {
                 "description": description,
                 "goodOrService": goodsSelected,
-                "minimum": minimum,
-                "maximum": maximum,
-                "rate": rate,
+                "minimum": parseInt(minimum, 10),
+                "maximum": parseInt(maximum, 10),
+                "rate": parseInt(rate, 10),
                 "rateType": rateType,
                 "postType": postType,
-                "upId": 0
+                "upId": 0,
+                "id": 0
             },
             headers: {
                 'Content-Type': 'application/json'
@@ -2867,7 +2868,7 @@ var searchPostingActions = {
                 }
             }, function (err) {
                 if (err.response.data.status === 400) {
-                    _reactReduxToastr.toastr.error('Error ', 'OTP is expired.You cannot reset password');
+                    _reactReduxToastr.toastr.error('Error ', 'occured');
                 }
             });
         };
@@ -5647,9 +5648,9 @@ var GoodsAndServicesModal = function (_React$Component) {
                         _react2.default.createElement(
                             "div",
                             null,
-                            _react2.default.createElement("input", { className: "goodsAndServices", type: "radio", name: "goodRequired", onChange: this.goodsSelected }),
+                            _react2.default.createElement("input", { className: "goodsAndServices", type: "radio", name: "goodRequired", onChange: this.goodsSelected, value: "GOOD" }),
                             "Goods",
-                            _react2.default.createElement("input", { className: "goodsAndServices", type: "radio", name: "goodRequired", onChange: this.servicesSelected }),
+                            _react2.default.createElement("input", { className: "goodsAndServices", type: "radio", name: "goodRequired", onChange: this.servicesSelected, value: "SERVICE" }),
                             "Services"
                         ),
                         _react2.default.createElement(
@@ -5690,7 +5691,7 @@ var GoodsAndServicesModal = function (_React$Component) {
                         _react2.default.createElement(
                             "div",
                             null,
-                            _react2.default.createElement("input", { type: "radio", className: "goodsAndServices", name: "rateType", onChange: this.rateType }),
+                            _react2.default.createElement("input", { type: "radio", className: "goodsAndServices", name: "rateType", onChange: this.rateType, value: "PERITEM" }),
                             "Per Item"
                         )
                     ),
@@ -9669,25 +9670,32 @@ var signUpUserActions = {
             responseType: 'json',
             url: 'http://13.127.249.79:9500/api/member/registration',
             data: {
-                "volunteerdetails": volunteerdetails,
-                "firstname": orgcreds.firstname,
-                "lastname": orgcreds.lastname,
+                "about": "string",
                 "city": orgcreds.city,
-                "state": orgcreds.state,
-                "mobilenumber": orgcreds.phone,
                 "email": orgcreds.email,
+                "organizationName": "string",
                 "password": orgcreds.password,
-                "role": orgcreds.role,
-                "status": 'inactive',
-                "total_amt": 0
+                "phoneNumber": orgcreds.phone,
+                "state": orgcreds.state,
+                "website": "string"
             },
+
+            // "about": "string",
+            // "city": orgcreds.city,
+            // "email": orgcreds.email,
+            // "organizationName": "string",
+            // "password": orgcreds.password,
+            // "phoneNumber": orgcreds.phone,
+            // "state": orgcreds.state,
+            // "website": "string"
+
             headers: {
                 'Content-Type': 'application/json'
             }
         };
         return function (dispatch) {
             (0, _axios2.default)(request).then(function (response) {
-                if (response.status === 201) {
+                if (response.status === 200) {
                     var signupResponse = response.data;
                     _reactRouter.hashHistory.push("/confirmsignup");
                     dispatch({
@@ -9707,15 +9715,16 @@ var signUpUserActions = {
         var request = {
             method: 'post',
             responseType: 'json',
-            url: '/users',
+            url: 'http://13.127.249.79:9500/api/member/registration',
             data: {
-                "firstname": userCredentials.firstName,
-                "lastname": userCredentials.lastName,
-                "mobilenumber": userCredentials.cell,
+                "about": "string",
+                "city": userCredentials.city,
                 "email": userCredentials.email,
+                "organizationName": "string",
                 "password": userCredentials.password,
-                "role": userCredentials.userRole,
-                "status": 'inactive'
+                "phoneNumber": userCredentials.phone,
+                "state": userCredentials.state,
+                "website": "string"
 
             },
             headers: {
@@ -9724,7 +9733,7 @@ var signUpUserActions = {
         };
         return function (dispatch) {
             (0, _axios2.default)(request).then(function (response) {
-                if (response.status === 201) {
+                if (response.status === 200) {
                     var signupResponse = response.data;
                     _reactRouter.hashHistory.push("/confirmsignup");
                     dispatch({
@@ -47560,7 +47569,7 @@ var ConfirmSignUp = function (_Component) {
     _createClass(ConfirmSignUp, [{
         key: "redirectSignup",
         value: function redirectSignup() {
-            _reactRouter.hashHistory.push('/');
+            _reactRouter.hashHistory.push('/login');
         }
     }, {
         key: "render",
