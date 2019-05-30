@@ -39,6 +39,7 @@ class GoodsAndServicesModal extends React.Component {
                 this.state.maximum,
                 this.state.rateType,
             this.props.postType);
+        this.props.handleCloseModal();
     }
 
     goodsSelected(event){

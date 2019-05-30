@@ -293,8 +293,8 @@ class LandingPage extends Component {
                             <Link to="/login" className="font-weight-bold text-white">Login</Link>
                         </div>
                         <div className="col-sm-3 col-5 d-flex align-items-center">
-                            <a href="/about.html" className="font-weight-bold text-white">About
-                            DoingGood</a></div>
+                            <Link href="/" className="font-weight-bold text-white">About
+                            DoingGood</Link></div>
                         <div className="col-sm-3 col-12">
                             <ul className="list-inline mb-0">
                                 <li className="list-inline-item"><a href="#"><img src={dginsta} alt="logo"

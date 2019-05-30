@@ -2845,7 +2845,7 @@ var searchPostingActions = {
             url: 'http://13.127.249.79:9500/api/posting/new-service-good',
             data: {
                 "description": description,
-                "goodOrService": goodsSelected,
+                "goodOrService": goodsSelected ? goodsSelected : servicesSelected,
                 "minimum": parseInt(minimum, 10),
                 "maximum": parseInt(maximum, 10),
                 "rate": parseInt(rate, 10),
@@ -5568,6 +5568,7 @@ var GoodsAndServicesModal = function (_React$Component) {
         key: "handleSubmit",
         value: function handleSubmit(event) {
             this.props.searchPostingAction.postWorkRequestAction(this.state.goodsSelected, this.state.servicesSelected, this.state.goods, this.state.description, this.state.rate, this.state.minimum, this.state.maximum, this.state.rateType, this.props.postType);
+            this.props.handleCloseModal();
         }
     }, {
         key: "goodsSelected",
@@ -47482,7 +47483,7 @@ var UserSignUp = function (_Component) {
                                     null,
                                     "Password*"
                                 ),
-                                _react2.default.createElement("input", { name: "password", onChange: this.handleChange, type: "text", required: true, placeholder: this.passwordError, className: this.state.passwordValid ? 'form-control' : this.state.highlightclass + " form-control" })
+                                _react2.default.createElement("input", { name: "password", onChange: this.handleChange, type: "password", required: true, placeholder: this.passwordError, className: this.state.passwordValid ? 'form-control' : this.state.highlightclass + " form-control" })
                             ),
                             _react2.default.createElement(
                                 "div",
@@ -47492,7 +47493,7 @@ var UserSignUp = function (_Component) {
                                     null,
                                     "Phone Number"
                                 ),
-                                _react2.default.createElement("input", { name: "phonenumber", className: "form-control", onChange: this.handleChange, type: "text", placeholder: "Please enter phone number" })
+                                _react2.default.createElement("input", { name: "phonenumber", className: "form-control", onChange: this.handleChange, type: "text", placeholder: "Please enter phone number", maxLength: "10" })
                             ),
                             _react2.default.createElement(
                                 "div",
@@ -47997,7 +47998,7 @@ var OrgSignUp = function (_Component) {
                                     null,
                                     "Password*"
                                 ),
-                                _react2.default.createElement("input", { type: "text", onChange: this.handleChange, name: "password", placeholder: this.passwordError, className: this.state.passwordValid ? 'form-control' : this.state.highlightclass + " form-control" })
+                                _react2.default.createElement("input", { type: "password", name: "password", onChange: this.handleChange, placeholder: this.passwordError, className: this.state.passwordValid ? 'form-control' : this.state.highlightclass + " form-control" })
                             ),
                             _react2.default.createElement(
                                 "div",
@@ -48007,7 +48008,7 @@ var OrgSignUp = function (_Component) {
                                     null,
                                     "Phone Number"
                                 ),
-                                _react2.default.createElement("input", { className: "form-control", type: "text", onChange: this.handleChange, placeholder: "Please enter phone number" })
+                                _react2.default.createElement("input", { className: "form-control", type: "text", onChange: this.handleChange, placeholder: "Please enter phone number", maxLength: "10" })
                             ),
                             _react2.default.createElement(
                                 "div",
@@ -48636,8 +48637,8 @@ var SearchPosting = function (_Component) {
                             'div',
                             { className: 'col-sm-3 col-3 d-flex align-items-center' },
                             _react2.default.createElement(
-                                'a',
-                                { href: '#',
+                                _reactRouter.Link,
+                                { to: '/usersignup',
                                     className: 'font-weight-bold text-white' },
                                 'JOIN'
                             )
@@ -48646,8 +48647,8 @@ var SearchPosting = function (_Component) {
                             'div',
                             { className: 'col-sm-3 col-4 d-flex align-items-center' },
                             _react2.default.createElement(
-                                'a',
-                                { href: '#',
+                                _reactRouter.Link,
+                                { to: '/login',
                                     className: 'font-weight-bold text-white' },
                                 'Login'
                             )
@@ -48656,8 +48657,8 @@ var SearchPosting = function (_Component) {
                             'div',
                             { className: 'col-sm-3 col-5 d-flex align-items-center' },
                             _react2.default.createElement(
-                                'a',
-                                { href: '#', className: 'font-weight-bold text-white' },
+                                _reactRouter.Link,
+                                { to: '/', className: 'font-weight-bold text-white' },
                                 'About DoingGood'
                             )
                         ),
@@ -60606,8 +60607,8 @@ var LandingPage = function (_Component) {
                             "div",
                             { className: "col-sm-3 col-5 d-flex align-items-center" },
                             _react2.default.createElement(
-                                "a",
-                                { href: "/about.html", className: "font-weight-bold text-white" },
+                                _reactRouter.Link,
+                                { href: "/", className: "font-weight-bold text-white" },
                                 "About DoingGood"
                             )
                         ),
@@ -61301,9 +61302,9 @@ var EditVolunteerProfile = function (_Component) {
                             ),
                             _react2.default.createElement(_GoodsAndServicesModal2.default, {
                                 showModal: this.state.showWantedModal,
-                                handleCloseModal: this.handleCloseModal
-                                // searchPostingAction={this.props.searchPostingAction}
-                                , postType: 'WANTED'
+                                handleCloseModal: this.handleCloseModal,
+                                searchPostingAction: this.props.searchPostingAction,
+                                postType: 'WANTED'
                             })
                         )
                     )
@@ -61351,8 +61352,8 @@ var EditVolunteerProfile = function (_Component) {
                             'div',
                             { className: 'col-sm-3 col-3 d-flex align-items-center' },
                             _react2.default.createElement(
-                                'a',
-                                { href: '#',
+                                _reactRouter.Link,
+                                { to: '/usersignup',
                                     className: 'font-weight-bold text-white' },
                                 'JOIN'
                             )
@@ -61361,8 +61362,8 @@ var EditVolunteerProfile = function (_Component) {
                             'div',
                             { className: 'col-sm-3 col-4 d-flex align-items-center' },
                             _react2.default.createElement(
-                                'a',
-                                { href: '#',
+                                _reactRouter.Link,
+                                { to: '/login',
                                     className: 'font-weight-bold text-white' },
                                 'Login'
                             )
@@ -61371,8 +61372,8 @@ var EditVolunteerProfile = function (_Component) {
                             'div',
                             { className: 'col-sm-3 col-5 d-flex align-items-center' },
                             _react2.default.createElement(
-                                'a',
-                                { href: '#', className: 'font-weight-bold text-white' },
+                                _reactRouter.Link,
+                                { to: '/', className: 'font-weight-bold text-white' },
                                 'About DoingGood'
                             )
                         ),

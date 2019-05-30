@@ -56,7 +56,7 @@ const searchPostingActions = {
             url: 'http://13.127.249.79:9500/api/posting/new-service-good',
             data: {
                 "description": description,
-                "goodOrService":goodsSelected,
+                "goodOrService":goodsSelected ? goodsSelected : servicesSelected,
                 "minimum": parseInt(minimum, 10),
                 "maximum":parseInt(maximum, 10),
                 "rate": parseInt(rate, 10),
