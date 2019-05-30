@@ -63,7 +63,7 @@ const searchPostingActions = {
                 "rateType":rateType,
                 "postType":postType,
                 "upId": 0,
-                "id": 0
+                "id": 28
             },
             headers: {
                 'Content-Type': 'application/json'
