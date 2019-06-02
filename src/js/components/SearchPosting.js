@@ -26,11 +26,13 @@ class SearchPosting extends Component {
         this.state = {
             showOfferedModal: false,
             showInterestModal:false,
+            showWantedInterestModal:false,
             showWantedModal:false,
             radiusSelected:'',
             dateIndex:0,
             zipdisabled:false,
-            orgArray: props.getAllOrgs
+            orgArray: props.getAllOrgs,
+            wanteddateIndex: 0
 
         };
         this.props.organizationAction.getAllOrgsAction();
@@ -38,6 +40,7 @@ class SearchPosting extends Component {
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleWantedOpenModal = this.handleWantedOpenModal.bind(this);
         this.handleShowIntersrOpenModal = this.handleShowIntersrOpenModal.bind(this);
+        this.handleShowIntersrWantedOpenModal = this.handleShowIntersrWantedOpenModal.bind(this);
         this.onRadiusChange = this.onRadiusChange.bind(this);
         this.onOrgChange = this.onOrgChange.bind(this);
     }
@@ -53,10 +56,15 @@ class SearchPosting extends Component {
         const id=parseInt(event.target.id.split("_")[1]);
         this.setState({ showInterestModal: true, dateIndex: id});
     }
+    handleShowIntersrWantedOpenModal (event) {
+        const id=parseInt(event.target.id.split("_")[1]);
+        this.setState({ showWantedInterestModal: true, wanteddateIndex: id});
+    }
 
     handleCloseModal () {
         this.setState({ showOfferedModal: false,
             showInterestModal:false,
+            showWantedInterestModal:false,
             showWantedModal:false});
     }
 
@@ -204,7 +212,7 @@ class SearchPosting extends Component {
                                         <p className="font-weight-bold text-center">Goods and Services Wanted</p>
                                         {this.props.allPostData.wantedGoodOrService.map((posts, index) => {
                                             return(<ul className="list-inline row">
-                                                <li className="list-inline-item col-8 col-sm-7">
+                                                <li className="list-inline-item col">
                                                     <div className="bg-secondary text-white rounded"><span
                                                         className="">&bull;</span> {posts.description}
                                                     </div>
@@ -213,12 +221,12 @@ class SearchPosting extends Component {
                                                     <a href="javascript:void(0)"
                                                         data-toggle="modal"
                                                         data-target="#postServices"
-                                                        className="btn btn-info btn-block font-weight-bold" id={`goodsdata_ ${index}`} onClick={this.handleShowIntersrOpenModal}>Select
+                                                        className="btn btn-info btn-block font-weight-bold" id={`goodsdata_ ${index}`} onClick={this.handleShowIntersrWantedOpenModal}>Select
                                                     </a>
                                                     <ShowInterestModal
-                                                        showInterestModal={this.state.showInterestModal}
+                                                        showInterestModal={this.state.showWantedInterestModal}
                                                         handleCloseModal={this.handleCloseModal}
-                                                        posts={posts}
+                                                        posts={this.props.allPostData ? this.props.allPostData.wantedGoodOrService[this.state.wanteddateIndex] : {}}
                                                     />
                                                 </li>
                                             </ul>);
