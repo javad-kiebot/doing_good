@@ -171,6 +171,7 @@ class EditVolunteerProfile extends Component{
                                 handleCloseModal={this.handleCloseModal}
                                 searchPostingAction={this.props.searchPostingAction}
                                 postType={'OFFERED'}
+                                session={this.props.session}
                             />
                         </div>
                         <div className="col-md-6 col-sm-12">
@@ -183,6 +184,7 @@ class EditVolunteerProfile extends Component{
                                 handleCloseModal={this.handleCloseModal}
                                 searchPostingAction={this.props.searchPostingAction}
                                 postType={'WANTED'}
+                                session={this.props.session}
                             />
                         </div>
                     </div>
