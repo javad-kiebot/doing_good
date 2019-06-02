@@ -15,7 +15,8 @@ class GoodsAndServicesModal extends React.Component {
             rate:'',
             minimum:'',
             maximum:'',
-            rateType:''
+            rateType:'',
+            upId: props.session ?  props.session.id : 0
         };
         this.goodsSelected = this.goodsSelected.bind(this);
         this.servicesSelected = this.servicesSelected.bind(this);
@@ -38,7 +39,8 @@ class GoodsAndServicesModal extends React.Component {
                 this.state.minimum,
                 this.state.maximum,
                 this.state.rateType,
-            this.props.postType);
+            this.props.postType,
+            this.state.upId);
         this.props.handleCloseModal();
     }
 

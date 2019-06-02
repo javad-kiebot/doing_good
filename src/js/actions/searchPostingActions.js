@@ -49,7 +49,8 @@ const searchPostingActions = {
                                     minimum,
                                     maximum,
                                     rateType,
-                                    postType) {
+                                    postType,
+                                    upId) {
         const request = {
             method: 'post',
             responseType: 'json',
@@ -62,8 +63,8 @@ const searchPostingActions = {
                 "rate": parseInt(rate, 10),
                 "rateType":rateType,
                 "postType":postType,
-                "upId": 0,
-                "id": 28
+                "upId": upId,
+                "id": 0
             },
             headers: {
                 'Content-Type': 'application/json'

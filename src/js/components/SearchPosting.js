@@ -157,6 +157,7 @@ class SearchPosting extends Component {
                                             handleCloseModal={this.handleCloseModal}
                                             searchPostingAction={this.props.searchPostingAction}
                                             postType={'OFFERED'}
+                                            session={ this.props.session}
                                         />
                                         <p className="content text-info font-weight-bold">Want to donate your service<br/> or good?</p>
                                         <button
@@ -167,6 +168,7 @@ class SearchPosting extends Component {
                                             handleCloseModal={this.handleCloseModal}
                                             searchPostingAction={this.props.searchPostingAction}
                                             postType={'WANTED'}
+                                            session={ this.props.session}
                                         />
                                     </div>
                                 </div>
