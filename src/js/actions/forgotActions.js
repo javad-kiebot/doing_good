@@ -3,16 +3,18 @@ import {browserHistory} from 'react-router';
 import {toastr} from 'react-redux-toastr'
 
 let forgotActions = {
-    resetpassword: function(userDetails) {
+    resetpassword: function(email,token,credentials) {
 
         const request = {
             method: 'post',
             responseType: 'json',
-            url: '/api/resetpassword',
+            url: 'http://13.127.249.79:9500/api/user/valiadateForgetPassword',
             data: {
-                "otp" : userDetails.otp ,
-                "email" : userDetails.email,
-                "newpassword" : userDetails.cpassword
+            "confirmPassword": credentials.confirmPassword,
+            "newPassword": credentials.password,
+            "token": token,
+            "userLogin": email
+
             },
             headers: {
                 'Content-Type': 'application/json'
@@ -29,7 +31,7 @@ let forgotActions = {
                 },err =>{
                     //    console.log(JSON.stringify(err,null,4));
                     if(err.response.data.status === 400){
-                        toastr.error('Error ', 'OTP is expired.You cannot reset password');
+                        toastr.error('Error ', 'Occured');
                     }
 
                 })

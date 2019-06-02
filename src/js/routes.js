@@ -11,6 +11,7 @@ import LandingPageContainer from "./container/LandingPageContainer";
 import EditVolunteerProfile from "./components/EditVolunteerProfile";
 import CompleteBasicProfile from "./components/CompleteBasicProfile";
 import ActiveUser from "./components/ActiveUser";
+import forgotPasswordEmailScreen from "./components/forgotPasswordEmailScreen";
 
 
 
@@ -26,6 +27,7 @@ export default (
             <Route path="landingpage" component={LandingPageContainer} />
             <Route path="editVoluteerProfile" component={EditVolunteerProfile} />
             <Route path="completebasicprofile" component={CompleteBasicProfile} />
-            <Route path="activeuser" component={ActiveUser} />
+            <Route path="activate/:email/:token" component={ActiveUser} />
+            <Route path="forgotpassword/:email/:token" component={forgotPasswordEmailScreen} />
         </Route>
 );

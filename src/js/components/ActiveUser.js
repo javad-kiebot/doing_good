@@ -17,22 +17,23 @@ class ActiveUser extends Component {
         // this.props.signUpUserAction.ActivateUser();
         hashHistory.push('/login');
     }
-
+    componentDidMount(){
+            this.props.signUpUserAction.ActivateUser(this.props.params.email,this.props.params.token);
+    }
     render() {
         return (
             <div className="d-flex align-items-center justify-content-center login-wrapper">
                 <div className="card">
                     <div className="card-body">
                         <h2 className="title text-center mt-0 mb-4">DoingGood</h2>
-                        <h3 className="text-center"><Link to="/" className="text-black-50">Activation Successful</Link></h3>
+                        <h3 className="text-center">Activate User</h3>
+                        <button className="btn"><Link to="/login">Return to login</Link></button>
                     </div>
                 </div>
             </div>
         );
     }
 }
-
-
 
 function mapStateToProps(state) {
     return {state};

@@ -20,6 +20,8 @@ import dgtwitter from "../../assests/images/home/dg-twitter.png";
 import GoodsAndServicesModal from "./GoodsAndServicesModal";
 import searchPostingActions from "../actions/searchPostingActions";
 import EditUserProfile from "./EditUserProfile";
+import memberDashboardReducer from "../reducers/memberDashboardReducer";
+import memberdashboardActions from "../actions/memberdashboardActions";
 
 class EditVolunteerProfile extends Component{
 
@@ -35,6 +37,7 @@ class EditVolunteerProfile extends Component{
         this.handleWantedOpenModal = this.handleWantedOpenModal.bind(this);
         this.gotosearchpostings=this.gotosearchpostings.bind(this);
         this.handleUserEditModal=this.handleUserEditModal.bind(this);
+        this.props.memberdashboardactions.allPostingByUserIdAction(this.props.session.id);
     }
 
     handleOfferedOpenModal () {
@@ -132,27 +135,56 @@ class EditVolunteerProfile extends Component{
                         <div className="card w-auto">
                             <div className="card-body">
                                 <h5 className="cardtitle">My accepted Volunteering Opportunities/purchased goods</h5>
-                                <li className="cardlabel-Opportunities"><span className="label-black">Science Tutor </span><span className="pull-right label-black"> $20/hour</span></li>
-                                <li className="cardlabel-Opportunities"><span className="label-black">I Want English Tutor </span><span className="pull-right label-black"> $15/hour</span></li>
-                                <li className="cardlabel-Opportunities"><span className="label-black">Math Tutor </span><span className="pull-right label-black"> $20/hour</span></li>
-                            </div>
+                                {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.map((allPostsByUser) =>
+                                    allPostsByUser.status === "ACCEPTED" ?
+                                        <li className="cardlabel-Opportunities"><span
+                                            className="label-black">{allPostsByUser.description}</span>
+                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType}</span>
+                                        </li>: null
+                                )
+                                }
+                                {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.map((allPostsByUser) =>
+                                    allPostsByUser.status === "ACCEPTED" ?
+                                        <li className="cardlabel-Opportunities"><span
+                                            className="label-black">{allPostsByUser.description}</span>
+                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType}</span>
+                                        </li>: null                                )
+                                }
+                                </div>
                         </div>
                         <div className="card w-auto">
                             <div className="card-body">
                                 <h5 className="cardtitle">My POSTS</h5>
-                                <li className="cardlabel-Opportunities"><span className="label-black">trtrtr </span><span className="pull-right label-black"> $20/hour</span></li>
-                                <li className="cardlabel-Opportunities"><span className="label-black"> </span><span className="pull-right label-black"> $/hour</span></li>
-                                <li className="cardlabel-Opportunities"><span className="label-black"> </span><span className="pull-right label-black"> $/hour</span></li>
-                                {/*<li className="cardlabel-Opportunities"><span className="label-black"> </span><span className="pull-right label-black"> $/hour</span></li>*/}
-                                {/*<li className="cardlabel-Opportunities"><span className="label-black"> </span><span className="pull-right label-black"> $/hour</span></li>*/}
-                                {/*<li className="cardlabel-Opportunities"><span className="label-black"> </span><span className="pull-right label-black"> $/hour</span></li>*/}
+                                {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.map((allPostsByUser) =>
+                                    <li className="cardlabel-Opportunities">
+                                        <span className="label-black">{allPostsByUser.description}</span><span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType}</span></li>
+                                )
+                                }
+                                {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.map((allPostsByUser) =>
+                                    <li className="cardlabel-Opportunities"><span className="label-black">{allPostsByUser.description}</span><span className="pull-right label-black"> ${ allPostsByUser.rate }/{ allPostsByUser.rateType }</span></li>
+                                )
+                                }
                             </div>
                         </div>
                         <div className="card w-auto">
                             <div className="card-body">
                                 <h5 className="cardtitle">My PENDING Volunteering Opportunities/Purchased Goods</h5>
-                                <li className="cardlabel-Opportunities"><span className="label-black">Science Tutor </span><span className="pull-right label-black"> $20/hour</span></li>
-                            </div>
+                                {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.map((allPostsByUser) =>
+                                    allPostsByUser.status === "PENDING" ?
+                                        <li className="cardlabel-Opportunities"><span
+                                            className="label-black">{allPostsByUser.description}</span>
+                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType}</span>
+                                        </li>: null                                                            )
+                                }
+                                {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.map((allPostsByUser) =>
+                                    allPostsByUser.status === "PENDING" ?
+                                        <li className="cardlabel-Opportunities"><span
+                                            className="label-black">{allPostsByUser.description}</span>
+                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType}</span>
+                                        </li>: null
+                                )
+                                }
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -240,12 +272,13 @@ class EditVolunteerProfile extends Component{
 }
 
 function mapStateToProps(state){
-    return{session:state.loginReducer.session};
+    return{session:state.loginReducer.session,
+        allPostDataByUserId:state.memberDashboardReducer.allPostDataByUserId};
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        memberdashboardactions: bindActionCreators(loginActions, dispatch),
+        memberdashboardactions: bindActionCreators(memberdashboardActions, dispatch),
         searchPostingAction: bindActionCreators(searchPostingActions, dispatch),
     }
 }

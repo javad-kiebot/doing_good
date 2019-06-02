@@ -161,13 +161,14 @@ let signUpUserActions = {
         hashHistory.push('/login');
     },
 
-    ActivateUser : function (email,updatData) {
+    ActivateUser : function (email,token) {
         const request = {
-            method: 'patch',
+            method: 'post',
             responseType: 'json',
-            url: 'http://13.127.249.79:9500/api/activateuser?email='+email,
+            url: 'http://13.127.249.79:9500/api/user/validateNewUerToken',
             data: {
-                "status": updatData.status
+                "token": token,
+                "userName": email
             },
             headers: {
                 'Content-Type': 'application/json'
@@ -177,12 +178,14 @@ let signUpUserActions = {
             axios(request)
                 .then(response => {
                     if (response.status === 200) {
-
+                        toastr.success('', 'User successfully activated');
                     } else if(response.status === 500){
-                        hashHistory.push('/activationlinkexpired');
+                        // hashHistory.push('/activationlinkexpired');
+                        toastr.error('', 'Activated link expired');
                     }
                 },err => {
-                    hashHistory.push('/activationlinkexpired');
+                    // hashHistory.push('/activationlinkexpired');
+                    toastr.error('', 'Activated link expired');
                 })
         }
     },

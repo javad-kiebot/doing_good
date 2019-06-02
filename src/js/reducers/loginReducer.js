@@ -15,7 +15,6 @@ let loginReducer = function(user = initialState, action) {
             return Object.assign({}, user, {token:action.data});
 
         case 'LOGGED_IN':
-            debugger;
             return Object.assign({}, user, {user: action.user,token:action.token,session:action.data});
 
         case 'UPDATE_LOGGED_IN':
