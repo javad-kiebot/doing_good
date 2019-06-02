@@ -139,7 +139,7 @@ class EditVolunteerProfile extends Component{
                                     allPostsByUser.status === "ACCEPTED" ?
                                         <li className="cardlabel-Opportunities"><span
                                             className="label-black">{allPostsByUser.description}</span>
-                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType}</span>
+                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
                                         </li>: null
                                 )
                                 }
@@ -147,7 +147,7 @@ class EditVolunteerProfile extends Component{
                                     allPostsByUser.status === "ACCEPTED" ?
                                         <li className="cardlabel-Opportunities"><span
                                             className="label-black">{allPostsByUser.description}</span>
-                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType}</span>
+                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
                                         </li>: null                                )
                                 }
                                 </div>
@@ -157,11 +157,11 @@ class EditVolunteerProfile extends Component{
                                 <h5 className="cardtitle">My POSTS</h5>
                                 {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.map((allPostsByUser) =>
                                     <li className="cardlabel-Opportunities">
-                                        <span className="label-black">{allPostsByUser.description}</span><span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType}</span></li>
+                                        <span className="label-black">{allPostsByUser.description}</span><span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span></li>
                                 )
                                 }
                                 {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.map((allPostsByUser) =>
-                                    <li className="cardlabel-Opportunities"><span className="label-black">{allPostsByUser.description}</span><span className="pull-right label-black"> ${ allPostsByUser.rate }/{ allPostsByUser.rateType }</span></li>
+                                    <li className="cardlabel-Opportunities"><span className="label-black">{allPostsByUser.description}</span><span className="pull-right label-black"> ${ allPostsByUser.rate }/{ allPostsByUser.rateType === "PERITEM" ? "item" : "hour" }</span></li>
                                 )
                                 }
                             </div>
@@ -173,14 +173,14 @@ class EditVolunteerProfile extends Component{
                                     allPostsByUser.status === "PENDING" ?
                                         <li className="cardlabel-Opportunities"><span
                                             className="label-black">{allPostsByUser.description}</span>
-                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType}</span>
+                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
                                         </li>: null                                                            )
                                 }
                                 {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.map((allPostsByUser) =>
                                     allPostsByUser.status === "PENDING" ?
                                         <li className="cardlabel-Opportunities"><span
                                             className="label-black">{allPostsByUser.description}</span>
-                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType}</span>
+                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
                                         </li>: null
                                 )
                                 }
