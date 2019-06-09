@@ -13,7 +13,7 @@ let loginActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'http://13.127.249.79:9500/api/user/authenticate',
+            url: 'https://13.127.249.79:9500/api/user/authenticate',
             data: {
                 "username" : userCredentials.email,
                 "rememberMe": true,
@@ -29,6 +29,7 @@ let loginActions = {
                 .then(response => {
                     if (response.status === 200) {
                         var loginResponse = response.data;
+                        toastr.success('', 'Logged in');
                         if(response.userStatusCode === 'INACT'){
                             toastr.error('Error ', 'User has not activated the account');
                             return;

@@ -18,7 +18,7 @@ const searchPostingActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'http://13.127.249.79:9500/api/posting/all-posts',
+            url: 'https://13.127.249.79:9500/api/posting/all-posts',
             data: {},
             headers: {
                 'Content-Type': 'application/json'
@@ -34,8 +34,8 @@ const searchPostingActions = {
                         });
                     }
                 },err =>{
-                    if(err.response.data.status === 400){
-                        toastr.error('Error ', 'OTP is expired.You cannot reset password');
+                    if(err.response.status === 400){
+                        toastr.error('Error ', 'Posts cannot be loaded');
                     }
                 })
         }
@@ -53,7 +53,7 @@ const searchPostingActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'http://13.127.249.79:9500/api/posting/new-service-good',
+            url: 'https://13.127.249.79:9500/api/posting/new-service-good',
             data: {
                 "description": description,
                 "goodOrService":goodsOrServicesSelected,
@@ -81,6 +81,38 @@ const searchPostingActions = {
                 },err =>{
                     if(err.response.data.status === 400){
                         toastr.error('Error ', 'occured');
+                    }
+                })
+        }
+    },
+
+    showInterestdAction: function(postId, userId) {
+        const request = {
+            method: 'post',
+            responseType: 'json',
+            url: 'https://13.127.249.79:9500/api/posting/sendInterestOnPost',
+            data: {
+                "postId": postId,
+                "ulpId": userId
+            },
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+        return (dispatch) => {
+            axios(request)
+                .then(response => {
+                    if (response.status === 200) {
+                        dispatch({
+                            type: 'SHOWINTEREST',
+                        });
+                        toastr.success('', 'You showed interest on this post');
+                    }
+                },err =>{
+                    if(err.response.status === 400){
+                        toastr.error('Error ', 'You cannot show interest on this post');
+                    }else if(err.response.status === 500){
+                        toastr.error('Error ', 'You already showed interest on this post');
                     }
                 })
         }

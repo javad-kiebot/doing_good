@@ -4,9 +4,12 @@ import React from "react";
 class ShowInterestModal extends React.Component {
     constructor () {
         super();
-
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
-
+    handleSubmit(event){
+        this.props.searchPostingAction.showInterestdAction(this.props.posts.id, this.props.session.id);
+        this.props.handleCloseModal();
+    }
     render () {
         const customStyles = {
             content : {
@@ -16,6 +19,7 @@ class ShowInterestModal extends React.Component {
                 bottom                : 'auto',
             }
         };
+
         return (
             <ReactModal
                 isOpen={this.props.showInterestModal}
@@ -41,8 +45,8 @@ class ShowInterestModal extends React.Component {
                     <br/>
                 </div>
                 <hr/>
-                    <button className="btn btn-default goodsAndServicesButton goodsAndServicesButtonRight" onClick={this.handleSubmit} type="button">No</button>
-                    <button className="btn btn-default goodsAndServicesButton goodsAndServicesButtonRight" onClick={this.props.handleCloseModal}>Yes</button>
+                    <button className="btn btn-default goodsAndServicesButton goodsAndServicesButtonRight" onClick={this.props.handleCloseModal} type="button">No</button>
+                    <button className="btn btn-default goodsAndServicesButton goodsAndServicesButtonRight" onClick={this.handleSubmit}>Yes</button>
                     <button className="btn btn-default goodsAndServicesButton" onClick={this.props.handleCloseModal}>Close</button>
             </ReactModal>
         );

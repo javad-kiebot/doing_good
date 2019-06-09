@@ -34,7 +34,7 @@ let signUpUserActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'http://13.127.249.79:9500/api/organization/registration',
+            url: 'https://13.127.249.79:9500/api/organization/registration',
             data: {
                 "about": "string",
                 "city": orgcreds.city,
@@ -59,6 +59,7 @@ let signUpUserActions = {
                             type: 'LOGGED_IN',
                             data: response.data.user,token:response.data.accessToken
                         });
+                        toastr.success('', 'Successfully registered');
                     }
                 },err => {
                     if(err.response.data.code === 409){
@@ -80,7 +81,7 @@ let signUpUserActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'http://13.127.249.79:9500/api/member/registration',
+            url: 'https://13.127.249.79:9500/api/member/registration',
             data: {
                 "aboutMe":  orgcreds.aboutme,
                 "address1": "string",
@@ -108,6 +109,7 @@ let signUpUserActions = {
                             type: 'LOGGED_IN',
                             data: response.data.user,token:response.data.accessToken
                         });
+                        toastr.success('', 'Successfully registered');
                     }
                 },err => {
                     if(err.response.data.code === 409){
@@ -121,7 +123,7 @@ let signUpUserActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'http://13.127.249.79:9500/api/member/registration',
+            url: 'https://13.127.249.79:9500/api/member/registration',
             data: {
                 "about": "string",
                 "city": userCredentials.city,
@@ -148,6 +150,7 @@ let signUpUserActions = {
                             data: response.data.user,token:response.data.accessToken
                         });
                         window.localStorage.setItem("sessionUser", JSON.stringify(signupResponse));
+                        toastr.success('', 'Successfully logged in');
                     }
                 },err => {
                     if(err.response.data.code === 409){
@@ -165,7 +168,7 @@ let signUpUserActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'http://13.127.249.79:9500/api/user/validateNewUerToken',
+            url: 'https://13.127.249.79:9500/api/user/validateNewUerToken',
             data: {
                 "token": token,
                 "userName": email
