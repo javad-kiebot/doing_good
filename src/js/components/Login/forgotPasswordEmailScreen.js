@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Link } from 'react-router';
-import lockImg from "../../assests/images/icons/lock.svg";
+import lockImg from "../../../assests/images/icons/lock.svg";
 import {bindActionCreators} from "redux";
 import connect from "react-redux/es/connect/connect";
-import forgotActions from "../actions/forgotActions";
+import forgotActions from "../../actions/forgotActions";
 
 class forgotPasswordEmailScreen extends Component {
     constructor() {

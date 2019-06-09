@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import {hashHistory, Link} from "react-router";
 import {bindActionCreators} from "redux";
 import connect from "react-redux/es/connect/connect";
-import signUpUserActions from "../actions/signUpAction";
-import userIMg from "../../assests/images/icons/user.svg";
-import lockImg from "../../assests/images/icons/lock.svg";
+import signUpUserActions from "../../actions/signUpAction";
+import userIMg from "../../../assests/images/icons/user.svg";
+import lockImg from "../../../assests/images/icons/lock.svg";
 
 
 class ActiveUser extends Component {

@@ -4,14 +4,14 @@ import App from "./App";
 import LoginContainer from "./container/LoginContainer";
 import ForgotPasswordContainer from "./container/ForgotPasswordContainer";
 import UserSignUpContainer from "./container/UserSignUpContainer";
-import ConfirmSignUp from "./components/confirmSignup";
+import ConfirmSignUp from "./components/Login/confirmSignup";
 import OrgSignUpContainer from "./container/OrgSignUpContainer";
 import SearchPostingContainer from "./container/SearchPostingContainer";
 import LandingPageContainer from "./container/LandingPageContainer";
-import EditVolunteerProfile from "./components/EditVolunteerProfile";
-import CompleteBasicProfile from "./components/CompleteBasicProfile";
-import ActiveUser from "./components/ActiveUser";
-import forgotPasswordEmailScreen from "./components/forgotPasswordEmailScreen";
+import EditVolunteerProfile from "./components/UserDashboard/EditVolunteerProfile";
+import CompleteBasicProfile from "./components/UserDashboard/CompleteBasicProfile";
+import ActiveUser from "./components/Login/ActiveUser";
+import forgotPasswordEmailScreen from "./components/Login/forgotPasswordEmailScreen";
 
 
 

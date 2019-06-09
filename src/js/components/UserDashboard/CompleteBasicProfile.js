@@ -4,11 +4,11 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import {hashHistory} from "react-router";
 import {Grid, Row, Col, Container, Form} from 'react-bootstrap'
-import doingGoodHero from "../../assests/images/home/DoingGood_logo_HERO.png";
-import "../../assests/sass/editVolunteerProfile.scss";
-import loginActions from "../actions/loginActions";
-import searchPostingActions from "../actions/searchPostingActions";
-import organizationActions from "../actions/organizationActions";
+import doingGoodHero from "../../../assests/images/home/DoingGood_logo_HERO.png";
+import "../../../assests/sass/editVolunteerProfile.scss";
+import loginActions from "../../actions/loginActions";
+import searchPostingActions from "../../actions/searchPostingActions";
+import organizationActions from "../../actions/organizationActions";
 
 
 class CompleteBasicProfile extends Component{

@@ -12,8 +12,8 @@ import dginsta from "../../assests/images/home/dg-insta.png";
 import dgfb from "../../assests/images/home/dg-fb.png";
 import dgtwitter from "../../assests/images/home/dg-twitter.png";
 import "../../assests/sass/searchPosting.scss";
-import GoodsAndServicesModal from "./GoodsAndServicesModal";
-import ShowInterestModal from "./ShowInterestModal";
+import GoodsAndServicesModal from "./SearchPostings/GoodsAndServicesModal";
+import ShowInterestModal from "./SearchPostings/ShowInterestModal";
 import {Col, Container, Row} from "react-bootstrap";
 import doingGoodHero from "../../assests/images/home/DoingGood_logo_HERO.png";
 

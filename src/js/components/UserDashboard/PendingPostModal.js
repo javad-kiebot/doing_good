@@ -1,7 +1,7 @@
 import ReactModal from "react-modal";
 import React from "react";
 import { Form, Button } from 'react-bootstrap'
-import "../../assests/sass/editVolunteerProfile.scss";
+import "../../../assests/sass/editVolunteerProfile.scss";
 // import { Form, Button } from "react-bootstrap";
 
 
