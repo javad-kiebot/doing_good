@@ -1,4 +1,4 @@
-import axios from 'axios';
+ import axios from 'axios';
 import {toastr} from 'react-redux-toastr'
 import {hashHistory} from "react-router";
 
@@ -39,11 +39,11 @@ let signUpUserActions = {
                 "about": "string",
                 "city": orgcreds.city,
                 "email": orgcreds.email,
-                "organizationName": "string",
+                "organizationName": orgcreds.orgname,
                 "password": orgcreds.password,
                 "phoneNumber": orgcreds.phone,
                 "state": orgcreds.state,
-                "website": "string"
+                "website": orgcreds.website
             },
             headers: {
                 'Content-Type': 'application/json'

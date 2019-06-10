@@ -46,8 +46,8 @@ let loginActions = {
                         if(loginResponse.userRole === 'MEMBER'){
                             hashHistory.push('/editVoluteerProfile');
                         }
-                        if(loginResponse.userRole === 'charity'){
-                            browserHistory.push('/charity/charityorganizerdashboard');
+                        if(loginResponse.userRole === 'ORGANIZATION'){
+                            hashHistory.push('/organizationDashboard');
                         }
                         if(loginResponse.userRole === 'admin'){
                             browserHistory.push('/admindashboard/authorizecharities');
