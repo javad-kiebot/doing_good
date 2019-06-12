@@ -1,25 +1,24 @@
 import React from 'react';
 
 const EditOrganizationProfile = (props) =>{
+    const { organization } = props;
     return(
         <div className="col-md-4 col-sm-12">
             <div className="card w-auto">
                 <div className="card-body">
                     <ul className="nobullet">
-                        <li className="cardlabel-Orange">About ME <span className="pull-right"><a>Edit</a></span></li>{/*Need to write click event*/}
-                        <li className="cardlabel">{props.session.firstName} {props.session.lastName}</li>
-                        <li className="cardlabel">{props.session.address1}, {props.session.address2}, {props.session.city}, {props.session.state}</li>
-                        <li className="cardlabel">{props.session.zipcode}</li>
-                        <li className="cardlabel">{props.session.aboutme}</li>
-                        <li className="cardlabel">{props.session.phoneNumber}</li>
-                        <li className="cardlabel">{props.session.email}</li>
+                        <li className="cardlabel-Orange">About Me</li>{/*Need to write click event*/}
+                        <li className="cardlabel">{organization.organizationName}</li>
+                        <li className="cardlabel">{organization.websiteUrl}</li>
+                        <li className="cardlabel">{organization.aboutme}</li>
+                        <li className="cardlabel">{organization.email}</li>
                     </ul>
                 </div>
             </div>
-            <div className="card w-auto">
-                <div className="card-body">
-                    <h5 className="cardtitle">My Interested Charitable Organizations</h5>
-                </div>
+            <div className="col-md-12 col-sm-12">
+                <button className="btn btn-primary buttonShadow">
+                    UPLOAD YOUR LOGO
+                </button>
             </div>
             <div className="card w-auto">
                 <div className="card-body">
@@ -29,6 +28,7 @@ const EditOrganizationProfile = (props) =>{
                     </ul>
                 </div>
             </div>
+
         </div>
     )
 };
