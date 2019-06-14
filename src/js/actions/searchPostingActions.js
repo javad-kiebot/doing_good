@@ -93,7 +93,8 @@ const searchPostingActions = {
             url: 'https://13.127.249.79:9500/api/posting/sendInterestOnPost',
             data: {
                 "postId": postId,
-                "ulpId": userId
+                "ulpId": userId,
+                "offerPrice": 0,
             },
             headers: {
                 'Content-Type': 'application/json'

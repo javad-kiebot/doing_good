@@ -85,7 +85,8 @@ class PendingPostModal extends React.Component {
                 overlfow: 'scroll'
             }
         };
-        const listOfUsers =this.props.allPostsByUser.users;
+        const listOfUsers =this.props.allPostsByUser.consumers.interestedMembers;
+        const listOfOrgs =this.props.allPostsByUser.consumers.interestedOrganization;
         return (
             <ReactModal
                 isOpen={this.props.showModal}
@@ -146,13 +147,22 @@ class PendingPostModal extends React.Component {
                     <div className="form-group m-0">
                         <select className="form-control" value={this.state.newUser} onChange={this.onUserChange}>
                             <option>Select User</option>
-                                {listOfUsers.map((user)=>
-                            <option>{user.description}</option>
+                                {listOfUsers && listOfUsers.map((user)=>
+                            <option>{user.name}</option>
+                            )}
+
+                        </select>
+                        <div>OR</div>
+                        <br/>
+                        <select className="form-control" value={this.state.newUser} onChange={this.onUserChange}>
+                            <option>Select User</option>
+                            {listOfOrgs && listOfOrgs.map((user)=>
+                                <option>{user.name}</option>
                             )}
 
                         </select>
                         <br/>
-                        <Form.Label> className="skill-text">Agreed upon price:</Form.Label>
+                        <Form.Label>Agreed upon price:</Form.Label>
                         <Form.Control required/>
                         <button className="btn btn-default signOffButton" type="button">Sign off</button>
                     </div>

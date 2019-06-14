@@ -29,7 +29,6 @@ let loginActions = {
                 .then(response => {
                     if (response.status === 200) {
                         var loginResponse = response.data;
-                        toastr.success('', 'Logged in');
                         if(response.userStatusCode === 'INACT'){
                             toastr.error('Error ', 'User has not activated the account');
                             return;

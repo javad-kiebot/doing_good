@@ -78,6 +78,91 @@ const memberdashboardActions = {
                     }
                 })
         }
+    },
+
+    updateMemberUserAction: function(firstName,
+                                     lastName,
+                                     address,
+                                     city,
+                                     state,
+                                     aboutMe,
+                                     phoneNumber,
+                                     emailId,
+                                     zipCode,
+                                     id) {
+        const request = {
+            method: 'post',
+            responseType: 'json',
+            url: 'https://13.127.249.79:9500/api/member/memberUpdate',
+            data: {
+                "aboutMe": aboutMe,
+                "address1": address,
+                "address2": address,
+                "city": city,
+                "firstName": firstName,
+                "id": id,
+                "lastName": lastName,
+                "phone": phoneNumber,
+                "state": state,
+                "user": {
+                    "profileEmail": emailId,
+                    "profileId": id
+                },
+                "zipCode": zipCode
+            },
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+        return (dispatch) => {
+            axios(request)
+                .then(response => {
+                    if (response.status === 200) {
+                        dispatch({
+                            type: 'MEMBERUPDATEBYUSER',
+                            // data: response.data
+                        });
+                        toastr.success('', 'Successfully updated the user');
+                    }
+                },err =>{
+                    if(err.response.data.status === 400){
+                        toastr.error('Error ', 'You cannot update the user');
+                    }
+                })
+        }
+    },
+
+    updatePostOnAgreedPrice: function(interestedMemberId,postId, offerPrice) {
+        const request = {
+            method: 'post',
+            responseType: 'json',
+            url: 'https://13.127.249.79:9500/api/posting/updatePostStatus',
+            data: {
+                "interestedMemberId": interestedMemberId,
+                "offerPrice": offerPrice,
+                "postId": postId,
+                "status": "PRODUCER_SIGNOFF"
+            },
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+        return (dispatch) => {
+            axios(request)
+                .then(response => {
+                    if (response.status === 200) {
+                        dispatch({
+                            type: 'UPDATEPOSTONAGREEDPRICE',
+                            // data: response.data
+                        });
+                        toastr.success('', 'Successfully updated the post');
+                    }
+                },err =>{
+                    if(err.response.data.status === 400){
+                        toastr.error('Error ', 'You cannot update the post');
+                    }
+                })
+        }
     }
 };
 

@@ -24,6 +24,7 @@ import memberDashboardReducer from "../../reducers/memberDashboardReducer";
 import memberdashboardActions from "../../actions/memberdashboardActions";
 import EditPostsByUser from "./EditPostsByUser";
 import PendingPostModal from "./PendingPostModal";
+import organizationActions from "../../actions/organizationActions";
 
 class EditVolunteerProfile extends Component{
 
@@ -40,7 +41,9 @@ class EditVolunteerProfile extends Component{
             myPendingPostIndex: 0,
             myWantedPendingPostIndex: 0,
             showPendingPosts:false,
-            showWantedPendingPosts:false
+            showWantedPendingPosts:false,
+            orgSelectedId:[],
+            orgSelected:''
         };
         this.handleOfferedOpenModal = this.handleOfferedOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -51,11 +54,14 @@ class EditVolunteerProfile extends Component{
         this.handleWantedPostbyUserModal=this.handleWantedPostbyUserModal.bind(this);
         this.handlePendingPosts=this.handlePendingPosts.bind(this);
         this.handleWantedPendingPosts=this.handleWantedPendingPosts.bind(this);
+        this.handleSubmitOrg=this.handleSubmitOrg.bind(this);
+        this.onOrgChange=this.onOrgChange.bind(this);
     }
 
     componentWillMount() {
         this.props.session.id &&
         this.props.memberdashboardactions.allPostingByUserIdAction(this.props.session.id);
+        this.props.organizationAction.getAllOrgsAction();
     }
 
     handleOfferedOpenModal () {
@@ -103,6 +109,25 @@ class EditVolunteerProfile extends Component{
         hashHistory.push("/searchposting");
     }
 
+    onOrgChange(event){
+        if(event.target.value === "Select Org") {
+            this.setState({orgSelectedId: [0], orgSelected: event.target.value});
+        }else{
+            for(let i=0; i < this.props.getAllOrgs.length;i++){
+                if(this.props.getAllOrgs[i].organizationName === event.target.value){
+                    this.state.orgSelectedId.push(this.props.getAllOrgs[i].id);
+                }
+            }
+            this.setState({orgSelectedId: this.state.orgSelectedId, orgSelected: event.target.value});
+        }
+    }
+
+    handleSubmitOrg(event){
+        this.props.session.id &&
+        this.props.organizationAction.linkToOrgsAction(this.props.session.id, this.state.orgSelectedId);
+        console.log(this.props.getAllOrgs);
+    }
+
     render(){
         return(
                 <div className="fullwidth">
@@ -136,10 +161,6 @@ class EditVolunteerProfile extends Component{
                     </Row>
                 <div className="show-grid orangeBar">
                     <label>DoingGood Member Dashboard</label>
-                    <span className="pull-right">
-                            <Link to="/completebasicprofile" className="White-anchor">
-                            <u>Complete your basic profile</u>
-                            </Link></span>
                 </div>
                 {/*
                     Card Readers Starts
@@ -172,13 +193,33 @@ class EditVolunteerProfile extends Component{
                                 </ul>
                             </div>
                         </div>
+                        <div className="card w-auto">
+                            <div className="card-body">
+                                <h5>My Interested Charitable Organization:</h5>
+                                <p>Select\Edit Charitable Organization you wish to donate to</p>
+                                <div className="form-group m-0">
+                                    <select className="form-control" value={this.state.orgSelected}
+                                            onChange={this.onOrgChange}>
+                                        <option>Select Org</option>
+                                        {this.props.getAllOrgs && this.props.getAllOrgs.map((org) =>
+                                            <option>{org.organizationName}</option>
+                                        )}
+
+                                    </select>
+                                </div>
+                                <br/>
+                                <button className="btn btn-default signOffButton" onClick={this.handleSubmitOrg}
+                                        type="button">Save
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div className="col-md-8 col-sm-12">
                         <div className="card w-auto">
                             <div className="card-body">
                                 <h5 className="cardtitle">My accepted Volunteering Opportunities/purchased goods</h5>
                                 {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.map((allPostsByUser) =>
-                                    allPostsByUser.status === "ACCEPTED" ?
+                                    allPostsByUser.status === "PRODUCER_SIGNOFF" ?
                                         <li className="cardlabel-Opportunities"><span
                                             className="label-black">{allPostsByUser.description}</span>
                                             <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
@@ -186,7 +227,7 @@ class EditVolunteerProfile extends Component{
                                 )
                                 }
                                 {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.map((allPostsByUser) =>
-                                    allPostsByUser.status === "ACCEPTED" ?
+                                    allPostsByUser.status === "PRODUCER_SIGNOFF" ?
                                         <li className="cardlabel-Opportunities"><span
                                             className="label-black">{allPostsByUser.description}</span>
                                             <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
@@ -217,7 +258,7 @@ class EditVolunteerProfile extends Component{
                             <div className="card-body">
                                 <h5 className="cardtitle">My PENDING Volunteering Opportunities/Purchased Goods</h5>
                                 {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.map((allPostsByUser,index) =>
-                                    allPostsByUser.status === "PENDING" ?
+                                    allPostsByUser.status === "PENDING_PRODUCER_SIGNOFF" ?
                                         <li className="cardlabel-Opportunities" id={`pendingPosts_ ${index}`} onClick={this.handlePendingPosts}>
                                             <span className="label-black" id={`pendingPostsDes_ ${index}`}>{allPostsByUser.description}</span>
                                             <span className="pull-right label-black" id={`pendingPostsRate_ ${index}`}> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
@@ -225,7 +266,7 @@ class EditVolunteerProfile extends Component{
                                 )
                                 }
                                 {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.map((allPostsByUser, index) =>
-                                    allPostsByUser.status === "PENDING" ?
+                                    allPostsByUser.status === "PENDING_PRODUCER_SIGNOFF" ?
                                         <li className="cardlabel-Opportunities" id={`pendingPostsWanted_ ${index}`} onClick={this.handleWantedPendingPosts}><span
                                             className="label-black" id={`pendingPostswantedDes_ ${index}`}>{allPostsByUser.description}</span>
                                             <span className="pull-right label-black" id={`pendingPostsRate_ ${index}`}> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
@@ -313,6 +354,7 @@ class EditVolunteerProfile extends Component{
                         showModal={this.state.showUserEditModal}
                         handleCloseModal={this.handleCloseModal}
                         session={this.props.session}
+                        memberdashboardactions={this.props.memberdashboardactions}
                     />
                     {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.length > 0 &&
                     <EditPostsByUser
@@ -357,14 +399,18 @@ class EditVolunteerProfile extends Component{
 }
 
 function mapStateToProps(state){
-    return{session:state.loginReducer.session,
-        allPostDataByUserId:state.memberDashboardReducer.allPostDataByUserId};
+    return{
+        session:state.loginReducer.session,
+        allPostDataByUserId:state.memberDashboardReducer.allPostDataByUserId,
+        getAllOrgs:state.organizationReducer.getAllOrgs
+    };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         memberdashboardactions: bindActionCreators(memberdashboardActions, dispatch),
         searchPostingAction: bindActionCreators(searchPostingActions, dispatch),
+        organizationAction: bindActionCreators(organizationActions, dispatch),
     }
 }
 
