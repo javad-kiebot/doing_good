@@ -61,6 +61,7 @@ class EditVolunteerProfile extends Component{
     componentWillMount() {
         this.props.session.id &&
         this.props.memberdashboardactions.allPostingByUserIdAction(this.props.session.id);
+        this.props.memberdashboardactions.assignedPostToConsumer(this.props.session.id);
         this.props.organizationAction.getAllOrgsAction();
     }
 
@@ -219,7 +220,7 @@ class EditVolunteerProfile extends Component{
                             <div className="card-body">
                                 <h5 className="cardtitle">My accepted Volunteering Opportunities/purchased goods</h5>
                                 {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.map((allPostsByUser) =>
-                                    allPostsByUser.status === "PRODUCER_SIGNOFF" ?
+                                    allPostsByUser.status === "PENDING_CONSUMER_SIGNOFF" ?
                                         <li className="cardlabel-Opportunities"><span
                                             className="label-black">{allPostsByUser.description}</span>
                                             <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
@@ -227,7 +228,14 @@ class EditVolunteerProfile extends Component{
                                 )
                                 }
                                 {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.map((allPostsByUser) =>
-                                    allPostsByUser.status === "PRODUCER_SIGNOFF" ?
+                                    allPostsByUser.status === "PENDING_CONSUMER_SIGNOFF" ?
+                                        <li className="cardlabel-Opportunities"><span
+                                            className="label-black">{allPostsByUser.description}</span>
+                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
+                                        </li>: null                                )
+                                }
+                                {this.props.assignedPostsBToConsumer && this.props.assignedPostsBToConsumer.map((allPostsByUser) =>
+                                    allPostsByUser.status === "PENDING_CONSUMER_SIGNOFF" ?
                                         <li className="cardlabel-Opportunities"><span
                                             className="label-black">{allPostsByUser.description}</span>
                                             <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
@@ -402,6 +410,7 @@ function mapStateToProps(state){
     return{
         session:state.loginReducer.session,
         allPostDataByUserId:state.memberDashboardReducer.allPostDataByUserId,
+        assignedPostsBToConsumer:state.memberDashboardReducer.assignedPostsBToConsumer,
         getAllOrgs:state.organizationReducer.getAllOrgs
     };
 }

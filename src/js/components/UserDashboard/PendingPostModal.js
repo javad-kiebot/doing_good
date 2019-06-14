@@ -18,7 +18,8 @@ class PendingPostModal extends React.Component {
             rateType:this.props.allPostsByUser.rateType,
             id: this.props.allPostsByUser.id,
             postType:this.props.allPostsByUser.postType,
-            newUser: ''
+            newUser: '',
+            agreedUponPrice:''
         };
         this.goodsOrServicesSelected = this.goodsOrServicesSelected.bind(this);
         this.goods = this.goods.bind(this);
@@ -29,6 +30,8 @@ class PendingPostModal extends React.Component {
         this.rateType = this.rateType.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.onUserChange = this.onUserChange.bind(this);
+        this.producerSignOff=this.producerSignOff.bind(this);
+        this.agreedPrice=this.agreedPrice.bind(this);
     }
     goodsOrServicesSelected(event){
         this.setState({ goodsOrServicesSelected:event.target.value})
@@ -67,11 +70,18 @@ class PendingPostModal extends React.Component {
         this.props.handleCloseModal();
     }
     onUserChange(event){
-        if(event.target.value === "Select User") {
+        if(event.target.value === "") {
             this.setState({newUser: event.target.value});
         }else{
             this.setState({newUser: event.target.value });
         }
+    }
+    producerSignOff(){
+        this.props.memberdashboardactions.updatePostOnAgreedPrice(this.state.newUser,this.props.allPostsByUser.id,
+            this.state.agreedUponPrice,'PRODUCER_SIGNOFF');
+    }
+    agreedPrice(event){
+        this.setState({agreedUponPrice:event.target.value})
     }
 
     render () {
@@ -145,26 +155,26 @@ class PendingPostModal extends React.Component {
                     <div>Following Volunteers and Charity Organisations have shown interest in your post.</div>
                     <label className="skill-text"> Select: </label>
                     <div className="form-group m-0">
-                        <select className="form-control" value={this.state.newUser} onChange={this.onUserChange}>
-                            <option>Select User</option>
+                        <select className="form-control" onChange={this.onUserChange}>
+                            <option value="">Select User</option>
                                 {listOfUsers && listOfUsers.map((user)=>
-                            <option>{user.name}</option>
+                            <option value={user.id}>{user.name}</option>
                             )}
 
                         </select>
                         <div>OR</div>
                         <br/>
-                        <select className="form-control" value={this.state.newUser} onChange={this.onUserChange}>
-                            <option>Select User</option>
+                        <select className="form-control" onChange={this.onUserChange}>
+                            <option value=''>Select User</option>
                             {listOfOrgs && listOfOrgs.map((user)=>
-                                <option>{user.name}</option>
+                                <option value={user.id}>{user.name}</option>
                             )}
 
                         </select>
                         <br/>
                         <Form.Label>Agreed upon price:</Form.Label>
-                        <Form.Control required/>
-                        <button className="btn btn-default signOffButton" type="button">Sign off</button>
+                        <Form.Control onChange={this.agreedPrice} required/>
+                        <button className="btn btn-default signOffButton" type="button" onClick={this.producerSignOff}>Sign off</button>
                     </div>
                     <button className="btn btn-default goodsAndServicesButton"
                             onClick={this.props.handleCloseModal}>Close

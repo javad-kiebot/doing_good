@@ -2,6 +2,7 @@ import axios from "axios";
 import {toastr} from "react-redux-toastr";
 
 export const POSTBYUSERID = 'POSTBYUSERID';
+export const ASSIGNEDPOSTTOCONSUMER = 'ASSIGNEDPOSTTOCONSUMER';
 
 const memberdashboardActions = {
     allPostingByUserIdAction: function(userId) {
@@ -132,7 +133,7 @@ const memberdashboardActions = {
         }
     },
 
-    updatePostOnAgreedPrice: function(interestedMemberId,postId, offerPrice) {
+    updatePostOnAgreedPrice: function(interestedMemberId,postId, offerPrice, status) {
         const request = {
             method: 'post',
             responseType: 'json',
@@ -141,7 +142,7 @@ const memberdashboardActions = {
                 "interestedMemberId": interestedMemberId,
                 "offerPrice": offerPrice,
                 "postId": postId,
-                "status": "PRODUCER_SIGNOFF"
+                "status": status
             },
             headers: {
                 'Content-Type': 'application/json'
@@ -154,6 +155,36 @@ const memberdashboardActions = {
                         dispatch({
                             type: 'UPDATEPOSTONAGREEDPRICE',
                             // data: response.data
+                        });
+                        toastr.success('', 'Successfully updated the post');
+                    }
+                },err =>{
+                    if(err.response.data.status === 400){
+                        toastr.error('Error ', 'You cannot update the post');
+                    }
+                })
+        }
+    },
+
+    assignedPostToConsumer: function(interestedMemberId) {
+        const request = {
+            method: 'post',
+            responseType: 'json',
+            url: 'https://13.127.249.79:9500/api/posting/assigenedPostsById',
+            data: {
+                "id": interestedMemberId
+            },
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+        return (dispatch) => {
+            axios(request)
+                .then(response => {
+                    if (response.status === 200) {
+                        dispatch({
+                            type: 'ASSIGNEDPOSTTOCONSUMER',
+                            data: response.data
                         });
                         toastr.success('', 'Successfully updated the post');
                     }
