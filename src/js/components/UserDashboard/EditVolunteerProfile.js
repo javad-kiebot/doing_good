@@ -25,6 +25,7 @@ import memberdashboardActions from "../../actions/memberdashboardActions";
 import EditPostsByUser from "./EditPostsByUser";
 import PendingPostModal from "./PendingPostModal";
 import organizationActions from "../../actions/organizationActions";
+import SignOffModal from "./SignOffModal";
 
 class EditVolunteerProfile extends Component{
 
@@ -39,9 +40,11 @@ class EditVolunteerProfile extends Component{
             myPostIndex: 0,
             myPostIndexWanted: 0,
             myPendingPostIndex: 0,
+            assignedPostIndex: 0,
             myWantedPendingPostIndex: 0,
             showPendingPosts:false,
             showWantedPendingPosts:false,
+            showAssignedPosts:false,
             orgSelectedId:[],
             orgSelected:''
         };
@@ -54,6 +57,7 @@ class EditVolunteerProfile extends Component{
         this.handleWantedPostbyUserModal=this.handleWantedPostbyUserModal.bind(this);
         this.handlePendingPosts=this.handlePendingPosts.bind(this);
         this.handleWantedPendingPosts=this.handleWantedPendingPosts.bind(this);
+        this.handleAssignedPosts=this.handleAssignedPosts.bind(this);
         this.handleSubmitOrg=this.handleSubmitOrg.bind(this);
         this.onOrgChange=this.onOrgChange.bind(this);
     }
@@ -92,6 +96,10 @@ class EditVolunteerProfile extends Component{
         const id=parseInt(event.target.id.split("_")[1]);
         this.setState({ showWantedPendingPosts: true, myWantedPendingPostIndex: id});
     }
+    handleAssignedPosts (event) {
+        const id=parseInt(event.target.id.split("_")[1]);
+        this.setState({ showAssignedPosts: true, assignedPostIndex: id});
+    }
     handleCloseModal () {
         if(this.state.showPostsByUserEditModal || this.state.showPostsByUserEditModalWanted) {
             this.props.memberdashboardactions.allPostingByUserIdAction(this.props.session.id);
@@ -103,7 +111,8 @@ class EditVolunteerProfile extends Component{
             showPostsByUserEditModal:false,
             showPostsByUserEditModalWanted: false,
             showPendingPosts:false,
-            showWantedPendingPosts: false});
+            showWantedPendingPosts: false,
+            showAssignedPosts: false});
     }
 
     gotosearchpostings (){
@@ -220,7 +229,7 @@ class EditVolunteerProfile extends Component{
                             <div className="card-body">
                                 <h5 className="cardtitle">My accepted Volunteering Opportunities/purchased goods</h5>
                                 {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.map((allPostsByUser) =>
-                                    allPostsByUser.status === "PENDING_CONSUMER_SIGNOFF" ?
+                                    (allPostsByUser.status === "PENDING_CONSUMER_SIGNOFF" || allPostsByUser.status === "ACCEPTED")?
                                         <li className="cardlabel-Opportunities"><span
                                             className="label-black">{allPostsByUser.description}</span>
                                             <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
@@ -228,17 +237,17 @@ class EditVolunteerProfile extends Component{
                                 )
                                 }
                                 {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.map((allPostsByUser) =>
-                                    allPostsByUser.status === "PENDING_CONSUMER_SIGNOFF" ?
+                                    (allPostsByUser.status === "PENDING_CONSUMER_SIGNOFF" || allPostsByUser.status === "ACCEPTED") ?
                                         <li className="cardlabel-Opportunities"><span
                                             className="label-black">{allPostsByUser.description}</span>
                                             <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
                                         </li>: null                                )
                                 }
-                                {this.props.assignedPostsBToConsumer && this.props.assignedPostsBToConsumer.map((allPostsByUser) =>
-                                    allPostsByUser.status === "PENDING_CONSUMER_SIGNOFF" ?
-                                        <li className="cardlabel-Opportunities"><span
-                                            className="label-black">{allPostsByUser.description}</span>
-                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
+                                {this.props.assignedPostsBToConsumer && this.props.assignedPostsBToConsumer.map((allPostsByUser, index) =>
+                                    (allPostsByUser.status === "PENDING_CONSUMER_SIGNOFF" || allPostsByUser.status === "ACCEPTED")?
+                                        <li className="cardlabel-Opportunities"  id={`assignedPost_ ${index}`} onClick={this.handleAssignedPosts}><span
+                                            className="label-black"  id={`assignedPostDesp_ ${index}`}>{allPostsByUser.description}</span>
+                                            <span className="pull-right label-black" id={`assignedPostRate_ ${index}`}> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
                                         </li>: null                                )
                                 }
                                 </div>
@@ -399,6 +408,15 @@ class EditVolunteerProfile extends Component{
                         showModal={this.state.showWantedPendingPosts}
                         handleCloseModal={this.handleCloseModal}
                         allPostsByUser={this.props.allPostDataByUserId.wantedGoodOrService ? this.props.allPostDataByUserId.wantedGoodOrService[this.state.myWantedPendingPostIndex] : {}}
+                        session={this.props.session}
+                        memberdashboardactions={this.props.memberdashboardactions}
+                    />
+                    }
+                    {this.props.assignedPostsBToConsumer && this.props.assignedPostsBToConsumer.length > 0 &&
+                    <SignOffModal
+                        showModal={this.state.showAssignedPosts}
+                        handleCloseModal={this.handleCloseModal}
+                        allPostsByUser={this.props.assignedPostsBToConsumer ? this.props.assignedPostsBToConsumer[this.state.assignedPostIndex] : {}}
                         session={this.props.session}
                         memberdashboardactions={this.props.memberdashboardactions}
                     />

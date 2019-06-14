@@ -106,7 +106,7 @@ let signUpUserActions = {
                         var signupResponse = response.data;
                         hashHistory.push("/confirmsignup");
                         dispatch({
-                            type: 'LOGGED_IN',
+                            type: 'LOGGED_IN_MEMBER',
                             data: response.data.user,token:response.data.accessToken
                         });
                         toastr.success('', 'Successfully registered');
@@ -146,7 +146,7 @@ let signUpUserActions = {
                         var signupResponse = response.data;
                         hashHistory.push("/confirmsignup");
                         dispatch({
-                            type: 'LOGGED_IN',
+                            type: 'LOGGED_IN_ORG',
                             data: response.data.user,token:response.data.accessToken
                         });
                         window.localStorage.setItem("sessionUser", JSON.stringify(signupResponse));

@@ -156,11 +156,10 @@ const memberdashboardActions = {
                             type: 'UPDATEPOSTONAGREEDPRICE',
                             // data: response.data
                         });
-                        toastr.success('', 'Successfully updated the post');
                     }
                 },err =>{
                     if(err.response.data.status === 400){
-                        toastr.error('Error ', 'You cannot update the post');
+                        toastr.error('Error ', 'Occured');
                     }
                 })
         }
@@ -186,11 +185,10 @@ const memberdashboardActions = {
                             type: 'ASSIGNEDPOSTTOCONSUMER',
                             data: response.data
                         });
-                        toastr.success('', 'Successfully updated the post');
                     }
                 },err =>{
                     if(err.response.data.status === 400){
-                        toastr.error('Error ', 'You cannot update the post');
+                        toastr.error('Error ', 'Occured');
                     }
                 })
         }
