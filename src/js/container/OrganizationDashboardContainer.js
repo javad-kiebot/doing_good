@@ -7,9 +7,11 @@ import Header from "../components/OrganisationDashboard/Header";
 // import Dashboard from "../components/OrganisationDashboard/Dashboard";
 import EditOrganizationProfile from "../components/OrganisationDashboard/EditOrganizationProfile";
 import EditPendingPosts from "../components/OrganisationDashboard/EditPendingPosts";
+import EditAcceptedPosts from "../components/OrganisationDashboard/EditAcceptedPosts";
+import EditNewPosts from "../components/OrganisationDashboard/EditNewPosts";
+import Footer from "../components/OrganisationDashboard/Footer";
 import memberDashboardActions from "../actions/memberdashboardActions";
 import searchPostingActions from "../actions/searchPostingActions";
-import Footer from "../components/OrganisationDashboard/Footer";
 
 
  class OrganizationDashboardContainer extends Component {
@@ -33,12 +35,15 @@ import Footer from "../components/OrganisationDashboard/Footer";
          return(
              <div className="fullwidth">
                 <Header { ...this.props } gotoSearchPostings={this.gotoSearchPostings}/>
-                <EditOrganizationProfile
-                    { ...this.props }
-                />
-                <EditPendingPosts allPostDataById={ allPostDataById } />
+                 <div className="cardwidth row">
+                     <EditOrganizationProfile { ...this.props } />
+                     <div className="col-md-8 col-sm-12">
+                         <EditAcceptedPosts allPostDataById={ allPostDataById } />
+                         <EditNewPosts allPostDataById={ allPostDataById } />
+                         <EditPendingPosts allPostDataById={ allPostDataById } />
+                     </div>
+                </div>
                 <Footer />
-                {/*<Dashboard/>*/}
             </div>
          )}
  }

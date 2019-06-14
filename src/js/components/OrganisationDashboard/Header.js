@@ -10,11 +10,10 @@ const Header = (props) => {
         <React.Fragment>
             <Container>
                 <Row>
-                    <Col md={1}><button className="btn btnPostOrange" onClick={gotoSearchPostings}><span style={{'fontFamily':'Gotham-Book','fontSize':'16','color':'white'}}>Search Postings</span></button></Col>
-                </Row>
-                <Row>
                     <Col><Link to="/landingpage"><img src={doingGoodHero} width="auto" height="70px" className="imgcenter"/></Link></Col>
-                    <Col><Link to="/editVoluteerProfile" className="current"><span className="textcenter">My Dashboard</span></Link></Col>
+                    <Col><button className="btn btnPostOrange" onClick={gotoSearchPostings}><span style={{'fontFamily':'Gotham-Book','fontSize':'16','color':'white'}}>Search Postings</span></button>
+                    </Col>
+                    <Col><Link to="/organizationDashboard" className="current"><span className="textcenter">My Dashboard</span></Link></Col>
                     <Col><Link to= "/login" className="current"><span className="textcenter logoutText">Logout</span></Link></Col>
                 </Row>
             </Container>
