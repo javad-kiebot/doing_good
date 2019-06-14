@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PostDetails from './PostDetails';
 
 const EditNewPosts= (props) => {
-    const { allPostDataById } = props;
+    const { allPostDataById, actions } = props;
     return(
         <React.Fragment>
             <div className="card w-auto">
@@ -11,7 +11,7 @@ const EditNewPosts= (props) => {
                     <h5 className="cardtitle">Our Organization's Help Wanted Postings</h5>
                     {allPostDataById && allPostDataById.offeredGoodOrService.map((post, index) =>
                         post.status === "NEW" &&
-                        <PostDetails key={index} post={ post }/>
+                        <PostDetails key={index} post={ post } actions={actions}/>
                     )
                     }
                     {allPostDataById && allPostDataById.wantedGoodOrService.map((post, index) =>
@@ -27,7 +27,8 @@ const EditNewPosts= (props) => {
 };
 
 EditNewPosts.propTypes = {
-    allPostDataById: PropTypes.object
+    allPostDataById: PropTypes.object,
+    actions: PropTypes.object
 };
 
 export default EditNewPosts;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PostDetails from './PostDetails';
 
 const EditPendingPosts= (props) => {
-    const { allPostDataById } = props;
+    const { allPostDataById, actions } = props;
     return(
         <React.Fragment>
             <div className="card w-auto">
@@ -11,12 +11,12 @@ const EditPendingPosts= (props) => {
                     <h5 className="cardtitle">Pending Postings</h5>
                     {allPostDataById && allPostDataById.offeredGoodOrService.map((post, index) =>
                         post.status === "PENDING_PRODUCER_SIGNOFF" &&
-                            <PostDetails key={index} post={ post }/>
+                            <PostDetails key={index} post={ post } actions={actions}/>
                     )
                     }
                     {allPostDataById && allPostDataById.wantedGoodOrService.map((post, index) =>
                         post.status === "PENDING_PRODUCER_SIGNOFF" &&
-                            <PostDetails key={index} post={ post }/>
+                            <PostDetails key={index} post={ post } actions={actions}/>
                     )
                     }
                 </div>
@@ -27,7 +27,8 @@ const EditPendingPosts= (props) => {
 };
 
 EditPendingPosts.propTypes = {
-    allPostDataById: PropTypes.object
+    allPostDataById: PropTypes.object,
+    actions: PropTypes.object
 };
 
 export default EditPendingPosts;

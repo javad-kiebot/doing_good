@@ -20,13 +20,7 @@ const Header = (props) => {
             <Row className="bgWelcomeMessage">
                 <Col md={1}>
                 </Col>
-                <Col md={1}>
-                    <label htmlFor="file" className="addphotobtn">
-                        <img src={addPhotoIcon} className=""/>
-                    </label>
-                    {/*<input type="file" className="hide" id="file" name="file"/>*/}
-                </Col>
-                <Col md={7}>
+                <Col md={9}>
                     <h3>Welcome, {organization.organizationName}</h3>
                 </Col>
                 <Col>

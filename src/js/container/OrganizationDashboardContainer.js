@@ -12,6 +12,7 @@ import EditNewPosts from "../components/OrganisationDashboard/EditNewPosts";
 import Footer from "../components/OrganisationDashboard/Footer";
 import memberDashboardActions from "../actions/memberdashboardActions";
 import searchPostingActions from "../actions/searchPostingActions";
+import organizationDashboardActions from "../actions/organizationDashboardActions";
 
 
  class OrganizationDashboardContainer extends Component {
@@ -31,16 +32,16 @@ import searchPostingActions from "../actions/searchPostingActions";
 
      }
      render() {
-         const { allPostDataById } = this.props;
+         const { allPostDataById, actions } = this.props;
          return(
              <div className="fullwidth">
                 <Header { ...this.props } gotoSearchPostings={this.gotoSearchPostings}/>
                  <div className="cardwidth row">
                      <EditOrganizationProfile { ...this.props } />
                      <div className="col-md-8 col-sm-12">
-                         <EditAcceptedPosts allPostDataById={ allPostDataById } />
-                         <EditNewPosts allPostDataById={ allPostDataById } />
-                         <EditPendingPosts allPostDataById={ allPostDataById } />
+                         <EditAcceptedPosts actions={actions} allPostDataById={ allPostDataById } />
+                         <EditNewPosts actions={actions} allPostDataById={ allPostDataById } />
+                         <EditPendingPosts actions={actions} allPostDataById={ allPostDataById } />
                      </div>
                 </div>
                 <Footer />
@@ -51,7 +52,8 @@ import searchPostingActions from "../actions/searchPostingActions";
 function mapStateToProps(state){
     return{
         organization:state.loginReducer.session,
-        allPostDataById:state.memberDashboardReducer.allPostDataByUserId
+        allPostDataById:state.memberDashboardReducer.allPostDataByUserId,
+        isModalOpen: state.organizationDashboardReducer.isModalOpen
     };
 }
 
@@ -59,13 +61,15 @@ function mapDispatchToProps(dispatch) {
     return {
         actions : bindActionCreators({
             ...memberDashboardActions,
-            ...searchPostingActions
+            ...searchPostingActions,
+            ...organizationDashboardActions
         }, dispatch)
     }
 }
 
 OrganizationDashboardContainer.propTypes = {
-    allPostDataById: PropTypes.object
+    allPostDataById: PropTypes.object,
+    actions: PropTypes.object
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrganizationDashboardContainer);

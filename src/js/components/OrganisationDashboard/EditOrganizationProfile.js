@@ -15,11 +15,6 @@ const EditOrganizationProfile = (props) =>{
                     </ul>
                 </div>
             </div>
-            <div className="col-md-12 col-sm-12">
-                <button className="btn btn-primary buttonShadow">
-                    UPLOAD YOUR LOGO
-                </button>
-            </div>
             <div className="card w-auto">
                 <div className="card-body">
                     <h5 className="cardtitle">My Doing Good Success</h5>
