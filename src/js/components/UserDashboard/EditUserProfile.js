@@ -43,7 +43,7 @@ class EditUserProfile extends React.Component {
             this.state.zipcode,
             this.props.session.id
         );
-        console.log("User updated");
+        this.props.handleCloseModal();
     }
 
     changeFirstName(event){

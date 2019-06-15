@@ -154,7 +154,7 @@ class UserSignUp extends Component {
                 this.handleValidatePassword(data);
                 break;
             case 'aboutme':
-                this.credentials.aboutme = data.target.vaue;
+                this.credentials.aboutme = data.target.value;
                 break;
             default:
                 console.log("user unknown");
@@ -245,7 +245,7 @@ class UserSignUp extends Component {
                             </div>
                             <div className="form-group mb-3">
                                 <label>About Me</label>
-                                <textarea name="aboutme" className="form-control" onChange={this.handleChange} placeholder="About me" />
+                                <textarea name="aboutme" data-aboutme="aboutme" className="form-control" onChange={this.handleChange} placeholder="About me" />
                             </div>
                             <button name="signupbutton" className="btn btn-primary btn-block fw-600 py-2" onClick={this.handleSubmit} type="button">Sign Up</button>
                         </form>
