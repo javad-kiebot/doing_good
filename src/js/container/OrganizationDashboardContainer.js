@@ -36,20 +36,19 @@ import PostNewServiceOrWantedServiceButtons
      }
 
      render() {
-         const { allPostDataById, actions, isModalOpen } = this.props;
+         const { actions, postDetails } = this.props;
          return(
              <div className="fullwidth">
                 <Header { ...this.props } gotoSearchPostings={this.gotoSearchPostings}/>
                  <div className="cardwidth row">
                      <EditOrganizationProfile { ...this.props } />
                      <div className="col-md-8 col-sm-12">
-                         <EditAcceptedPosts actions={actions} allPostDataById={ allPostDataById } />
-                         <EditNewPosts actions={actions} allPostDataById={ allPostDataById } />
-                         <EditPendingPosts actions={actions} allPostDataById={ allPostDataById } />
+                         <EditAcceptedPosts { ...this.props } postDetails={ postDetails ? postDetails:{}} />
+                         <EditNewPosts { ...this.props } postDetails={ postDetails ? postDetails:{}} />
+                         <EditPendingPosts { ...this.props } postDetails={ postDetails ? postDetails:{}} />
                      </div>
                 </div>
                  <PostNewServiceOrWantedServiceButtons actions={actions} />
-                 <EditPostModal {...this.props } />
                 <Footer />
             </div>
          )}
@@ -60,7 +59,8 @@ function mapStateToProps(state){
         organization:state.loginReducer.session,
         allPostDataById:state.memberDashboardReducer.allPostDataByUserId,
         isModalOpen: state.organizationDashboardReducer.isModalOpen,
-        modalValues: state.organizationDashboardReducer
+        modalValues: state.organizationDashboardReducer,
+        postDetails: state.organizationDashboardReducer.postDetails
     };
 }
 

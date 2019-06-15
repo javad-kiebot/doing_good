@@ -1,5 +1,6 @@
 const OPEN_MODAL='OPEN_MODAL';
 const CLOSE_MODAL='CLOSE_MODAL';
+const SET_POST_DETAILS='SET_POST_DETAILS';
 const SET_GOOD_OR_SERVICE_SELECTED='SET_GOOD_OR_SERVICE_SELECTED';
 const SET_GOOD_OR_SERVICE='SET_GOOD_OR_SERVICE';
 const SET_DESCRIPTION='SET_DESCRIPTION';
@@ -9,16 +10,22 @@ const SET_MAXIMUM_AMOUNT='SET_MAXIMUM_AMOUNT';
 const SET_RATE_TYPE='SET_RATE_TYPE';
 
 export default {
-    openModal:()=>{
+    openModal: () => {
         return{
             type:OPEN_MODAL,
             isModalOpen: true
         }
     },
-    closeModal:()=>{
+    closeModal: () => {
         return{
             type:CLOSE_MODAL,
             isModalOpen: false
+        }
+    },
+    setPostDetails: (postDetails) => {
+        return{
+            type:SET_POST_DETAILS,
+            postDetails
         }
     },
     setGoodOrServiceSelected: (isGoodOrServiceSelected) => {

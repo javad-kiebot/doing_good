@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import ReactModal from "react-modal";
 import {Form} from "react-bootstrap";
 
 const EditPostModal=(props)=>{
-    const { actions, modalValues, organization } = props;
+    const { actions, modalValues, organization, postDetails } = props;
     const customStyles = {
         content : {
             top                   : '5%',
@@ -19,16 +20,17 @@ const EditPostModal=(props)=>{
         actions.closeModal();
     };
     const handleSave = () => {
-        actions.updatePostsByUserAction(modalValues.isGoodOrServiceSelected,
-            modalValues.goodOrService,
-            modalValues.description,
-            modalValues.rate,
-            modalValues.minimumAmount,
-            modalValues.maximumAmount,
-            modalValues.rateType,
-            null,
-            null,
-            null)
+        actions.updatePostsByUserAction(modalValues.isGoodOrServiceSelected ? modalValues.isGoodOrServiceSelected : postDetails.goodOrService,
+            modalValues.goodOrService ? modalValues.goodOrService : '',
+            modalValues.description ? modalValues.description : postDetails.description,
+            modalValues.rate ? modalValues.rate : postDetails.rate,
+            modalValues.minimumAmount ? modalValues.minimumAmount : postDetails.minimum,
+            modalValues.maximumAmount ? modalValues.maximumAmount : postDetails.maximum,
+            modalValues.rateType ? modalValues.rateType : postDetails.rateType,
+            postDetails.postType,
+            organization.id,
+            postDetails.id);
+        handleCloseModal()
     };
     return(
         <ReactModal
@@ -41,20 +43,42 @@ const EditPostModal=(props)=>{
                     <Form.Label className="skill-text">Services/Goods Required</Form.Label>
                     <div>
                         <input className="goodsAndServices" type="radio" value="GOOD" name="goodRequired"
+                               defaultValue={ postDetails && postDetails.goodOrService }
                                onChange={(e) => actions.setGoodOrServiceSelected(e.target.value)}/>Goods
                         <input className="goodsAndServices" type="radio" value="SERVICE" name="goodRequired"
+                               defaultValue={ postDetails && postDetails.goodOrService }
                                onChange={(e) => actions.setGoodOrServiceSelected(e.target.value)}/>Services
                     </div>
                     <Form.Label>Goods/Service:</Form.Label>
-                    <input className='form-control' type="text" onBlur={(e) => actions.setGoodOrService(e.target.value)}/>
+                    <input
+                        className='form-control'
+                        type="text"
+                        onBlur={(e) => actions.setGoodOrService(e.target.value)}
+                    />
                     <Form.Label>Description:</Form.Label>
-                    <Form.Control type="text" onBlur={(e) => actions.setDescription(e.target.value)} />
+                    <Form.Control
+                        type="text"
+                        defaultValue={ postDetails && postDetails.description }
+                        onBlur={(e) => actions.setDescription(e.target.value)}
+                    />
                     <Form.Label>Rate:</Form.Label>
-                    <Form.Control type="text" onBlur={(e) => actions.setRate(e.target.value)} />
+                    <Form.Control
+                        type="text"
+                        defaultValue={ postDetails && postDetails.rate }
+                        onBlur={(e) => actions.setRate(e.target.value)}
+                    />
                     <Form.Label>Minimum:</Form.Label>
-                    <Form.Control type="text" onBlur={(e) => actions.setMinimumAmount(e.target.value)} />
+                    <Form.Control
+                        type="text"
+                        defaultValue={ postDetails && postDetails.minimum }
+                        onBlur={(e) => actions.setMinimumAmount(e.target.value)}
+                    />
                     <Form.Label>Maximum:</Form.Label>
-                    <Form.Control type="text" onBlur={(e) => actions.setMaximumAmount(e.target.value)} />
+                    <Form.Control
+                        type="text"
+                        defaultValue={ postDetails && postDetails.maximum }
+                        onBlur={(e) => actions.setMaximumAmount(e.target.value)}
+                    />
                     <Form.Label>Rate Type</Form.Label>
                     { modalValues.isGoodOrServiceSelected === "GOOD" &&
                     <div>
@@ -83,6 +107,13 @@ const EditPostModal=(props)=>{
             </Form>
         </ReactModal>
     )
+};
+
+EditPostModal.propTypes = {
+    modalValues: PropTypes.object,
+    actions: PropTypes.object,
+    organization: PropTypes.object,
+    postDetails: PropTypes.object
 };
 
 export default EditPostModal;
