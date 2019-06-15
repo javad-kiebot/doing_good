@@ -9,8 +9,11 @@ class UserSignUp extends Component {
         this.credentials = {
             firstname: '',
             lastname: '',
+            address1:'',
+            address2:'',
             city : '',
             state:'',
+            zipcode:'',
             email :'',
             password:'',
             phone:'',
@@ -123,17 +126,26 @@ class UserSignUp extends Component {
                 this.credentials.lastname = data.target.value;
                 this.handleValidateLastName(data);
                 break;
+            case 'address1':
+                this.credentials.address1 = data.target.value;
+                break;
+            case 'address2':
+                this.credentials.address2 = data.target.value;
+                break;
             case 'city':
                 this.credentials.city = data.target.value;
                 break;
             case 'state':
                 this.credentials.state = data.target.value;
                 break;
+            case 'zipcode':
+                this.credentials.zipcode = data.target.value;
+                break;
             case 'email':
                 this.credentials.email = data.target.value;
                 this.handleValidateEmail(data);
                 break;
-            case 'phone':
+            case 'phonenumber':
                 this.credentials.phone = data.target.value;
                 this.handleValidatePhone(data);
                 break;
@@ -144,6 +156,8 @@ class UserSignUp extends Component {
             case 'aboutme':
                 this.credentials.aboutme = data.target.vaue;
                 break;
+            default:
+                console.log("user unknown");
         }
 
     }
@@ -198,12 +212,24 @@ class UserSignUp extends Component {
                                 <input name="lastname" className="form-control" onChange={this.handleChange} type="text" required placeholder={this.lastnameError} className={this.state.lastnameValid ? 'form-control' : this.state.highlightclass +" form-control"}/>
                             </div>
                             <div className="form-group mb-2">
+                                <label>Address</label>
+                                <input name="address1" className="form-control" onChange={this.handleChange} type="text" placeholder="Please enter address" />
+                            </div>
+                            <div className="form-group mb-2">
+                                <label>Address</label>
+                                <input name="address2" className="form-control" onChange={this.handleChange} type="text"  placeholder="Please enter address "/>
+                            </div>
+                            <div className="form-group mb-2">
                                 <label>City</label>
                                 <input name="city" className="form-control" onChange={this.handleChange} type="text" placeholder="Please enter City"/>
                             </div>
                             <div className="form-group mb-2">
                                 <label>State</label>
                                 <input name="state" className="form-control" onChange={this.handleChange} type="text" placeholder="Please enter State"/>
+                            </div>
+                            <div className="form-group mb-2">
+                                <label>zip code</label>
+                                <input name="zipcode" className="form-control" onChange={this.handleChange} type="text" placeholder="Please enter zip code "/>
                             </div>
                             <div className="form-group mb-2">
                                 <label>Email*</label>

@@ -138,21 +138,16 @@ class EditVolunteerProfile extends Component{
     }
 
     onOrgChange(event){
-        if(event.target.value === "Select Org") {
-            this.setState({orgSelectedId: [0], orgSelected: event.target.value});
+        if(event.target.value === "") {
+            this.setState({orgSelectedId: event.target.value});
         }else{
-            for(let i=0; i < this.props.getAllOrgs.length;i++){
-                if(this.props.getAllOrgs[i].organizationName === event.target.value){
-                    this.state.orgSelectedId.push(this.props.getAllOrgs[i].id);
-                }
-            }
-            this.setState({orgSelectedId: this.state.orgSelectedId, orgSelected: event.target.value});
+            this.setState({orgSelectedId: event.target.value});
         }
     }
 
     handleSubmitOrg(event){
         this.props.session.id &&
-        this.props.organizationAction.linkToOrgsAction(this.props.session.id, this.state.orgSelectedId);
+        this.props.organizationAction.linkToOrgsAction(this.props.session.id, [this.state.orgSelectedId]);
         console.log(this.props.getAllOrgs);
     }
 
@@ -210,27 +205,14 @@ class EditVolunteerProfile extends Component{
                         </div>
                         <div className="card w-auto">
                             <div className="card-body">
-                                <h5 className="cardtitle">My Interested Charitable Organizations</h5>
-                            </div>
-                        </div>
-                        <div className="card w-auto">
-                            <div className="card-body">
-                                <h5 className="cardtitle">My Doing Good Success</h5>
-                                <ul className="nobullet">
-                                <li className="cardLabel-raised">$$$ RAISED (to date)<span className="span-raised"> $0</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="card w-auto">
-                            <div className="card-body">
                                 <h5>My Interested Charitable Organization:</h5>
                                 <p>Select\Edit Charitable Organization you wish to donate to</p>
                                 <div className="form-group m-0">
-                                    <select className="form-control" value={this.state.orgSelected}
+                                    <select className="form-control"
                                             onChange={this.onOrgChange}>
-                                        <option>Select Org</option>
+                                        <option value = "">Select Org</option>
                                         {this.props.getAllOrgs && this.props.getAllOrgs.map((org) =>
-                                            <option>{org.organizationName}</option>
+                                            <option value={org.id}>{org.organizationName}</option>
                                         )}
 
                                     </select>
@@ -239,6 +221,14 @@ class EditVolunteerProfile extends Component{
                                 <button className="btn btn-default signOffButton" onClick={this.handleSubmitOrg}
                                         type="button">Save
                                 </button>
+                            </div>
+                        </div>
+                        <div className="card w-auto">
+                            <div className="card-body">
+                                <h5 className="cardtitle">My Doing Good Success</h5>
+                                <ul className="nobullet">
+                                <li className="cardLabel-raised">$$$ RAISED (to date)<span className="span-raised"> $0</span></li>
+                                </ul>
                             </div>
                         </div>
                     </div>

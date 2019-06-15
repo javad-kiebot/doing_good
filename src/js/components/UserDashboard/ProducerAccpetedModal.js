@@ -51,6 +51,7 @@ class ProducerAccpetedModal extends React.Component {
                 {(this.props.allPostsByUser.status === 'ACCEPTED') &&
                 <div>
                     <label className="control-label signOffLabel">Post Status :</label>
+                    <br/>
                     <label className="control-label signOffLabel">Amount Agreed: { this.props.allPostsByUser.offerPrice}</label>
                     <div>Final Sign-Off Given By Helper. Please proceed with payment.</div>
                     <button className="btn btn-default signOffButton"

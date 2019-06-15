@@ -48,7 +48,7 @@ const organizationActions = {
                 .then(response => {
                     if (response.status === 200) {
                         dispatch({
-                            type: 'ALLORGANIZATION',
+                            type: 'LINKORGS',
                             data: response.data
                         });
                     }
