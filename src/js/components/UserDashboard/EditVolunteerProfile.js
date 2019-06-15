@@ -4,26 +4,29 @@ import { hashHistory }from "react-router";
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import { Container, Row, Col} from 'react-bootstrap'
-import doingGoodHero from "../../assests/images/home/DoingGood_logo_HERO.png";
-import photoIcon from "../../assests/images/dashboard/Photo_icon.png";
-import addphotoIcon from "../../assests/images/dashboard/add photo icon.png";
-import "../../assests/sass/editVolunteerProfile.scss";
-import loginActions from "../actions/loginActions";
-import paint_fence from "../../assests/images/dashboard/paint_fence.jpg";
-import tennis from "../../assests/images/dashboard/tennis.jpg";
-import kitchen_teach from "../../assests/images/dashboard/kitchen_teach.jpg";
-import cloud6 from "../../assests/images/dashboard/couch6_enlarged.jpg";
-import rake_leaves from "../../assests/images/dashboard/Rake_leaves.jpg";
-import dginsta from "../../assests/images/home/dg-insta.png";
-import dgfb from "../../assests/images/home/dg-fb.png";
-import dgtwitter from "../../assests/images/home/dg-twitter.png";
-import GoodsAndServicesModal from "./GoodsAndServicesModal";
-import searchPostingActions from "../actions/searchPostingActions";
+import doingGoodHero from "../../../assests/images/home/DoingGood_logo_HERO.png";
+import photoIcon from "../../../assests/images/dashboard/Photo_icon.png";
+import addphotoIcon from "../../../assests/images/dashboard/add photo icon.png";
+import "../../../assests/sass/editVolunteerProfile.scss";
+import loginActions from "../../actions/loginActions";
+import paint_fence from "../../../assests/images/dashboard/paint_fence.jpg";
+import tennis from "../../../assests/images/dashboard/tennis.jpg";
+import kitchen_teach from "../../../assests/images/dashboard/kitchen_teach.jpg";
+import cloud6 from "../../../assests/images/dashboard/couch6_enlarged.jpg";
+import rake_leaves from "../../../assests/images/dashboard/Rake_leaves.jpg";
+import dginsta from "../../../assests/images/home/dg-insta.png";
+import dgfb from "../../../assests/images/home/dg-fb.png";
+import dgtwitter from "../../../assests/images/home/dg-twitter.png";
+import GoodsAndServicesModal from "../SearchPostings/GoodsAndServicesModal";
+import searchPostingActions from "../../actions/searchPostingActions";
 import EditUserProfile from "./EditUserProfile";
-import memberDashboardReducer from "../reducers/memberDashboardReducer";
-import memberdashboardActions from "../actions/memberdashboardActions";
+import memberDashboardReducer from "../../reducers/memberDashboardReducer";
+import memberdashboardActions from "../../actions/memberdashboardActions";
 import EditPostsByUser from "./EditPostsByUser";
 import PendingPostModal from "./PendingPostModal";
+import organizationActions from "../../actions/organizationActions";
+import ConsumerSignOffModal from "./ConsumerSignOffModal";
+import ProducerAccpetedModal from "./ProducerAccpetedModal";
 
 class EditVolunteerProfile extends Component{
 
@@ -38,9 +41,17 @@ class EditVolunteerProfile extends Component{
             myPostIndex: 0,
             myPostIndexWanted: 0,
             myPendingPostIndex: 0,
+            assignedPostIndex: 0,
+            assignedWantedPostIndex:0,
+            assignedOfferedPostIndex:0,
             myWantedPendingPostIndex: 0,
             showPendingPosts:false,
-            showWantedPendingPosts:false
+            showWantedPendingPosts:false,
+            showOfferedAssignedPosts:false,
+            showAssignedPosts:false,
+            showWantedAssignedPosts:false,
+            orgSelectedId:[],
+            orgSelected:''
         };
         this.handleOfferedOpenModal = this.handleOfferedOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -51,11 +62,18 @@ class EditVolunteerProfile extends Component{
         this.handleWantedPostbyUserModal=this.handleWantedPostbyUserModal.bind(this);
         this.handlePendingPosts=this.handlePendingPosts.bind(this);
         this.handleWantedPendingPosts=this.handleWantedPendingPosts.bind(this);
+        this.handleAssignedPosts=this.handleAssignedPosts.bind(this);
+        this.handleWantedAssignedPosts=this.handleWantedAssignedPosts.bind(this);
+        this.handleOfferedAssignedPosts=this.handleOfferedAssignedPosts.bind(this);
+        this.handleSubmitOrg=this.handleSubmitOrg.bind(this);
+        this.onOrgChange=this.onOrgChange.bind(this);
     }
 
     componentWillMount() {
         this.props.session.id &&
         this.props.memberdashboardactions.allPostingByUserIdAction(this.props.session.id);
+        this.props.memberdashboardactions.assignedPostToConsumer(this.props.session.id);
+        this.props.organizationAction.getAllOrgsAction();
     }
 
     handleOfferedOpenModal () {
@@ -85,6 +103,18 @@ class EditVolunteerProfile extends Component{
         const id=parseInt(event.target.id.split("_")[1]);
         this.setState({ showWantedPendingPosts: true, myWantedPendingPostIndex: id});
     }
+    handleAssignedPosts (event) {
+        const id=parseInt(event.target.id.split("_")[1]);
+        this.setState({ showAssignedPosts: true, assignedPostIndex: id});
+    }
+    handleWantedAssignedPosts (event) {
+        const id=parseInt(event.target.id.split("_")[1]);
+        this.setState({ showWantedAssignedPosts: true, assignedWantedPostIndex: id});
+    }
+    handleOfferedAssignedPosts (event) {
+        const id=parseInt(event.target.id.split("_")[1]);
+        this.setState({ showOfferedAssignedPosts: true, assignedOfferedPostIndex: id});
+    }
     handleCloseModal () {
         if(this.state.showPostsByUserEditModal || this.state.showPostsByUserEditModalWanted) {
             this.props.memberdashboardactions.allPostingByUserIdAction(this.props.session.id);
@@ -96,11 +126,29 @@ class EditVolunteerProfile extends Component{
             showPostsByUserEditModal:false,
             showPostsByUserEditModalWanted: false,
             showPendingPosts:false,
-            showWantedPendingPosts: false});
+            showWantedPendingPosts: false,
+            showAssignedPosts: false,
+            showOfferedAssignedPosts: false,
+            showWantedAssignedPosts: false
+        });
     }
 
     gotosearchpostings (){
         hashHistory.push("/searchposting");
+    }
+
+    onOrgChange(event){
+        if(event.target.value === "") {
+            this.setState({orgSelectedId: event.target.value});
+        }else{
+            this.setState({orgSelectedId: event.target.value});
+        }
+    }
+
+    handleSubmitOrg(event){
+        this.props.session.id &&
+        this.props.organizationAction.linkToOrgsAction(this.props.session.id, [this.state.orgSelectedId]);
+        console.log(this.props.getAllOrgs);
     }
 
     render(){
@@ -136,10 +184,6 @@ class EditVolunteerProfile extends Component{
                     </Row>
                 <div className="show-grid orangeBar">
                     <label>DoingGood Member Dashboard</label>
-                    <span className="pull-right">
-                            <Link to="/completebasicprofile" className="White-anchor">
-                            <u>Complete your basic profile</u>
-                            </Link></span>
                 </div>
                 {/*
                     Card Readers Starts
@@ -166,6 +210,26 @@ class EditVolunteerProfile extends Component{
                         </div>
                         <div className="card w-auto">
                             <div className="card-body">
+                                <h5>My Interested Charitable Organization:</h5>
+                                <p>Select\Edit Charitable Organization you wish to donate to</p>
+                                <div className="form-group m-0">
+                                    <select className="form-control"
+                                            onChange={this.onOrgChange}>
+                                        <option value = "">Select Org</option>
+                                        {this.props.getAllOrgs && this.props.getAllOrgs.map((org) =>
+                                            <option value={org.id}>{org.organizationName}</option>
+                                        )}
+
+                                    </select>
+                                </div>
+                                <br/>
+                                <button className="btn btn-default signOffButton" onClick={this.handleSubmitOrg}
+                                        type="button">Save
+                                </button>
+                            </div>
+                        </div>
+                        <div className="card w-auto">
+                            <div className="card-body">
                                 <h5 className="cardtitle">My Doing Good Success</h5>
                                 <ul className="nobullet">
                                 <li className="cardLabel-raised">$$$ RAISED (to date)<span className="span-raised"> $0</span></li>
@@ -177,19 +241,26 @@ class EditVolunteerProfile extends Component{
                         <div className="card w-auto">
                             <div className="card-body">
                                 <h5 className="cardtitle">My accepted Volunteering Opportunities/purchased goods</h5>
-                                {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.map((allPostsByUser) =>
-                                    allPostsByUser.status === "ACCEPTED" ?
-                                        <li className="cardlabel-Opportunities"><span
-                                            className="label-black">{allPostsByUser.description}</span>
-                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
+                                {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.map((allPostsByUser, index) =>
+                                    (allPostsByUser.status === "PENDING_CONSUMER_SIGNOFF" || allPostsByUser.status === "ACCEPTED")?
+                                        <li className="cardlabel-Opportunities" id={`assigneOffereddPost_ ${index}`} onClick={this.handleOfferedAssignedPosts}><span
+                                            className="label-black" id={`assigneOffereddPostDesp_ ${index}`}>{allPostsByUser.description}</span>
+                                            <span className="pull-right label-black" id={`assigneOffereddPostRate_ ${index}`}> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
                                         </li>: null
                                 )
                                 }
-                                {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.map((allPostsByUser) =>
-                                    allPostsByUser.status === "ACCEPTED" ?
-                                        <li className="cardlabel-Opportunities"><span
-                                            className="label-black">{allPostsByUser.description}</span>
-                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
+                                {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.map((allPostsByUser, index) =>
+                                    (allPostsByUser.status === "PENDING_CONSUMER_SIGNOFF" || allPostsByUser.status === "ACCEPTED") ?
+                                        <li className="cardlabel-Opportunities" id={`assigneWanteddPost_ ${index}`} onClick={this.handleWantedAssignedPosts}><span
+                                            className="label-black" id={`assigneWanteddPostDesp_ ${index}`}>{allPostsByUser.description}</span>
+                                            <span className="pull-right label-black" id={`assigneWantedPostRate_ ${index}`} > ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
+                                        </li>: null                                )
+                                }
+                                {this.props.assignedPostsBToConsumer && this.props.assignedPostsBToConsumer.map((allPostsByUser, index) =>
+                                    (allPostsByUser.status === "PENDING_CONSUMER_SIGNOFF" || allPostsByUser.status === "ACCEPTED")?
+                                        <li className="cardlabel-Opportunities"  id={`assignedPost_ ${index}`} onClick={this.handleAssignedPosts}><span
+                                            className="label-black"  id={`assignedPostDesp_ ${index}`}>{allPostsByUser.description}</span>
+                                            <span className="pull-right label-black" id={`assignedPostRate_ ${index}`}> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
                                         </li>: null                                )
                                 }
                                 </div>
@@ -198,13 +269,15 @@ class EditVolunteerProfile extends Component{
                             <div className="card-body">
                                 <h5 className="cardtitle">My POSTS</h5>
                                 {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.map((allPostsByUser ,index) =>
-                                    <li className="cardlabel-Opportunities" id={`userPost_ ${index}`} onClick={this.handlePostbyUserModal}>
+                                    allPostsByUser.status === "NEW" &&
+                                        <li className="cardlabel-Opportunities" id={`userPost_ ${index}`} onClick={this.handlePostbyUserModal}>
                                         <span className="label-black" id={`descriptionUserPost_ ${index}`}>{allPostsByUser.description}</span>
                                         <span className="pull-right label-black" id={`rateUserPost_ ${index}`}> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
                                     </li>
                                 )
                                 }
                                 {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.map((allPostsByUser, index) =>
+                                    allPostsByUser.status === "NEW" &&
                                     <li className="cardlabel-Opportunities" id={`wantedUserPost_ ${index}`} onClick ={this.handleWantedPostbyUserModal}>
                                         <span className="label-black" id={`wantedDescriptionUserPost_ ${index}`}>{allPostsByUser.description}</span>
                                         <span className="pull-right label-black" id={`wantedRateUserPost_ ${index}`}> ${ allPostsByUser.rate }/{ allPostsByUser.rateType === "PERITEM" ? "item" : "hour" }</span>
@@ -217,7 +290,7 @@ class EditVolunteerProfile extends Component{
                             <div className="card-body">
                                 <h5 className="cardtitle">My PENDING Volunteering Opportunities/Purchased Goods</h5>
                                 {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.map((allPostsByUser,index) =>
-                                    allPostsByUser.status === "PENDING" ?
+                                    allPostsByUser.status === "PENDING_PRODUCER_SIGNOFF" ?
                                         <li className="cardlabel-Opportunities" id={`pendingPosts_ ${index}`} onClick={this.handlePendingPosts}>
                                             <span className="label-black" id={`pendingPostsDes_ ${index}`}>{allPostsByUser.description}</span>
                                             <span className="pull-right label-black" id={`pendingPostsRate_ ${index}`}> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
@@ -225,7 +298,7 @@ class EditVolunteerProfile extends Component{
                                 )
                                 }
                                 {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.map((allPostsByUser, index) =>
-                                    allPostsByUser.status === "PENDING" ?
+                                    allPostsByUser.status === "PENDING_PRODUCER_SIGNOFF" ?
                                         <li className="cardlabel-Opportunities" id={`pendingPostsWanted_ ${index}`} onClick={this.handleWantedPendingPosts}><span
                                             className="label-black" id={`pendingPostswantedDes_ ${index}`}>{allPostsByUser.description}</span>
                                             <span className="pull-right label-black" id={`pendingPostsRate_ ${index}`}> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
@@ -309,11 +382,14 @@ class EditVolunteerProfile extends Component{
                             </div>
                         </div>
                     </div>
-                    <EditUserProfile
-                        showModal={this.state.showUserEditModal}
-                        handleCloseModal={this.handleCloseModal}
-                        session={this.props.session}
-                    />
+                    {this.state.showUserEditModal &&
+                        <EditUserProfile
+                            showModal={this.state.showUserEditModal}
+                            handleCloseModal={this.handleCloseModal}
+                            session={this.props.session}
+                            memberdashboardactions={this.props.memberdashboardactions}
+                        />
+                    }
                     {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.length > 0 &&
                     <EditPostsByUser
                         showModal={this.state.showPostsByUserEditModal}
@@ -351,20 +427,52 @@ class EditVolunteerProfile extends Component{
                         memberdashboardactions={this.props.memberdashboardactions}
                     />
                     }
+                    {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.length > 0 &&
+                    <ProducerAccpetedModal
+                        showModal={this.state.showOfferedAssignedPosts}
+                        handleCloseModal={this.handleCloseModal}
+                        allPostsByUser={this.props.allPostDataByUserId.offeredGoodOrService ? this.props.allPostDataByUserId.offeredGoodOrService[this.state.assignedOfferedPostIndex] : {}}
+                        session={this.props.session}
+                        memberdashboardactions={this.props.memberdashboardactions}
+                    />
+                    }
+                    {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.length > 0 &&
+                    <ProducerAccpetedModal
+                        showModal={this.state.showWantedAssignedPosts}
+                        handleCloseModal={this.handleCloseModal}
+                        allPostsByUser={this.props.allPostDataByUserId.wantedGoodOrService ? this.props.allPostDataByUserId.wantedGoodOrService[this.state.assignedWantedPostIndex] : {}}
+                        session={this.props.session}
+                        memberdashboardactions={this.props.memberdashboardactions}
+                    />
+                    }
+                    {this.props.assignedPostsBToConsumer && this.props.assignedPostsBToConsumer.length > 0 &&
+                    <ConsumerSignOffModal
+                        showModal={this.state.showAssignedPosts}
+                        handleCloseModal={this.handleCloseModal}
+                        allPostsByUser={this.props.assignedPostsBToConsumer ? this.props.assignedPostsBToConsumer[this.state.assignedPostIndex] : {}}
+                        session={this.props.session}
+                        memberdashboardactions={this.props.memberdashboardactions}
+                    />
+                    }
                 </div>
         )
     }
 }
 
 function mapStateToProps(state){
-    return{session:state.loginReducer.session,
-        allPostDataByUserId:state.memberDashboardReducer.allPostDataByUserId};
+    return{
+        session:state.loginReducer.session,
+        allPostDataByUserId:state.memberDashboardReducer.allPostDataByUserId,
+        assignedPostsBToConsumer:state.memberDashboardReducer.assignedPostsBToConsumer,
+        getAllOrgs:state.organizationReducer.getAllOrgs
+    };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         memberdashboardactions: bindActionCreators(memberdashboardActions, dispatch),
         searchPostingAction: bindActionCreators(searchPostingActions, dispatch),
+        organizationAction: bindActionCreators(organizationActions, dispatch),
     }
 }
 

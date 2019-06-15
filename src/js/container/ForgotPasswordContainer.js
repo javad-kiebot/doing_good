@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import ForgotPassword from "../components/ForgotPassword";
+import ForgotPassword from "../components/Login/ForgotPassword";
 import {bindActionCreators} from "redux";
 import forgotActions from "../actions/forgotActions";
 

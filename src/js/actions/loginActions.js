@@ -29,7 +29,6 @@ let loginActions = {
                 .then(response => {
                     if (response.status === 200) {
                         var loginResponse = response.data;
-                        toastr.success('', 'Logged in');
                         if(response.userStatusCode === 'INACT'){
                             toastr.error('Error ', 'User has not activated the account');
                             return;
@@ -46,8 +45,8 @@ let loginActions = {
                         if(loginResponse.userRole === 'MEMBER'){
                             hashHistory.push('/editVoluteerProfile');
                         }
-                        if(loginResponse.userRole === 'charity'){
-                            browserHistory.push('/charity/charityorganizerdashboard');
+                        if(loginResponse.userRole === 'ORGANIZATION'){
+                            hashHistory.push('/organizationDashboard');
                         }
                         if(loginResponse.userRole === 'admin'){
                             browserHistory.push('/admindashboard/authorizecharities');

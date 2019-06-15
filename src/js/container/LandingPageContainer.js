@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Login from "../components/Login";
+import Login from "../components/Login/Login";
 import {bindActionCreators} from "redux";
 import loginActions from "../actions/loginActions";
 import LandingPage from "../components/LangingPage";

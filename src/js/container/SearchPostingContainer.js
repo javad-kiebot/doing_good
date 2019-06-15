@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {bindActionCreators} from "redux";
-import SearchPosting from "../components/SearchPosting";
+import SearchPosting from "../components/SearchPostings/SearchPosting";
 import searchPostingActions from "../actions/searchPostingActions";
 import organizationReducer from "../reducers/organizationReducer";
 import organizationActions from "../actions/organizationActions";

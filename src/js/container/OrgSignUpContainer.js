@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import OrgSignUp from "../components/OrgSignUp";
+import OrgSignUp from "../components/Login/OrgSignUp";
 import {bindActionCreators} from "redux";
 import signUpUserActions from "../actions/signUpAction";
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import orangetick from "../../assests/images/home/orangetick.png";
+import orangetick from "../../../assests/images/home/orangetick.png";
 import {hashHistory} from "react-router";
 
 

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {bindActionCreators} from "redux";
-import UserSignUp from "../components/UserSignUp";
+import UserSignUp from "../components/Login/UserSignUp";
 import signUpUserActions from "../actions/signUpAction";
 
 class UserSignUpContainer extends Component {

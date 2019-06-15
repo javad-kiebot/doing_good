@@ -1,4 +1,4 @@
-import axios from 'axios';
+ import axios from 'axios';
 import {toastr} from 'react-redux-toastr'
 import {hashHistory} from "react-router";
 
@@ -39,11 +39,11 @@ let signUpUserActions = {
                 "about": "string",
                 "city": orgcreds.city,
                 "email": orgcreds.email,
-                "organizationName": "string",
+                "organizationName": orgcreds.orgname,
                 "password": orgcreds.password,
                 "phoneNumber": orgcreds.phone,
                 "state": orgcreds.state,
-                "website": "string"
+                "website": orgcreds.website
             },
             headers: {
                 'Content-Type': 'application/json'
@@ -69,31 +69,23 @@ let signUpUserActions = {
         }
     },
 
-    signupUser: function(orgcreds){
-        var volunteerdetails = {
-            aboutvolunteer:orgcreds.aboutme,
-            bankdetails : {
-                country:'USA',
-                currency:'USD',
-                accountnumber:''
-            }
-        };
+    signupUser: function(userCredentials){
         const request = {
             method: 'post',
             responseType: 'json',
             url: 'https://13.127.249.79:9500/api/member/registration',
             data: {
-                "aboutMe":  orgcreds.aboutme,
-                "address1": "string",
-                "address2": "string",
-                "city": orgcreds.city,
-                "email": orgcreds.email,
-                "firstName": orgcreds.firstname,
-                "lastName": orgcreds.lastname,
-                "password": orgcreds.password,
-                "phoneNumber": orgcreds.phone,
-                "state": orgcreds.state,
-                "zipCode": 0
+                "about":  userCredentials.aboutme,
+                "address1": userCredentials.address1,
+                "address2": userCredentials.address2,
+                "city": userCredentials.city,
+                "email": userCredentials.email,
+                "firstName": userCredentials.firstname,
+                "lastName": userCredentials.lastname,
+                "password": userCredentials.password,
+                "phoneNumber": userCredentials.phone,
+                "state": userCredentials.state,
+                "zipCode": userCredentials.zipcode
             },
             headers: {
                 'Content-Type': 'application/json'
@@ -106,7 +98,7 @@ let signUpUserActions = {
                         var signupResponse = response.data;
                         hashHistory.push("/confirmsignup");
                         dispatch({
-                            type: 'LOGGED_IN',
+                            type: 'LOGGED_IN_MEMBER',
                             data: response.data.user,token:response.data.accessToken
                         });
                         toastr.success('', 'Successfully registered');
@@ -119,46 +111,46 @@ let signUpUserActions = {
         }
     },
 
-    signupActions: function(userCredentials) {
-        const request = {
-            method: 'post',
-            responseType: 'json',
-            url: 'https://13.127.249.79:9500/api/member/registration',
-            data: {
-                "about": "string",
-                "city": userCredentials.city,
-                "email": userCredentials.email,
-                "organizationName": "string",
-                "password": userCredentials.password,
-                "phoneNumber": userCredentials.phone,
-                "state": userCredentials.state,
-                "website": "string"
-
-            },
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        };
-        return (dispatch) => {
-            axios(request)
-                .then(response => {
-                    if (response.status === 200) {
-                        var signupResponse = response.data;
-                        hashHistory.push("/confirmsignup");
-                        dispatch({
-                            type: 'LOGGED_IN',
-                            data: response.data.user,token:response.data.accessToken
-                        });
-                        window.localStorage.setItem("sessionUser", JSON.stringify(signupResponse));
-                        toastr.success('', 'Successfully logged in');
-                    }
-                },err => {
-                    if(err.response.data.code === 409){
-                        toastr.error('Error while signing up user', 'Email already exists')
-                    }
-                })
-        }
-    },
+    // signupActions: function(userCredentials) {
+    //     const request = {
+    //         method: 'post',
+    //         responseType: 'json',
+    //         url: 'https://13.127.249.79:9500/api/member/registration',
+    //         data: {
+    //             "about": "string",
+    //             "city": userCredentials.city,
+    //             "email": userCredentials.email,
+    //             "organizationName": "string",
+    //             "password": userCredentials.password,
+    //             "phoneNumber": userCredentials.phone,
+    //             "state": userCredentials.state,
+    //             "website": "string"
+    //
+    //         },
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         }
+    //     };
+    //     return (dispatch) => {
+    //         axios(request)
+    //             .then(response => {
+    //                 if (response.status === 200) {
+    //                     var signupResponse = response.data;
+    //                     hashHistory.push("/confirmsignup");
+    //                     dispatch({
+    //                         type: 'LOGGED_IN_ORG',
+    //                         data: response.data.user,token:response.data.accessToken
+    //                     });
+    //                     window.localStorage.setItem("sessionUser", JSON.stringify(signupResponse));
+    //                     toastr.success('', 'Successfully logged in');
+    //                 }
+    //             },err => {
+    //                 if(err.response.data.code === 409){
+    //                     toastr.error('Error while signing up user', 'Email already exists')
+    //                 }
+    //             })
+    //     }
+    // },
 
     redirectLogin : function () {
         hashHistory.push('/login');

@@ -19,8 +19,8 @@ import youCan from "../../assests/images/home/you_can.png";
 import dginsta from "../../assests/images/home/dg-insta.png";
 import dgfb from "../../assests/images/home/dg-fb.png";
 import dgtwitter from "../../assests/images/home/dg-twitter.png";
-import GoodsAndServicesModal from "./GoodsAndServicesModal";
-import RedirectToLoginModal from "./RedirectToLoginModal";
+import GoodsAndServicesModal from "./SearchPostings/GoodsAndServicesModal";
+import RedirectToLoginModal from "./SearchPostings/RedirectToLoginModal";
 
 
 class LandingPage extends Component {

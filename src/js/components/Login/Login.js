@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from 'react-router';
-import userIMg from "../../assests/images/icons/user.svg";
-import lockImg from "../../assests/images/icons/lock.svg";
+import userIMg from "../../../assests/images/icons/user.svg";
+import lockImg from "../../../assests/images/icons/lock.svg";
 import {toastr} from 'react-redux-toastr';
 
 class Login extends Component {

@@ -1,21 +1,21 @@
 import React, { Component } from "react";
 import { Link } from 'react-router';
 import ReactModal from 'react-modal';
-import doingGood from "../../assests/images/home/DoingGood_logo_HERO_RGB.png";
-import guitar from "../../assests/images/home/teach_guitar-bright.jpg";
-import skateImg from "../../assests/images/search/skateboard_teach-min.jpg";
-import teen_girl from "../../assests/images/search/teen_girl_smile_glasses-min.jpg";
-import WalkingDog from "../../assests/images/search/WalkingDog-min.jpg";
-import kid_teen_babysite from "../../assests/images/search/kid_teen_babysite_window-min.jpg";
-import clean_floor from "../../assests/images/search/clean_floor-min.jpg";
-import dginsta from "../../assests/images/home/dg-insta.png";
-import dgfb from "../../assests/images/home/dg-fb.png";
-import dgtwitter from "../../assests/images/home/dg-twitter.png";
-import "../../assests/sass/searchPosting.scss";
+import doingGood from "../../../assests/images/home/DoingGood_logo_HERO_RGB.png";
+import guitar from "../../../assests/images/home/teach_guitar-bright.jpg";
+import skateImg from "../../../assests/images/search/skateboard_teach-min.jpg";
+import teen_girl from "../../../assests/images/search/teen_girl_smile_glasses-min.jpg";
+import WalkingDog from "../../../assests/images/search/WalkingDog-min.jpg";
+import kid_teen_babysite from "../../../assests/images/search/kid_teen_babysite_window-min.jpg";
+import clean_floor from "../../../assests/images/search/clean_floor-min.jpg";
+import dginsta from "../../../assests/images/home/dg-insta.png";
+import dgfb from "../../../assests/images/home/dg-fb.png";
+import dgtwitter from "../../../assests/images/home/dg-twitter.png";
+import "../../../assests/sass/searchPosting.scss";
 import GoodsAndServicesModal from "./GoodsAndServicesModal";
 import ShowInterestModal from "./ShowInterestModal";
 import {Col, Container, Row} from "react-bootstrap";
-import doingGoodHero from "../../assests/images/home/DoingGood_logo_HERO.png";
+import doingGoodHero from "../../../assests/images/home/DoingGood_logo_HERO.png";
 
 
 ReactModal.setAppElement('#app');
@@ -34,8 +34,10 @@ class SearchPosting extends Component {
             dateIndex:0,
             zipdisabled:false,
             orgArray: props.getAllOrgs,
-            wanteddateIndex: 0
-
+            wanteddateIndex: 0,
+            postingType:null,
+            quickSearchInput:'',
+            orgSelected:0
         };
         this.props.organizationAction.getAllOrgsAction();
         this.handleOfferedOpenModal = this.handleOfferedOpenModal.bind(this);
@@ -45,6 +47,9 @@ class SearchPosting extends Component {
         this.handleShowIntersrWantedOpenModal = this.handleShowIntersrWantedOpenModal.bind(this);
         this.onRadiusChange = this.onRadiusChange.bind(this);
         this.onOrgChange = this.onOrgChange.bind(this);
+        this.postingTypeSearch = this.postingTypeSearch.bind(this);
+        this.quickSearch = this.quickSearch.bind(this);
+        this.resetSearchPost = this.resetSearchPost.bind(this);
     }
 
     handleOfferedOpenModal () {
@@ -71,6 +76,13 @@ class SearchPosting extends Component {
     }
 
     onPostServiceRequest(){
+        this.props.searchPostingAction.searchPostServiceAction(
+            this.state.orgSelected,
+            this.state.postingType,
+            this.state.quickSearchInput);
+    }
+
+    resetSearchPost(){
         this.props.searchPostingAction.allPostingServiceAction();
     }
 
@@ -85,6 +97,12 @@ class SearchPosting extends Component {
         }
     }
 
+    postingTypeSearch(event){
+            this.setState({postingType: event.target.value });
+    }
+    quickSearch(event){
+        this.setState({quickSearchInput:event.target.value  });
+    }
 
     render(){
         const radiusArray= ['5 miles','10 miles', '20 miles','25 miles', '50 miles', '100 miles','500 miles'];
@@ -108,15 +126,14 @@ class SearchPosting extends Component {
                         <div className="row">
                             <div className="col-sm">
                                 <div className="form-group m-0">
-                                    <input className="form-control" type="text" placeholder="Quick Search"/>
+                                    <input className="form-control" type="text" placeholder="Quick Search" onChange={this.quickSearch}/>
                                 </div>
                             </div>
                             <div className="col-sm">
                                 <div className="form-group m-0">
-                                    <select className="form-control">
-                                        <option>Service Required</option>
-                                        <option>Service Offered</option>
-
+                                    <select className="form-control" onChange={this.postingTypeSearch}>
+                                        <option value="WANTED">Service Required</option>
+                                        <option value="OFFERED">Service Offered</option>
                                     </select>
                                 </div>
                             </div>
@@ -125,8 +142,7 @@ class SearchPosting extends Component {
                                     <select className="form-control" value={this.state.orgSelected} onChange={this.onOrgChange}>
                                         <option>Select Org</option>
                                         {this.props.getAllOrgs.map((org)=>
-                                            <option>{org.organizationName}</option>
-
+                                            <option value={org.id}>{org.organizationName}</option>
                                         )}
 
                                     </select>
@@ -139,7 +155,6 @@ class SearchPosting extends Component {
                                         {radiusArray.map((rules)=>
                                         <option>{rules}</option>
                                         )}
-
                                     </select>
                                 </div>
                             </div>
@@ -149,7 +164,7 @@ class SearchPosting extends Component {
                                 </div>
                             </div>
                             <div className="col-sm">
-                                <button className="btn btn-default goodsAndServicesButton goodsAndServicesButtonRight" >Reset</button>
+                                <button className="btn btn-default goodsAndServicesButton goodsAndServicesButtonRight" onClick={this.resetSearchPost}>Reset</button>
                                 <button className="btn btn-default goodsAndServicesButton" onClick={this.onPostServiceRequest}>Search</button>
                             </div>
                         </div>
