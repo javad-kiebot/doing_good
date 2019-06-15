@@ -13,6 +13,9 @@ import Footer from "../components/OrganisationDashboard/Footer";
 import memberDashboardActions from "../actions/memberdashboardActions";
 import searchPostingActions from "../actions/searchPostingActions";
 import organizationDashboardActions from "../actions/organizationDashboardActions";
+import EditPostModal from "../components/OrganisationDashboard/EditPostModal";
+import PostNewServiceOrWantedServiceButtons
+    from "../components/OrganisationDashboard/PostNewServiceOrWantedServiceButtons";
 
 
  class OrganizationDashboardContainer extends Component {
@@ -31,8 +34,9 @@ import organizationDashboardActions from "../actions/organizationDashboardAction
          hashHistory.push("/searchposting");
 
      }
+
      render() {
-         const { allPostDataById, actions } = this.props;
+         const { allPostDataById, actions, isModalOpen } = this.props;
          return(
              <div className="fullwidth">
                 <Header { ...this.props } gotoSearchPostings={this.gotoSearchPostings}/>
@@ -44,6 +48,8 @@ import organizationDashboardActions from "../actions/organizationDashboardAction
                          <EditPendingPosts actions={actions} allPostDataById={ allPostDataById } />
                      </div>
                 </div>
+                 <PostNewServiceOrWantedServiceButtons actions={actions} />
+                 <EditPostModal {...this.props } />
                 <Footer />
             </div>
          )}
@@ -53,7 +59,8 @@ function mapStateToProps(state){
     return{
         organization:state.loginReducer.session,
         allPostDataById:state.memberDashboardReducer.allPostDataByUserId,
-        isModalOpen: state.organizationDashboardReducer.isModalOpen
+        isModalOpen: state.organizationDashboardReducer.isModalOpen,
+        modalValues: state.organizationDashboardReducer
     };
 }
 
@@ -69,7 +76,8 @@ function mapDispatchToProps(dispatch) {
 
 OrganizationDashboardContainer.propTypes = {
     allPostDataById: PropTypes.object,
-    actions: PropTypes.object
+    actions: PropTypes.object,
+    isModalOpen: PropTypes.bool
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrganizationDashboardContainer);

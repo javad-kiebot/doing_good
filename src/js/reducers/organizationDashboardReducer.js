@@ -1,12 +1,18 @@
-import { OPEN_MODAL } from "../actions/organizationDashboardActions";
-
 const initialState = {
   isModalOpen:false
 };
 
 const organizationDashboardReducer = (state = initialState, action) => {
     switch (action.type) {
-        case OPEN_MODAL: return{...state, isModalOpen: true}
+        case "OPEN_MODAL": return{...state, isModalOpen: true};
+        case "CLOSE_MODAL": return{...state, isModalOpen: false};
+        case "SET_GOOD_OR_SERVICE_SELECTED": return{...state, isGoodOrServiceSelected: action.isGoodOrServiceSelected};
+        case "SET_GOOD_OR_SERVICE": return{...state, goodOrService: action.goodOrService};
+        case "SET_DESCRIPTION": return{...state, description: action.description};
+        case "SET_RATE": return{...state, description: action.rate};
+        case "SET_MINIMUM_AMOUNT": return{...state, description: action.minimumAmount};
+        case "SET_MAXIMUM_AMOUNT": return{...state, description: action.maximumAmount};
+        case "SET_RATE_TYPE": return{...state, rateType: action.rateType};
         default: return state;
     }
 };
