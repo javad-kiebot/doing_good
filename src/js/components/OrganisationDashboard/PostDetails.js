@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import EditPostModal from "../../components/OrganisationDashboard/EditPostModal";
+import ConsumerSignOffModal from "../UserDashboard/ConsumerSignOffModal";
+import ProducerAccpetedModal from "../UserDashboard/ProducerAccpetedModal";
 
 const PostDetails = (props) =>{
-    const { post, key, actions } = props;
+    const { post, key, actions, isModalOpen, session } = props;
     const handleOnClick = () => {
       actions.openModal();
       actions.setPostDetails(post);
@@ -14,7 +16,19 @@ const PostDetails = (props) =>{
             className="label-black">{post.description}</span>
             <span className="pull-right label-black"> ${post.rate}/{post.rateType === "PERITEM" ? "item" : "hour"}</span>
         </li>
-        <EditPostModal {...props } />
+        {isModalOpen && post.status === "NEW" &&
+            <EditPostModal {...props} />
+        }
+        {isModalOpen && (post.status === "PENDING_CONSUMER_SIGNOFF" || post.status === "ACCEPTED") &&
+        <ConsumerSignOffModal {...props}
+                              allPostsByUser={post}
+                              memberdashboardactions={ actions }/>
+        }
+        {isModalOpen && (post.status === "PENDING_CONSUMER_SIGNOFF" || post.status === "ACCEPTED") &&
+        <ProducerAccpetedModal {...props}
+                              allPostsByUser={post}
+                              memberdashboardactions={ actions }/>
+        }
     </React.Fragment>
     )
 };

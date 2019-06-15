@@ -23,9 +23,9 @@ const EditPostModal=(props)=>{
         actions.updatePostsByUserAction(modalValues.isGoodOrServiceSelected ? modalValues.isGoodOrServiceSelected : postDetails.goodOrService,
             modalValues.goodOrService ? modalValues.goodOrService : '',
             modalValues.description ? modalValues.description : postDetails.description,
-            modalValues.rate ? modalValues.rate : postDetails.rate,
-            modalValues.minimumAmount ? modalValues.minimumAmount : postDetails.minimum,
-            modalValues.maximumAmount ? modalValues.maximumAmount : postDetails.maximum,
+            modalValues.rate ? parseInt(modalValues.rate, 10) : postDetails.rate,
+            modalValues.minimumAmount ? parseInt(modalValues.minimumAmount, 10) : postDetails.minimum,
+            modalValues.maximumAmount ? parseInt(modalValues.maximumAmount, 10) : postDetails.maximum,
             modalValues.rateType ? modalValues.rateType : postDetails.rateType,
             postDetails.postType,
             organization.id,
@@ -53,6 +53,7 @@ const EditPostModal=(props)=>{
                     <input
                         className='form-control'
                         type="text"
+                        defaultValue={ postDetails && postDetails.goodOrService }
                         onBlur={(e) => actions.setGoodOrService(e.target.value)}
                     />
                     <Form.Label>Description:</Form.Label>

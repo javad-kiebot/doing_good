@@ -17,7 +17,7 @@ const EditAcceptedPosts= (props) => {
                             actions={ actions }
                             isModalOpen={ isModalOpen }
                             modalValues={ modalValues }
-                            organization={ organization }
+                            session={ organization }
                             postDetails={ postDetails }
                         />
                     )
@@ -30,7 +30,7 @@ const EditAcceptedPosts= (props) => {
                             actions={ actions }
                             isModalOpen={ isModalOpen }
                             modalValues={ modalValues }
-                            organization={ organization }
+                            session={ organization }
                             postDetails={ postDetails }
                         />
                     )
@@ -43,7 +43,7 @@ const EditAcceptedPosts= (props) => {
                             actions={ actions }
                             isModalOpen={ isModalOpen }
                             modalValues={ modalValues }
-                            organization={ organization }
+                            session={ organization }
                             postDetails={ postDetails }
                         />
                     )
