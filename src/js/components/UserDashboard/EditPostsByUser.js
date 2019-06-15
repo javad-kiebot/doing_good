@@ -16,7 +16,12 @@ class EditPostsByUser extends React.Component {
             maximum:this.props.allPostsByUser.maximum,
             rateType:this.props.allPostsByUser.rateType,
             id: this.props.allPostsByUser.id,
-            postType:this.props.allPostsByUser.postType
+            postType:this.props.allPostsByUser.postType,
+            checkedGood: this.props.allPostsByUser.goodOrService ? (this.props.allPostsByUser.goodOrService === 'GOOD') : false,
+            checkedService: this.props.allPostsByUser.goodOrService ? (this.props.allPostsByUser.goodOrService === 'SERVICE') : false,
+            checkedPerItem: this.props.allPostsByUser.rateType ? (this.props.allPostsByUser.rateType === 'PERITEM') : false,
+            checkedPerDay: this.props.allPostsByUser.rateType ? (this.props.allPostsByUser.rateType === 'PERHOUR') : false,
+            checkedPerHour: this.props.allPostsByUser.rateType ? (this.props.allPostsByUser.rateType === 'PERDAY') : false
         };
         this.goodsOrServicesSelected = this.goodsOrServicesSelected.bind(this);
         this.goods = this.goods.bind(this);
@@ -28,7 +33,10 @@ class EditPostsByUser extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     goodsOrServicesSelected(event){
-        this.setState({ goodsOrServicesSelected:event.target.value})
+        this.setState({ goodsOrServicesSelected:event.target.value,
+            checkedService: event.target.value !== "GOOD",
+            checkedGood: event.target.value !== "SERVICE"
+        })
     }
     goods(event){
         this.setState({ goods:event.target.value})
@@ -46,7 +54,10 @@ class EditPostsByUser extends React.Component {
         this.setState({ maximum:event.target.value})
     }
     rateType(event){
-        this.setState({ rateType:event.target.value})
+        this.setState({ rateType:event.target.value,
+            checkedPerItem: event.target.value !== "PERHOUR" ,
+            checkedPerDay: event.target.value !== "PERDAY",
+            checkedPerHour: event.target.value !== "PERITEM"})
     }
 
     handleSubmit(event){
@@ -81,15 +92,15 @@ class EditPostsByUser extends React.Component {
                 contentLabel="Minimal Modal Example"
                 style={customStyles}
             >
-                <h4 id="contained-modal-title" className="modal-title">Edit Post</h4>
+                <h5 id="contained-modal-title" className="modal-title">Edit Post</h5>
                 <Form>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label className="skill-text">Services/Goods Required</Form.Label>
                         <div>
                             <input className="goodsAndServices" type="radio" value="GOOD" name="goodRequired"
-                                   onChange={this.goodsOrServicesSelected}/>Goods
+                                   onChange={this.goodsOrServicesSelected} checked={this.state.checkedGood}/>Goods
                             <input className="goodsAndServices" type="radio" value="SERVICE" name="goodRequired"
-                                   onChange={this.goodsOrServicesSelected}/>Services
+                                   onChange={this.goodsOrServicesSelected} checked={this.state.checkedService}/>Services
                         </div>
                         <Form.Label>Goods/Service:</Form.Label>
                         <input className='form-control' type="text" onChange={this.goods}
@@ -109,17 +120,17 @@ class EditPostsByUser extends React.Component {
                         {this.state.goodsOrServicesSelected === "GOOD" &&
                         <div>
                             <input type="radio" id="perItem" className="goodsAndServices" value="PERITEM"
-                                   name="rateType" onChange={this.rateType}/>
+                                   name="rateType" onChange={this.rateType} checked={this.state.checkedPerItem}/>
                             <label htmlFor="perItem">Per Item</label>
                         </div>
                         }
                         {this.state.goodsOrServicesSelected === "SERVICE" &&
                         <div>
                             <input type="radio" id="perHour" className="goodsAndServices" value="PERHOUR"
-                                   name="rateType" onChange={this.rateType}/>
+                                   name="rateType" onChange={this.rateType} checked={this.state.checkedPerHour}/>
                             <label htmlFor="perHour">Per Hour</label>
                             <input type="radio" id="perDay" className="goodsAndServices" value="PERDAY" name="rateType"
-                                   onChange={this.rateType}/>
+                                   onChange={this.rateType} checked={this.state.checkedPerDay}/>
                             <label htmlFor="perDay">Per Day</label>
                         </div>
                         }

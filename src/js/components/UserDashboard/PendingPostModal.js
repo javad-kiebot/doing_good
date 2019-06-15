@@ -19,7 +19,13 @@ class PendingPostModal extends React.Component {
             id: this.props.allPostsByUser.id,
             postType:this.props.allPostsByUser.postType,
             newUser: '',
-            agreedUponPrice:''
+            newOrg: '',
+            agreedUponPrice:null,
+            checkedGood: this.props.allPostsByUser.goodOrService ? (this.props.allPostsByUser.goodOrService === 'GOOD') : false,
+            checkedService: this.props.allPostsByUser.goodOrService ? (this.props.allPostsByUser.goodOrService === 'SERVICE') : false,
+            checkedPerItem: this.props.allPostsByUser.rateType ? (this.props.allPostsByUser.rateType === 'PERITEM') : false,
+            checkedPerDay: this.props.allPostsByUser.rateType ? (this.props.allPostsByUser.rateType === 'PERHOUR') : false,
+            checkedPerHour: this.props.allPostsByUser.rateType ? (this.props.allPostsByUser.rateType === 'PERDAY') : false
         };
         this.goodsOrServicesSelected = this.goodsOrServicesSelected.bind(this);
         this.goods = this.goods.bind(this);
@@ -30,11 +36,14 @@ class PendingPostModal extends React.Component {
         this.rateType = this.rateType.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.onUserChange = this.onUserChange.bind(this);
+        this.onOrgChange = this.onOrgChange.bind(this);
         this.producerSignOff=this.producerSignOff.bind(this);
         this.agreedPrice=this.agreedPrice.bind(this);
     }
     goodsOrServicesSelected(event){
-        this.setState({ goodsOrServicesSelected:event.target.value})
+        this.setState({ goodsOrServicesSelected:event.target.value,
+            checkedService: event.target.value !== "GOOD",
+            checkedGood: event.target.value !== "SERVICE"})
     }
     goods(event){
         this.setState({ goods:event.target.value})
@@ -52,7 +61,10 @@ class PendingPostModal extends React.Component {
         this.setState({ maximum:event.target.value})
     }
     rateType(event){
-        this.setState({ rateType:event.target.value})
+        this.setState({ rateType:event.target.value,
+            checkedPerItem: event.target.value !== "PERHOUR" ,
+            checkedPerDay: event.target.value !== "PERDAY",
+            checkedPerHour: event.target.value !== "PERITEM"})
     }
 
     handleSubmit(event){
@@ -74,6 +86,14 @@ class PendingPostModal extends React.Component {
             this.setState({newUser: event.target.value});
         }else{
             this.setState({newUser: event.target.value });
+        }
+    }
+
+    onOrgChange(event){
+        if(event.target.value === "") {
+            this.setState({newOrg: event.target.value});
+        }else{
+            this.setState({newOrg: event.target.value });
         }
     }
     producerSignOff(){
@@ -104,16 +124,16 @@ class PendingPostModal extends React.Component {
                 contentLabel="Minimal Modal Example"
                 style={customStyles}
             >
-                <h4 id="contained-modal-title" className="modal-title">Edit Post Details</h4>
+                <h5 id="contained-modal-title" className="modal-title">Edit Post Details</h5>
                 <label className="skill-text">Post Details:</label>
                 <Form>
-                    <Form.Group controlId="formBasicEmail">
+                    <Form.Group controlId="formBasicEmail" className="pendingPostFormFormGroup">
                         <Form.Label className="skill-text">Services/Goods Required</Form.Label>
                         <div>
                             <input className="goodsAndServices" type="radio" value="GOOD" name="goodRequired"
-                                   onChange={this.goodsOrServicesSelected}/>Goods
+                                   onChange={this.goodsOrServicesSelected} checked={this.state.checkedGood}/>Goods
                             <input className="goodsAndServices" type="radio" value="SERVICE" name="goodRequired"
-                                   onChange={this.goodsOrServicesSelected}/>Services
+                                   onChange={this.goodsOrServicesSelected} checked={this.state.checkedService}/>Services
                         </div>
                         <Form.Label>Goods/Service:</Form.Label>
                         <input className='form-control' type="text" onChange={this.goods}
@@ -133,39 +153,39 @@ class PendingPostModal extends React.Component {
                         {this.state.goodsOrServicesSelected === "GOOD" &&
                         <div>
                             <input type="radio" id="perItem" className="goodsAndServices" value="PERITEM"
-                                   name="rateType" onChange={this.rateType}/>
+                                   name="rateType" onChange={this.rateType} checked={this.state.checkedPerItem}/>
                             <label htmlFor="perItem">Per Item</label>
                         </div>
                         }
                         {this.state.goodsOrServicesSelected === "SERVICE" &&
                         <div>
                             <input type="radio" id="perHour" className="goodsAndServices" value="PERHOUR"
-                                   name="rateType" onChange={this.rateType}/>
+                                   name="rateType" onChange={this.rateType} checked={this.state.checkedPerHour}/>
                             <label htmlFor="perHour">Per Hour</label>
                             <input type="radio" id="perDay" className="goodsAndServices" value="PERDAY" name="rateType"
-                                   onChange={this.rateType}/>
+                                   onChange={this.rateType} checked={this.state.checkedPerDay}/>
                             <label htmlFor="perDay">Per Day</label>
                         </div>
                         }
+                        <button className="btn btn-default signOffButton"
+                                onClick={this.handleSubmit} type="button">Save Post
+                        </button>
                     </Form.Group>
-                    <button className="btn btn-default signOffButton"
-                            onClick={this.handleSubmit} type="button">Save Post
-                    </button>
-                    <br/>
-                    <label className="control-label">Post Status:</label>
+                    <label className="control-label signOffLabel">Post Status:</label>
                     <div>Following Volunteers and Charity Organisations have shown interest in your post.</div>
                     <label className="skill-text"> Select: </label>
                     <div className="form-group m-0">
-                        <select className="form-control" onChange={this.onUserChange}>
+                        <select className="form-control" onChange={this.onUserChange} disabled={this.state.newOrg}>
                             <option value="">Select User</option>
                                 {listOfUsers && listOfUsers.map((user)=>
                             <option value={user.id}>{user.name}</option>
                             )}
 
                         </select>
+                        <br/>
                         <div>OR</div>
                         <br/>
-                        <select className="form-control" onChange={this.onUserChange}>
+                        <select className="form-control" onChange={this.onOrgChange} disabled={this.state.newUser}>
                             <option value=''>Select User</option>
                             {listOfOrgs && listOfOrgs.map((user)=>
                                 <option value={user.id}>{user.name}</option>
@@ -175,7 +195,8 @@ class PendingPostModal extends React.Component {
                         <br/>
                         <Form.Label>Agreed upon price:</Form.Label>
                         <Form.Control onChange={this.agreedPrice} required/>
-                        <button className="btn btn-default signOffButton" type="button" onClick={this.producerSignOff}>Sign off</button>
+                        <br/>
+                        <button className="btn btn-default signOffButton" type="button" onClick={this.producerSignOff} disabled={!this.state.agreedUponPrice}>Sign off</button>
                     </div>
                     <button className="btn btn-default goodsAndServicesButton"
                             onClick={this.props.handleCloseModal}>Close

@@ -83,7 +83,8 @@ const memberdashboardActions = {
 
     updateMemberUserAction: function(firstName,
                                      lastName,
-                                     address,
+                                     address1,
+                                     address2,
                                      city,
                                      state,
                                      aboutMe,
@@ -97,19 +98,15 @@ const memberdashboardActions = {
             url: 'https://13.127.249.79:9500/api/member/memberUpdate',
             data: {
                 "aboutMe": aboutMe,
-                "address1": address,
-                "address2": address,
+                "address1": address1,
+                "address2":  address2,
                 "city": city,
                 "firstName": firstName,
-                "id": id,
                 "lastName": lastName,
                 "phone": phoneNumber,
-                "state": state,
-                "user": {
-                    "profileEmail": emailId,
-                    "profileId": id
-                },
-                "zipCode": zipCode
+                "state":  state,
+                "ulpId": id,
+                "zipCode":zipCode
             },
             headers: {
                 'Content-Type': 'application/json'

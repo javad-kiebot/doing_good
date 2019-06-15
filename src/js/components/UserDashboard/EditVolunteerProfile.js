@@ -205,6 +205,11 @@ class EditVolunteerProfile extends Component{
                         </div>
                         <div className="card w-auto">
                             <div className="card-body">
+                                <h5 className="cardtitle">My Interested Charitable Organizations</h5>
+                            </div>
+                        </div>
+                        <div className="card w-auto">
+                            <div className="card-body">
                                 <h5>My Interested Charitable Organization:</h5>
                                 <p>Select\Edit Charitable Organization you wish to donate to</p>
                                 <div className="form-group m-0">
@@ -377,12 +382,14 @@ class EditVolunteerProfile extends Component{
                             </div>
                         </div>
                     </div>
-                    <EditUserProfile
-                        showModal={this.state.showUserEditModal}
-                        handleCloseModal={this.handleCloseModal}
-                        session={this.props.session}
-                        memberdashboardactions={this.props.memberdashboardactions}
-                    />
+                    {this.state.showUserEditModal &&
+                        <EditUserProfile
+                            showModal={this.state.showUserEditModal}
+                            handleCloseModal={this.handleCloseModal}
+                            session={this.props.session}
+                            memberdashboardactions={this.props.memberdashboardactions}
+                        />
+                    }
                     {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.length > 0 &&
                     <EditPostsByUser
                         showModal={this.state.showPostsByUserEditModal}
