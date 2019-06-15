@@ -5,7 +5,7 @@ import "../../../assests/sass/editVolunteerProfile.scss";
 // import { Form, Button } from "react-bootstrap";
 
 
-class SignOffModal extends React.Component {
+class ProducerAccpetedModal extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
@@ -13,13 +13,11 @@ class SignOffModal extends React.Component {
             newUser: '',
             agreedUponPrice:''
         };
-        this.producerSignOff=this.producerSignOff.bind(this);
+        this.makeAPayment=this.makeAPayment.bind(this);
     }
 
-    producerSignOff(){
-        this.props.memberdashboardactions.updatePostOnAgreedPrice(this.props.session.id,this.props.allPostsByUser.id,
-            this.props.allPostsByUser.offerPrice,'CONSUMER_SIGNOFF');
-        this.props.handleCloseModal();
+    makeAPayment(){
+        console.log("payment");
     }
 
     render () {
@@ -42,30 +40,28 @@ class SignOffModal extends React.Component {
             >
                 <h4 id="contained-modal-title" className="modal-title">Details :</h4>
                 {(this.props.allPostsByUser.status === 'PENDING_CONSUMER_SIGNOFF') &&
+                <div>
+                    <label className="control-label signOffLabel">Post Status :</label>
                     <div>
-                        <label className="control-label signOffLabel">Post Status :</label>
-                    <div>
-                        <p>Signed-Off By Requester, Please Sign-Off From Your End.</p>
+                        <p>Final Sign-Off From Helper Pending.</p>
                         <label className="control-label signOffLabel">Amount Agreed:{ this.props.allPostsByUser.offerPrice}</label>
                     </div>
-                        <button className="btn btn-defa
-                        ult signOffButton" type="button" onClick={this.producerSignOff}>Sign off</button>
-                    </div>
+                </div>
                 }
                 {(this.props.allPostsByUser.status === 'ACCEPTED') &&
-                    <div>
-                        <label className="control-label signOffLabel">Post Status :</label>
-                        <div>Payment Pending</div>
-                        <label className="control-label signOffLabel">Amount Agreed: { this.props.allPostsByUser.offerPrice}</label>
-
-                    </div>
-
+                <div>
+                    <label className="control-label signOffLabel">Post Status :</label>
+                    <label className="control-label signOffLabel">Amount Agreed: { this.props.allPostsByUser.offerPrice}</label>
+                    <div>Final Sign-Off Given By Helper. Please proceed with payment.</div>
+                    <button className="btn btn-default signOffButton"
+                            type="button" onClick={this.makeAPayment}>Make Payment</button>
+                </div>
                 }
                 <button className="btn btn-default goodsAndServicesButton"
-                            onClick={this.props.handleCloseModal}>Close
-                    </button>
+                        onClick={this.props.handleCloseModal}>Close
+                </button>
             </ReactModal>
         );
     }
 }
-export default SignOffModal ;
+export default ProducerAccpetedModal ;

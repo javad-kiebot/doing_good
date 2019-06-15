@@ -25,7 +25,8 @@ import memberdashboardActions from "../../actions/memberdashboardActions";
 import EditPostsByUser from "./EditPostsByUser";
 import PendingPostModal from "./PendingPostModal";
 import organizationActions from "../../actions/organizationActions";
-import SignOffModal from "./SignOffModal";
+import ConsumerSignOffModal from "./ConsumerSignOffModal";
+import ProducerAccpetedModal from "./ProducerAccpetedModal";
 
 class EditVolunteerProfile extends Component{
 
@@ -41,10 +42,14 @@ class EditVolunteerProfile extends Component{
             myPostIndexWanted: 0,
             myPendingPostIndex: 0,
             assignedPostIndex: 0,
+            assignedWantedPostIndex:0,
+            assignedOfferedPostIndex:0,
             myWantedPendingPostIndex: 0,
             showPendingPosts:false,
             showWantedPendingPosts:false,
+            showOfferedAssignedPosts:false,
             showAssignedPosts:false,
+            showWantedAssignedPosts:false,
             orgSelectedId:[],
             orgSelected:''
         };
@@ -58,6 +63,8 @@ class EditVolunteerProfile extends Component{
         this.handlePendingPosts=this.handlePendingPosts.bind(this);
         this.handleWantedPendingPosts=this.handleWantedPendingPosts.bind(this);
         this.handleAssignedPosts=this.handleAssignedPosts.bind(this);
+        this.handleWantedAssignedPosts=this.handleWantedAssignedPosts.bind(this);
+        this.handleOfferedAssignedPosts=this.handleOfferedAssignedPosts.bind(this);
         this.handleSubmitOrg=this.handleSubmitOrg.bind(this);
         this.onOrgChange=this.onOrgChange.bind(this);
     }
@@ -100,6 +107,14 @@ class EditVolunteerProfile extends Component{
         const id=parseInt(event.target.id.split("_")[1]);
         this.setState({ showAssignedPosts: true, assignedPostIndex: id});
     }
+    handleWantedAssignedPosts (event) {
+        const id=parseInt(event.target.id.split("_")[1]);
+        this.setState({ showWantedAssignedPosts: true, assignedWantedPostIndex: id});
+    }
+    handleOfferedAssignedPosts (event) {
+        const id=parseInt(event.target.id.split("_")[1]);
+        this.setState({ showOfferedAssignedPosts: true, assignedOfferedPostIndex: id});
+    }
     handleCloseModal () {
         if(this.state.showPostsByUserEditModal || this.state.showPostsByUserEditModalWanted) {
             this.props.memberdashboardactions.allPostingByUserIdAction(this.props.session.id);
@@ -112,7 +127,10 @@ class EditVolunteerProfile extends Component{
             showPostsByUserEditModalWanted: false,
             showPendingPosts:false,
             showWantedPendingPosts: false,
-            showAssignedPosts: false});
+            showAssignedPosts: false,
+            showOfferedAssignedPosts: false,
+            showWantedAssignedPosts: false
+        });
     }
 
     gotosearchpostings (){
@@ -228,19 +246,19 @@ class EditVolunteerProfile extends Component{
                         <div className="card w-auto">
                             <div className="card-body">
                                 <h5 className="cardtitle">My accepted Volunteering Opportunities/purchased goods</h5>
-                                {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.map((allPostsByUser) =>
+                                {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.map((allPostsByUser, index) =>
                                     (allPostsByUser.status === "PENDING_CONSUMER_SIGNOFF" || allPostsByUser.status === "ACCEPTED")?
-                                        <li className="cardlabel-Opportunities"><span
-                                            className="label-black">{allPostsByUser.description}</span>
-                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
+                                        <li className="cardlabel-Opportunities" id={`assigneOffereddPost_ ${index}`} onClick={this.handleOfferedAssignedPosts}><span
+                                            className="label-black" id={`assigneOffereddPostDesp_ ${index}`}>{allPostsByUser.description}</span>
+                                            <span className="pull-right label-black" id={`assigneOffereddPostRate_ ${index}`}> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
                                         </li>: null
                                 )
                                 }
-                                {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.map((allPostsByUser) =>
+                                {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.map((allPostsByUser, index) =>
                                     (allPostsByUser.status === "PENDING_CONSUMER_SIGNOFF" || allPostsByUser.status === "ACCEPTED") ?
-                                        <li className="cardlabel-Opportunities"><span
-                                            className="label-black">{allPostsByUser.description}</span>
-                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
+                                        <li className="cardlabel-Opportunities" id={`assigneWanteddPost_ ${index}`} onClick={this.handleWantedAssignedPosts}><span
+                                            className="label-black" id={`assigneWanteddPostDesp_ ${index}`}>{allPostsByUser.description}</span>
+                                            <span className="pull-right label-black" id={`assigneWantedPostRate_ ${index}`} > ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
                                         </li>: null                                )
                                 }
                                 {this.props.assignedPostsBToConsumer && this.props.assignedPostsBToConsumer.map((allPostsByUser, index) =>
@@ -412,8 +430,26 @@ class EditVolunteerProfile extends Component{
                         memberdashboardactions={this.props.memberdashboardactions}
                     />
                     }
+                    {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.length > 0 &&
+                    <ProducerAccpetedModal
+                        showModal={this.state.showOfferedAssignedPosts}
+                        handleCloseModal={this.handleCloseModal}
+                        allPostsByUser={this.props.allPostDataByUserId.offeredGoodOrService ? this.props.allPostDataByUserId.offeredGoodOrService[this.state.assignedOfferedPostIndex] : {}}
+                        session={this.props.session}
+                        memberdashboardactions={this.props.memberdashboardactions}
+                    />
+                    }
+                    {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.length > 0 &&
+                    <ProducerAccpetedModal
+                        showModal={this.state.showWantedAssignedPosts}
+                        handleCloseModal={this.handleCloseModal}
+                        allPostsByUser={this.props.allPostDataByUserId.wantedGoodOrService ? this.props.allPostDataByUserId.wantedGoodOrService[this.state.assignedWantedPostIndex] : {}}
+                        session={this.props.session}
+                        memberdashboardactions={this.props.memberdashboardactions}
+                    />
+                    }
                     {this.props.assignedPostsBToConsumer && this.props.assignedPostsBToConsumer.length > 0 &&
-                    <SignOffModal
+                    <ConsumerSignOffModal
                         showModal={this.state.showAssignedPosts}
                         handleCloseModal={this.handleCloseModal}
                         allPostsByUser={this.props.assignedPostsBToConsumer ? this.props.assignedPostsBToConsumer[this.state.assignedPostIndex] : {}}

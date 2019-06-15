@@ -79,6 +79,7 @@ class PendingPostModal extends React.Component {
     producerSignOff(){
         this.props.memberdashboardactions.updatePostOnAgreedPrice(this.state.newUser,this.props.allPostsByUser.id,
             this.state.agreedUponPrice,'PRODUCER_SIGNOFF');
+        this.props.handleCloseModal();
     }
     agreedPrice(event){
         this.setState({agreedUponPrice:event.target.value})
