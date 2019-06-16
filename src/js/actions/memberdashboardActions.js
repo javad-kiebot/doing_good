@@ -83,7 +83,8 @@ const memberdashboardActions = {
 
     updateMemberUserAction: function(firstName,
                                      lastName,
-                                     address,
+                                     address1,
+                                     address2,
                                      city,
                                      state,
                                      aboutMe,
@@ -97,19 +98,16 @@ const memberdashboardActions = {
             url: 'https://13.127.249.79:9500/api/member/memberUpdate',
             data: {
                 "aboutMe": aboutMe,
-                "address1": address,
-                "address2": address,
+                "address1": address1,
+                "address2":  address2,
                 "city": city,
                 "firstName": firstName,
-                "id": id,
                 "lastName": lastName,
                 "phone": phoneNumber,
-                "state": state,
-                "user": {
-                    "profileEmail": emailId,
-                    "profileId": id
-                },
-                "zipCode": zipCode
+                "state":  state,
+                "email" : emailId,
+                "ulpId": id,
+                "zipCode":zipCode
             },
             headers: {
                 'Content-Type': 'application/json'
@@ -156,11 +154,10 @@ const memberdashboardActions = {
                             type: 'UPDATEPOSTONAGREEDPRICE',
                             // data: response.data
                         });
-                        toastr.success('', 'Successfully updated the post');
                     }
                 },err =>{
                     if(err.response.data.status === 400){
-                        toastr.error('Error ', 'You cannot update the post');
+                        toastr.error('Error ', 'Occured');
                     }
                 })
         }
@@ -186,11 +183,10 @@ const memberdashboardActions = {
                             type: 'ASSIGNEDPOSTTOCONSUMER',
                             data: response.data
                         });
-                        toastr.success('', 'Successfully updated the post');
                     }
                 },err =>{
                     if(err.response.data.status === 400){
-                        toastr.error('Error ', 'You cannot update the post');
+                        toastr.error('Error ', 'Occured');
                     }
                 })
         }

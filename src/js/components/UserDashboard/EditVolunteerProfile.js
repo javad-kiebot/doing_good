@@ -25,6 +25,8 @@ import memberdashboardActions from "../../actions/memberdashboardActions";
 import EditPostsByUser from "./EditPostsByUser";
 import PendingPostModal from "./PendingPostModal";
 import organizationActions from "../../actions/organizationActions";
+import ConsumerSignOffModal from "./ConsumerSignOffModal";
+import ProducerAccpetedModal from "./ProducerAccpetedModal";
 
 class EditVolunteerProfile extends Component{
 
@@ -39,9 +41,15 @@ class EditVolunteerProfile extends Component{
             myPostIndex: 0,
             myPostIndexWanted: 0,
             myPendingPostIndex: 0,
+            assignedPostIndex: 0,
+            assignedWantedPostIndex:0,
+            assignedOfferedPostIndex:0,
             myWantedPendingPostIndex: 0,
             showPendingPosts:false,
             showWantedPendingPosts:false,
+            showOfferedAssignedPosts:false,
+            showAssignedPosts:false,
+            showWantedAssignedPosts:false,
             orgSelectedId:[],
             orgSelected:''
         };
@@ -54,6 +62,9 @@ class EditVolunteerProfile extends Component{
         this.handleWantedPostbyUserModal=this.handleWantedPostbyUserModal.bind(this);
         this.handlePendingPosts=this.handlePendingPosts.bind(this);
         this.handleWantedPendingPosts=this.handleWantedPendingPosts.bind(this);
+        this.handleAssignedPosts=this.handleAssignedPosts.bind(this);
+        this.handleWantedAssignedPosts=this.handleWantedAssignedPosts.bind(this);
+        this.handleOfferedAssignedPosts=this.handleOfferedAssignedPosts.bind(this);
         this.handleSubmitOrg=this.handleSubmitOrg.bind(this);
         this.onOrgChange=this.onOrgChange.bind(this);
     }
@@ -92,6 +103,18 @@ class EditVolunteerProfile extends Component{
         const id=parseInt(event.target.id.split("_")[1]);
         this.setState({ showWantedPendingPosts: true, myWantedPendingPostIndex: id});
     }
+    handleAssignedPosts (event) {
+        const id=parseInt(event.target.id.split("_")[1]);
+        this.setState({ showAssignedPosts: true, assignedPostIndex: id});
+    }
+    handleWantedAssignedPosts (event) {
+        const id=parseInt(event.target.id.split("_")[1]);
+        this.setState({ showWantedAssignedPosts: true, assignedWantedPostIndex: id});
+    }
+    handleOfferedAssignedPosts (event) {
+        const id=parseInt(event.target.id.split("_")[1]);
+        this.setState({ showOfferedAssignedPosts: true, assignedOfferedPostIndex: id});
+    }
     handleCloseModal () {
         if(this.state.showPostsByUserEditModal || this.state.showPostsByUserEditModalWanted) {
             this.props.memberdashboardactions.allPostingByUserIdAction(this.props.session.id);
@@ -103,7 +126,11 @@ class EditVolunteerProfile extends Component{
             showPostsByUserEditModal:false,
             showPostsByUserEditModalWanted: false,
             showPendingPosts:false,
-            showWantedPendingPosts: false});
+            showWantedPendingPosts: false,
+            showAssignedPosts: false,
+            showOfferedAssignedPosts: false,
+            showWantedAssignedPosts: false
+        });
     }
 
     gotosearchpostings (){
@@ -111,21 +138,16 @@ class EditVolunteerProfile extends Component{
     }
 
     onOrgChange(event){
-        if(event.target.value === "Select Org") {
-            this.setState({orgSelectedId: [0], orgSelected: event.target.value});
+        if(event.target.value === "") {
+            this.setState({orgSelectedId: event.target.value});
         }else{
-            for(let i=0; i < this.props.getAllOrgs.length;i++){
-                if(this.props.getAllOrgs[i].organizationName === event.target.value){
-                    this.state.orgSelectedId.push(this.props.getAllOrgs[i].id);
-                }
-            }
-            this.setState({orgSelectedId: this.state.orgSelectedId, orgSelected: event.target.value});
+            this.setState({orgSelectedId: event.target.value});
         }
     }
 
     handleSubmitOrg(event){
         this.props.session.id &&
-        this.props.organizationAction.linkToOrgsAction(this.props.session.id, this.state.orgSelectedId);
+        this.props.organizationAction.linkToOrgsAction(this.props.session.id, [this.state.orgSelectedId]);
         console.log(this.props.getAllOrgs);
     }
 
@@ -199,11 +221,11 @@ class EditVolunteerProfile extends Component{
                                 <h5>My Interested Charitable Organization:</h5>
                                 <p>Select\Edit Charitable Organization you wish to donate to</p>
                                 <div className="form-group m-0">
-                                    <select className="form-control" value={this.state.orgSelected}
+                                    <select className="form-control"
                                             onChange={this.onOrgChange}>
-                                        <option>Select Org</option>
+                                        <option value = "">Select Org</option>
                                         {this.props.getAllOrgs && this.props.getAllOrgs.map((org) =>
-                                            <option>{org.organizationName}</option>
+                                            <option value={org.id}>{org.organizationName}</option>
                                         )}
 
                                     </select>
@@ -219,26 +241,26 @@ class EditVolunteerProfile extends Component{
                         <div className="card w-auto">
                             <div className="card-body">
                                 <h5 className="cardtitle">My accepted Volunteering Opportunities/purchased goods</h5>
-                                {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.map((allPostsByUser) =>
-                                    allPostsByUser.status === "PENDING_CONSUMER_SIGNOFF" ?
-                                        <li className="cardlabel-Opportunities"><span
-                                            className="label-black">{allPostsByUser.description}</span>
-                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
+                                {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.map((allPostsByUser, index) =>
+                                    (allPostsByUser.status === "PENDING_CONSUMER_SIGNOFF" || allPostsByUser.status === "ACCEPTED")?
+                                        <li className="cardlabel-Opportunities" id={`assigneOffereddPost_ ${index}`} onClick={this.handleOfferedAssignedPosts}><span
+                                            className="label-black" id={`assigneOffereddPostDesp_ ${index}`}>{allPostsByUser.description}</span>
+                                            <span className="pull-right label-black" id={`assigneOffereddPostRate_ ${index}`}> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
                                         </li>: null
                                 )
                                 }
-                                {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.map((allPostsByUser) =>
-                                    allPostsByUser.status === "PENDING_CONSUMER_SIGNOFF" ?
-                                        <li className="cardlabel-Opportunities"><span
-                                            className="label-black">{allPostsByUser.description}</span>
-                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
+                                {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.map((allPostsByUser, index) =>
+                                    (allPostsByUser.status === "PENDING_CONSUMER_SIGNOFF" || allPostsByUser.status === "ACCEPTED") ?
+                                        <li className="cardlabel-Opportunities" id={`assigneWanteddPost_ ${index}`} onClick={this.handleWantedAssignedPosts}><span
+                                            className="label-black" id={`assigneWanteddPostDesp_ ${index}`}>{allPostsByUser.description}</span>
+                                            <span className="pull-right label-black" id={`assigneWantedPostRate_ ${index}`} > ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
                                         </li>: null                                )
                                 }
-                                {this.props.assignedPostsBToConsumer && this.props.assignedPostsBToConsumer.map((allPostsByUser) =>
-                                    allPostsByUser.status === "PENDING_CONSUMER_SIGNOFF" ?
-                                        <li className="cardlabel-Opportunities"><span
-                                            className="label-black">{allPostsByUser.description}</span>
-                                            <span className="pull-right label-black"> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
+                                {this.props.assignedPostsBToConsumer && this.props.assignedPostsBToConsumer.map((allPostsByUser, index) =>
+                                    (allPostsByUser.status === "PENDING_CONSUMER_SIGNOFF" || allPostsByUser.status === "ACCEPTED")?
+                                        <li className="cardlabel-Opportunities"  id={`assignedPost_ ${index}`} onClick={this.handleAssignedPosts}><span
+                                            className="label-black"  id={`assignedPostDesp_ ${index}`}>{allPostsByUser.description}</span>
+                                            <span className="pull-right label-black" id={`assignedPostRate_ ${index}`}> ${allPostsByUser.rate}/{allPostsByUser.rateType === "PERITEM" ? "item" : "hour"}</span>
                                         </li>: null                                )
                                 }
                                 </div>
@@ -360,12 +382,14 @@ class EditVolunteerProfile extends Component{
                             </div>
                         </div>
                     </div>
-                    <EditUserProfile
-                        showModal={this.state.showUserEditModal}
-                        handleCloseModal={this.handleCloseModal}
-                        session={this.props.session}
-                        memberdashboardactions={this.props.memberdashboardactions}
-                    />
+                    {this.state.showUserEditModal &&
+                        <EditUserProfile
+                            showModal={this.state.showUserEditModal}
+                            handleCloseModal={this.handleCloseModal}
+                            session={this.props.session}
+                            memberdashboardactions={this.props.memberdashboardactions}
+                        />
+                    }
                     {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.length > 0 &&
                     <EditPostsByUser
                         showModal={this.state.showPostsByUserEditModal}
@@ -399,6 +423,33 @@ class EditVolunteerProfile extends Component{
                         showModal={this.state.showWantedPendingPosts}
                         handleCloseModal={this.handleCloseModal}
                         allPostsByUser={this.props.allPostDataByUserId.wantedGoodOrService ? this.props.allPostDataByUserId.wantedGoodOrService[this.state.myWantedPendingPostIndex] : {}}
+                        session={this.props.session}
+                        memberdashboardactions={this.props.memberdashboardactions}
+                    />
+                    }
+                    {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.length > 0 &&
+                    <ProducerAccpetedModal
+                        showModal={this.state.showOfferedAssignedPosts}
+                        handleCloseModal={this.handleCloseModal}
+                        allPostsByUser={this.props.allPostDataByUserId.offeredGoodOrService ? this.props.allPostDataByUserId.offeredGoodOrService[this.state.assignedOfferedPostIndex] : {}}
+                        session={this.props.session}
+                        memberdashboardactions={this.props.memberdashboardactions}
+                    />
+                    }
+                    {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.length > 0 &&
+                    <ProducerAccpetedModal
+                        showModal={this.state.showWantedAssignedPosts}
+                        handleCloseModal={this.handleCloseModal}
+                        allPostsByUser={this.props.allPostDataByUserId.wantedGoodOrService ? this.props.allPostDataByUserId.wantedGoodOrService[this.state.assignedWantedPostIndex] : {}}
+                        session={this.props.session}
+                        memberdashboardactions={this.props.memberdashboardactions}
+                    />
+                    }
+                    {this.props.assignedPostsBToConsumer && this.props.assignedPostsBToConsumer.length > 0 &&
+                    <ConsumerSignOffModal
+                        showModal={this.state.showAssignedPosts}
+                        handleCloseModal={this.handleCloseModal}
+                        allPostsByUser={this.props.assignedPostsBToConsumer ? this.props.assignedPostsBToConsumer[this.state.assignedPostIndex] : {}}
                         session={this.props.session}
                         memberdashboardactions={this.props.memberdashboardactions}
                     />

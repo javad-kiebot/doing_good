@@ -1,7 +1,9 @@
 import React from "react";
+import GoodsAndServicesModal from "../SearchPostings/GoodsAndServicesModal";
+import EditPostModal from "./EditPostModal";
 
 const PostNewServiceOrWantedServiceButtons = (props) => {
-    const { actions } = props;
+    const { actions, isModalOpen, organization } = props;
     return(
         <div className="container cardwidth-button">
             <div className="row">
@@ -18,6 +20,9 @@ const PostNewServiceOrWantedServiceButtons = (props) => {
                     </button>
                 </div>
             </div>
+            {isModalOpen &&
+                <EditPostModal {...props} />
+            }
         </div>
     )
 

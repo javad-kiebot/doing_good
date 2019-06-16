@@ -17,7 +17,6 @@ import EditPostModal from "../components/OrganisationDashboard/EditPostModal";
 import PostNewServiceOrWantedServiceButtons
     from "../components/OrganisationDashboard/PostNewServiceOrWantedServiceButtons";
 
-
  class OrganizationDashboardContainer extends Component {
      constructor(props) {
          super(props);
@@ -27,6 +26,7 @@ import PostNewServiceOrWantedServiceButtons
      componentWillMount() {
          this.props.organization.id &&
          this.props.actions.allPostingByUserIdAction(this.props.organization.id);
+         this.props.actions.assignedPostToConsumer(this.props.organization.id);
      }
 
      gotoSearchPostings (){
@@ -34,21 +34,23 @@ import PostNewServiceOrWantedServiceButtons
          hashHistory.push("/searchposting");
 
      }
-
      render() {
-         const { actions, postDetails } = this.props;
+         const { actions, postDetails, assignedPostsBToConsumer, organization} = this.props;
+
          return(
              <div className="fullwidth">
                 <Header { ...this.props } gotoSearchPostings={this.gotoSearchPostings}/>
                  <div className="cardwidth row">
                      <EditOrganizationProfile { ...this.props } />
                      <div className="col-md-8 col-sm-12">
-                         <EditAcceptedPosts { ...this.props } postDetails={ postDetails ? postDetails:{}} />
-                         <EditNewPosts { ...this.props } postDetails={ postDetails ? postDetails:{}} />
-                         <EditPendingPosts { ...this.props } postDetails={ postDetails ? postDetails:{}} />
+                         <EditAcceptedPosts { ...this.props }
+                                postDetails={ postDetails ? postDetails:{}}
+                                assignedPostsBToConsumer={ assignedPostsBToConsumer ? assignedPostsBToConsumer : []} />
+                         <EditNewPosts { ...this.props } postDetails={ postDetails ? postDetails:{}} organization={organization}/>
+                         <EditPendingPosts { ...this.props } postDetails={ postDetails ? postDetails:{}} organization={organization} />
                      </div>
                 </div>
-                 <PostNewServiceOrWantedServiceButtons actions={actions} />
+                 <PostNewServiceOrWantedServiceButtons actions={actions} organization={organization} />
                 <Footer />
             </div>
          )}
@@ -58,6 +60,7 @@ function mapStateToProps(state){
     return{
         organization:state.loginReducer.session,
         allPostDataById:state.memberDashboardReducer.allPostDataByUserId,
+        assignedPostsBToConsumer:state.memberDashboardReducer.assignedPostsBToConsumer,
         isModalOpen: state.organizationDashboardReducer.isModalOpen,
         modalValues: state.organizationDashboardReducer,
         postDetails: state.organizationDashboardReducer.postDetails

@@ -8,15 +8,16 @@ class EditUserProfile extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
-            firstName: props.session.firstName,
-            lastName:props.session.lastName,
-            address:props.session.address1,
-            stateName:props.session.state,
-            city:props.session.city,
-            aboutMe:props.session.aboutMe,
-            phoneNumber:props.session.phoneNumber,
-            emailId:props.session.email,
-            zipcode: props.session.zipcode
+            firstName: this.props.session.firstName,
+            lastName:this.props.session.lastName,
+            address1:this.props.session.address1,
+            address2:this.props.session.address2,
+            stateName:this.props.session.state,
+            city:this.props.session.city,
+            aboutMe:this.props.session.aboutme,
+            phoneNumber:this.props.session.phoneNumber,
+            emailId:this.props.session.email,
+            zipcode: this.props.session.zipcode
         };
         this.changeFirstName = this.changeFirstName.bind(this);
         this.changeLastName = this.changeLastName.bind(this);
@@ -28,22 +29,7 @@ class EditUserProfile extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.changeState = this.changeState.bind(this);
         this.changeCity = this.changeCity.bind(this);
-    }
-
-    handleSubmit(event){
-        this.props.memberdashboardactions.updateMemberUserAction(
-            this.state.firstName,
-            this.state.lastName,
-            this.state.address,
-            this.state.city,
-            this.state.stateName,
-            this.state.aboutMe,
-            this.state.phoneNumber,
-            this.state.emailId,
-            this.state.zipcode,
-            this.props.session.id
-        );
-        console.log("User updated");
+        this.changeAddress2 = this.changeAddress2.bind(this);
     }
 
     changeFirstName(event){
@@ -53,7 +39,10 @@ class EditUserProfile extends React.Component {
         this.setState({ lastName:event.target.value})
     }
     changeAddress(event){
-        this.setState({ address:event.target.value})
+        this.setState({ address1:event.target.value})
+    }
+    changeAddress2(event){
+        this.setState({ address2:event.target.value})
     }
     changeZipcode(event){
         this.setState({ zipcode:event.target.value})
@@ -74,6 +63,23 @@ class EditUserProfile extends React.Component {
         this.setState({ city:event.target.value})
     }
 
+    handleSubmit(event){
+        this.props.memberdashboardactions.updateMemberUserAction(
+            this.state.firstName,
+            this.state.lastName,
+            this.state.address1,
+            this.state.address2,
+            this.state.city,
+            this.state.stateName,
+            this.state.aboutMe,
+            this.state.phoneNumber,
+            this.state.emailId,
+            this.state.zipcode,
+            this.props.session.id
+        );
+        this.props.handleCloseModal();
+    }
+
     render () {
         const customStyles = {
             content : {
@@ -91,7 +97,7 @@ class EditUserProfile extends React.Component {
                 contentLabel="Minimal Modal Example"
                 style={customStyles}
             >
-                <h4 id="contained-modal-title" className="modal-title">Edit User Profile</h4>
+                <h5 id="contained-modal-title" className="modal-title">Edit User Profile</h5>
                 <Form>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label >First name</Form.Label>
@@ -99,7 +105,10 @@ class EditUserProfile extends React.Component {
                         <Form.Label >Last name</Form.Label>
                         <Form.Control type="text" onChange={this.changeLastName} defaultValue={this.props.session.lastName} />
                         <Form.Label>Address</Form.Label>
-                        <Form.Control type="text" onChange={this.changeAddress} defaultValue={`${this.props.session.address1}, ${this.props.session.address2}`}/>
+                        <Form.Control type="text" onChange={this.changeAddress} defaultValue={this.props.session.address1}/>
+                        <Form.Label>Address flat or Apt#</Form.Label>
+                        <Form.Control type="text" onChange={this.changeAddress2} defaultValue={this.props.session.address2}/>
+
                         <Form.Label>City</Form.Label>
                         <Form.Control type="text" onChange={this.changeCity} defaultValue={this.props.session.city}/>
                         <Form.Label>State</Form.Label>

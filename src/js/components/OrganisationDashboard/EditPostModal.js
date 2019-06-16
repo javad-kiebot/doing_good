@@ -1,4 +1,5 @@
 import React from 'react';
+
 import PropTypes from "prop-types";
 import ReactModal from "react-modal";
 import {Form} from "react-bootstrap";
@@ -109,7 +110,6 @@ const EditPostModal=(props)=>{
         </ReactModal>
     )
 };
-
 EditPostModal.propTypes = {
     modalValues: PropTypes.object,
     actions: PropTypes.object,

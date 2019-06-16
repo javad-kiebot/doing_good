@@ -40,6 +40,38 @@ const searchPostingActions = {
                 })
         }
     },
+    searchPostServiceAction: function(orgSelected, postingType, quickSearchInput) {
+        const request = {
+            method: 'post',
+            responseType: 'json',
+            url: 'https://13.127.249.79:9500/api/posting/searchPost',
+            data: {
+                "organizationId": orgSelected,
+                "postingType": postingType,
+                "quickSearch": quickSearchInput,
+                "radius": 0,
+                "zipCode": ""
+            },
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+        return (dispatch) => {
+            axios(request)
+                .then(response => {
+                    if (response.status === 200) {
+                        dispatch({
+                            type: 'ALLSERVICEREQUEST',
+                            data: response.data
+                        });
+                    }
+                },err =>{
+                    if(err.response.status === 400){
+                        toastr.error('Error ', 'Invalid search');
+                    }
+                })
+        }
+    },
 
     postWorkRequestAction: function(goodsOrServicesSelected,
                                     goods,

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PostDetails from './PostDetails';
+import PendingPostModal from "../UserDashboard/PendingPostModal";
 
 const EditPendingPosts= (props) => {
     const { allPostDataById, actions, modalValues, organization, isModalOpen, postDetails  } = props;

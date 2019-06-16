@@ -1,3 +1,15 @@
+
+import { OPEN_MODAL,
+    CLOSE_MODAL,
+    SET_POST_DETAILS,
+    SET_GOOD_OR_SERVICE_SELECTED,
+    SET_GOOD_OR_SERVICE,
+    SET_DESCRIPTION,
+    SET_RATE,
+    SET_MINIMUM_AMOUNT,
+    SET_MAXIMUM_AMOUNT,
+    SET_RATE_TYPE} from "../actions/organizationDashboardActions";
+
 const initialState = {
   isModalOpen:false
 };
@@ -14,7 +26,8 @@ const organizationDashboardReducer = (state = initialState, action) => {
         case "SET_MINIMUM_AMOUNT": return{...state, description: action.minimumAmount};
         case "SET_MAXIMUM_AMOUNT": return{...state, description: action.maximumAmount};
         case "SET_RATE_TYPE": return{...state, rateType: action.rateType};
-        default: return state;
+        default:
+            return initialState;
     }
 };
 

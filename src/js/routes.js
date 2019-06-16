@@ -26,7 +26,6 @@ export default (
             <Route path="searchposting" component={SearchPostingContainer} />
             <Route path="landingpage" component={LandingPageContainer} />
             <Route path="editVoluteerProfile" component={EditVolunteerProfile} />
-            {/*<Route path="completebasicprofile" component={CompleteBasicProfile} />*/}
             <Route path="organizationDashboard" component={OrganizationDashboardContainer} />
             <Route path="activate/:email/:token" component={ActiveUser} />
             <Route path="forgotpassword/:email/:token" component={forgotPasswordEmailScreen} />
