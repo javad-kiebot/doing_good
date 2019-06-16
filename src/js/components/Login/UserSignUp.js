@@ -225,11 +225,11 @@ class UserSignUp extends Component {
                             </div>
                             <div className="form-group mb-2">
                                 <label>State</label>
-                                <input name="state" className="form-control" onChange={this.handleChange} type="text" placeholder="Please enter State"/>
+                                <input name="state"  maxLength='5' className="form-control" onChange={this.handleChange} type="text" placeholder="Please enter State"/>
                             </div>
                             <div className="form-group mb-2">
-                                <label>zip code</label>
-                                <input name="zipcode" className="form-control" onChange={this.handleChange} type="text" placeholder="Please enter zip code "/>
+                                <label>Zip code</label>
+                                <input name="zipcode" className="form-control" maxLength="5" onChange={this.handleChange} type="text" placeholder="Please enter zip code "/>
                             </div>
                             <div className="form-group mb-2">
                                 <label>Email*</label>

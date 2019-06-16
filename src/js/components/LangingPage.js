@@ -55,7 +55,7 @@ class LandingPage extends Component {
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav mx-auto text-right">
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">Start Doing Good</a>
+                                    <Link className="nav-link" to="/usersignup">Start Doing Good</Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/login">Member Login</Link>

@@ -114,13 +114,13 @@ class EditUserProfile extends React.Component {
                         <Form.Label>State</Form.Label>
                         <Form.Control type="text" onChange={this.changeState} defaultValue={this.props.session.state}/>
                         <Form.Label>Zip code</Form.Label>
-                        <Form.Control type="text" onChange={this.changeZipcode} defaultValue={this.props.session.zipcode}/>
+                        <Form.Control type="text" maxLength='5' onChange={this.changeZipcode} defaultValue={this.props.session.zipcode}/>
                         <Form.Label>About Me</Form.Label>
                         <Form.Control type="text" onChange={this.changeAboutMe} defaultValue={this.props.session.aboutme}/>
                         <Form.Label>Phone Number</Form.Label>
-                        <Form.Control type="text" onChange={this.changePhoneNumber} defaultValue={this.props.session.phoneNumber}/>
+                        <Form.Control type="text" maxLength="10" onChange={this.changePhoneNumber} defaultValue={this.props.session.phoneNumber}/>
                         <Form.Label>Email Id</Form.Label>
-                        <Form.Control type="text" onChange={this.changeEmail} defaultValue={this.props.session.email}/>
+                        <Form.Control type="email" onChange={this.changeEmail} defaultValue={this.props.session.email}/>
                     </Form.Group>
                     <button className="btn btn-default goodsAndServicesButton goodsAndServicesButtonRight" onClick={this.handleSubmit} type="button">Save</button>
                     <button className="btn btn-default goodsAndServicesButton" onClick={this.props.handleCloseModal}>Close</button>

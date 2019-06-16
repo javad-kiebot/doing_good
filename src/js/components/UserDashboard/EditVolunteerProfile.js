@@ -176,7 +176,7 @@ class EditVolunteerProfile extends Component{
 
                         </Col>
                         <Col md={7}>
-                            <h3>Welcome, SOUTHERN ILLINOIS CARBONDALE</h3>
+                            <h3>Welcome, {(this.props.session.firstName).toUpperCase()} {this.props.session.lastName.toUpperCase()}</h3>
                             <p className="welcomeMessage">You are DoingGood by offering <br/>
                                 your time, services and goods.</p>
                         </Col>
