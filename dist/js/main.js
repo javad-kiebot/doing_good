@@ -51674,7 +51674,7 @@ var SearchPosting = function (_Component) {
                             null,
                             _react2.default.createElement(
                                 _reactRouter.Link,
-                                { to: '/editVoluteerProfile', className: 'current' },
+                                { to: this.props.session.userRole === "ORGANIZATION" ? "/organizationDashboard" : "/editVoluteerProfile", className: 'current' },
                                 _react2.default.createElement(
                                     'span',
                                     { className: 'textcenter' },
