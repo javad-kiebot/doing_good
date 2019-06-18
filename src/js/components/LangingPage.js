@@ -9,7 +9,7 @@ import oldPurchase from "../../assests/images/home/oldpurchase_time.png";
 import equalTo from "../../assests/images/home/equal_to.jpg";
 import nonProfit from "../../assests/images/home/non_profit.png";
 import walkingDog from "../../assests/images/home/Walking_Dog-512457253.png";
-import teachPiano from "../../assests/images/home/Teach_Piano-96162171.png";
+import teachPiano from "../../assests/images/home/TeachPiano.jpg";
 import groupImg from "../../assests/images/home/group-510486410.png";
 import aaManSmile from "../../assests/images/home/AA_Man_smile.png";
 import teachQuitar from "../../assests/images/home/teach_guitar-bright.jpg";
