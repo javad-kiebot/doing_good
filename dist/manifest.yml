@@ -1,5 +1,5 @@
 application:
-  name: doing-good
+  name: doing-good-app
   memory: 800M
   instances: 1
   buildpack: staticfile_buildpack

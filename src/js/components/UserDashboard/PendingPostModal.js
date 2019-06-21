@@ -18,8 +18,8 @@ class PendingPostModal extends React.Component {
             rateType:this.props.allPostsByUser.rateType,
             id: this.props.allPostsByUser.id,
             postType:this.props.allPostsByUser.postType,
-            newUser: '',
-            newOrg: '',
+            newUser: 0,
+            newOrg: 0,
             agreedUponPrice:null,
             checkedGood: this.props.allPostsByUser.goodOrService ? (this.props.allPostsByUser.goodOrService === 'GOOD') : false,
             checkedService: this.props.allPostsByUser.goodOrService ? (this.props.allPostsByUser.goodOrService === 'SERVICE') : false,
@@ -82,19 +82,11 @@ class PendingPostModal extends React.Component {
         this.props.handleCloseModal();
     }
     onUserChange(event){
-        if(event.target.value === "") {
             this.setState({newUser: event.target.value});
-        }else{
-            this.setState({newUser: event.target.value });
-        }
     }
 
     onOrgChange(event){
-        if(event.target.value === "") {
-            this.setState({newOrg: event.target.value});
-        }else{
             this.setState({newOrg: event.target.value });
-        }
     }
     producerSignOff(){
         this.props.memberdashboardactions.updatePostOnAgreedPrice(this.state.newUser,this.props.allPostsByUser.id,
@@ -175,8 +167,7 @@ class PendingPostModal extends React.Component {
                     <div>Following Volunteers and Charity Organisations have shown interest in your post.</div>
                     <label className="skill-text"> Select: </label>
                     <div className="form-group m-0">
-                        <select className="form-control" onChange={this.onUserChange} disabled={this.state.newOrg}>
-                            <option value="">Select User</option>
+                        <select className="form-control" onChange={this.onUserChange} disabled={this.state.newOrg}>r
                                 {listOfUsers && listOfUsers.map((user)=>
                             <option value={user.id}>{user.name}</option>
                             )}
@@ -186,7 +177,6 @@ class PendingPostModal extends React.Component {
                         <div>OR</div>
                         <br/>
                         <select className="form-control" onChange={this.onOrgChange} disabled={this.state.newUser}>
-                            <option value=''>Select User</option>
                             {listOfOrgs && listOfOrgs.map((user)=>
                                 <option value={user.id}>{user.name}</option>
                             )}

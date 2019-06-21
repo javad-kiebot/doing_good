@@ -9,17 +9,17 @@ import photoIcon from "../../../assests/images/dashboard/Photo_icon.png";
 import addphotoIcon from "../../../assests/images/dashboard/add photo icon.png";
 import "../../../assests/sass/editVolunteerProfile.scss";
 import loginActions from "../../actions/loginActions";
-import paint_fence from "../../../assests/images/dashboard/paint_fence.jpg";
-import tennis from "../../../assests/images/dashboard/tennis.jpg";
-import kitchen_teach from "../../../assests/images/dashboard/kitchen_teach.jpg";
-import cloud6 from "../../../assests/images/dashboard/couch6_enlarged.jpg";
-import rake_leaves from "../../../assests/images/dashboard/Rake_leaves.jpg";
+import Teach_Piano from "../../../assests/images/home/TeachPiano.jpg";
+import boys_bike from "../../../assests/images/home/boys_bike.jpg";
+import tutor from "../../../assests/images/home/tutor.png";
+import garage from "../../../assests/images/home/garage_box.jpg";
+import teach_computer from "../../../assests/images/home/teach_computer.jpg";
 import dginsta from "../../../assests/images/home/dg-insta.png";
 import dgfb from "../../../assests/images/home/dg-fb.png";
 import dgtwitter from "../../../assests/images/home/dg-twitter.png";
 import GoodsAndServicesModal from "../SearchPostings/GoodsAndServicesModal";
 import searchPostingActions from "../../actions/searchPostingActions";
-import EditUserProfile from "./EditUserProfile";
+import EditOrgProfileContent from "./EditOrgProfileContent";
 import memberDashboardReducer from "../../reducers/memberDashboardReducer";
 import memberdashboardActions from "../../actions/memberdashboardActions";
 import EditPostsByUser from "./EditPostsByUser";
@@ -28,7 +28,7 @@ import organizationActions from "../../actions/organizationActions";
 import ConsumerSignOffModal from "./ConsumerSignOffModal";
 import ProducerAccpetedModal from "./ProducerAccpetedModal";
 
-class EditVolunteerProfile extends Component{
+class EditOrgProfile extends Component{
 
     constructor(props) {
         super(props);
@@ -163,7 +163,7 @@ class EditVolunteerProfile extends Component{
                             <Col><Link to= "/login" className="current"><span className="textcenter logoutText">Logout</span></Link></Col>
                         </Row>
                     </Container>
-                    <Row className="bgWelcomeMessage">
+                    <Row className="bgOrgWelcomeMessage">
                         <Col md={1}>
                         </Col>
                         <Col md={1}>
@@ -176,14 +176,14 @@ class EditVolunteerProfile extends Component{
 
                         </Col>
                         <Col md={7}>
-                            <h3>Welcome, {(this.props.session.firstName)} {this.props.session.lastName}</h3>
+                            <h3>Welcome,{this.props.session.organizationName}</h3>
                             <p className="welcomeMessage">You are DoingGood by offering <br/>
                                 your time, services and goods.</p>
                         </Col>
-                        <Col><h3>Thank you for</h3><img src={doingGoodHero} width="auto" height="70px" className="imgcenter"/></Col>
+                        <Col><img src={doingGoodHero} width="auto" height="70px" className="imgcenter"/></Col>
                     </Row>
-                <div className="show-grid orangeBar">
-                    <label>DoingGood Member Dashboard</label>
+                <div className="show-grid blueBar">
+                    <label>DoingGood Organization Dashboard</label>
                 </div>
                 {/*
                     Card Readers Starts
@@ -194,11 +194,9 @@ class EditVolunteerProfile extends Component{
                             <div className="card-body">
                                 <ul className="nobullet">
                                     <li className="cardlabel-Orange">About ME <span className="pull-right"><a onClick={this.handleUserEditModal}>Edit</a></span></li>
-                                    <li className="cardlabel">{this.props.session.firstName} {this.props.session.lastName}</li>
-                                    <li className="cardlabel">{this.props.session.address1}, {this.props.session.address2}, {this.props.session.city}, {this.props.session.state}</li>
-                                    <li className="cardlabel">{this.props.session.zipcode}</li>
+                                    <li className="cardlabel">{this.props.session.organizationName}</li>
+                                    <li className="cardlabel">{this.props.session.websiteUrl}</li>
                                     <li className="cardlabel">{this.props.session.aboutme}</li>
-                                    <li className="cardlabel">{this.props.session.phoneNumber}</li>
                                     <li className="cardlabel">{this.props.session.email}</li>
                                 </ul>
                             </div>
@@ -206,6 +204,14 @@ class EditVolunteerProfile extends Component{
                         <div className="card w-auto">
                             <div className="card-body">
                                 <h5 className="cardtitle">My Interested Charitable Organizations</h5>
+                            </div>
+                        </div>
+                        <div className="card w-auto">
+                            <div className="card-body">
+                                <h5 className="cardtitle">My Doing Good Success</h5>
+                                <ul className="nobullet">
+                                <li className="cardLabel-raised">$$$ RAISED (to date)<span className="span-raised"> $0</span></li>
+                                </ul>
                             </div>
                         </div>
                         <div className="card w-auto">
@@ -226,14 +232,6 @@ class EditVolunteerProfile extends Component{
                                 <button className="btn btn-default signOffButton" onClick={this.handleSubmitOrg}
                                         type="button">Save
                                 </button>
-                            </div>
-                        </div>
-                        <div className="card w-auto">
-                            <div className="card-body">
-                                <h5 className="cardtitle">My Doing Good Success</h5>
-                                <ul className="nobullet">
-                                <li className="cardLabel-raised">$$$ RAISED (to date)<span className="span-raised"> $0</span></li>
-                                </ul>
                             </div>
                         </div>
                     </div>
@@ -345,19 +343,19 @@ class EditVolunteerProfile extends Component{
                     <div className="container-fluid">
                         <div className="row">
                             <div className="fiveimages col-sm col-12">
-                                <img src={ paint_fence } alt="image" className="img-fluid"/>
+                                <img src={ Teach_Piano } alt="image" className="img-fluid"/>
                             </div>
                             <div className="fiveimages col-sm col-12">
-                                <img src={tennis} alt="image" className="img-fluid"/>
+                                <img src={boys_bike} alt="image" className="img-fluid"/>
                             </div>
                             <div className="fiveimages col-sm col-12">
-                                <img src={kitchen_teach} alt="image" className="img-fluid"/>
+                                <img src={tutor} alt="image" className="img-fluid"/>
                             </div>
                             <div className="fiveimages col-sm col-12">
-                                <img src={cloud6} alt="image" className="img-fluid"/>
+                                <img src={garage} alt="image" className="img-fluid"/>
                             </div>
                             <div className="fiveimages col-sm col-12">
-                                <img src={rake_leaves} alt="image" className="img-fluid"/>
+                                <img src={teach_computer} alt="image" className="img-fluid"/>
                             </div>
                         </div>
                     </div>
@@ -383,22 +381,23 @@ class EditVolunteerProfile extends Component{
                         </div>
                     </div>
                     {this.state.showUserEditModal &&
-                        <EditUserProfile
+                        <EditOrgProfileContent
                             showModal={this.state.showUserEditModal}
                             handleCloseModal={this.handleCloseModal}
                             session={this.props.session}
+                            organizationAction={this.props.organizationAction}
                             memberdashboardactions={this.props.memberdashboardactions}
                         />
                     }
                     {this.props.allPostDataByUserId && this.props.allPostDataByUserId.offeredGoodOrService.length > 0 &&
-                    <EditPostsByUser
-                        showModal={this.state.showPostsByUserEditModal}
-                        handleCloseModal={this.handleCloseModal}
-                        allPostsByUser={this.props.allPostDataByUserId.offeredGoodOrService ? this.props.allPostDataByUserId.offeredGoodOrService[this.state.myPostIndex] : {}}
-                        session={this.props.session}
-                        memberdashboardactions={this.props.memberdashboardactions}
+                        <EditPostsByUser
+                            showModal={this.state.showPostsByUserEditModal}
+                            handleCloseModal={this.handleCloseModal}
+                            allPostsByUser={this.props.allPostDataByUserId.offeredGoodOrService ? this.props.allPostDataByUserId.offeredGoodOrService[this.state.myPostIndex] : {}}
+                            session={this.props.session}
+                            memberdashboardactions={this.props.memberdashboardactions}
 
-                    />
+                        />
                     }
                     {this.props.allPostDataByUserId && this.props.allPostDataByUserId.wantedGoodOrService.length > 0 &&
                     <EditPostsByUser
@@ -476,4 +475,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditVolunteerProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(EditOrgProfile);

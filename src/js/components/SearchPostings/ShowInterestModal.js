@@ -28,17 +28,17 @@ class ShowInterestModal extends React.Component {
             >
                 <h4 id="contained-modal-title" className="modal-title">Show Interest</h4>
                 <div className="form-group">
-                    <label className="control-label">Goods/Service:</label>
-                    <label className="control-label">{this.props.posts.goodOrService}</label>
+                    <label className="control-label">Goods/Service: </label>
+                    <label className="control-label"> {this.props.posts.goodOrService}</label>
                     <br/>
-                        <label className="control-label">Description:</label>
-                        <label className="control-label">{this.props.posts.description}</label>
+                        <label className="control-label">Description: </label>
+                        <label className="control-label"> {this.props.posts.description}</label>
                         <br/>
-                            <label className="control-label">Rate:</label>
-                    <label className="control-label">{this.props.posts.rate}</label>
+                            <label className="control-label">Rate: </label>
+                    <label className="control-label"> {this.props.posts.rate}</label>
                     <br/>
-                    <label className="control-label">Rate Type:</label>
-                    <label className="control-label">{this.props.posts.rateType}</label>
+                    <label className="control-label">Rate Type: </label>
+                    <label className="control-label"> {this.props.posts.rateType}</label>
                     <br/>
                     <label className="control-label">Let's Connect, do you
                     want to send email to the person who has posted?</label>

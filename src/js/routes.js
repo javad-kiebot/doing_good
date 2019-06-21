@@ -11,9 +11,7 @@ import LandingPageContainer from "./container/LandingPageContainer";
 import EditVolunteerProfile from "./components/UserDashboard/EditVolunteerProfile";
 import ActiveUser from "./components/Login/ActiveUser";
 import forgotPasswordEmailScreen from "./components/Login/forgotPasswordEmailScreen";
-import OrganizationDashboardContainer from "./container/OrganizationDashboardContainer";
-
-
+import EditOrgProfile from "./components/UserDashboard/EditOrgProfile";
 
 export default (
         <Route path="/" component={App}>
@@ -26,7 +24,7 @@ export default (
             <Route path="searchposting" component={SearchPostingContainer} />
             <Route path="landingpage" component={LandingPageContainer} />
             <Route path="editVoluteerProfile" component={EditVolunteerProfile} />
-            <Route path="organizationDashboard" component={OrganizationDashboardContainer} />
+            <Route path="organizationDashboard" component={EditOrgProfile} />
             <Route path="activate/:email/:token" component={ActiveUser} />
             <Route path="forgotpassword/:email/:token" component={forgotPasswordEmailScreen} />
         </Route>
