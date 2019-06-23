@@ -10,6 +10,8 @@ const memberDashboardReducer = (state=initialState, action) => {
             return {...state,allPostDataByUserId: action.data};
             case ASSIGNEDPOSTTOCONSUMER:
             return {...state,assignedPostsBToConsumer: action.data};
+        case 'LOGOUT_USER':
+            return {state:undefined};
         default:
             return state;
     }

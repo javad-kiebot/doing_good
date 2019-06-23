@@ -72,7 +72,10 @@ class EditPostsByUser extends React.Component {
             this.state.postType,
             this.props.session ?  this.props.session.id : 0,
             this.props.allPostsByUser.id);
+        this.forceUpdate();
+        this.props.memberdashboardactions.allPostingByUserIdAction(this.props.session.id);
         this.props.handleCloseModal();
+
     }
 
     render () {

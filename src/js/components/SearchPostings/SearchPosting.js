@@ -50,6 +50,7 @@ class SearchPosting extends Component {
         this.postingTypeSearch = this.postingTypeSearch.bind(this);
         this.quickSearch = this.quickSearch.bind(this);
         this.resetSearchPost = this.resetSearchPost.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
     handleOfferedOpenModal () {
@@ -104,6 +105,10 @@ class SearchPosting extends Component {
         this.setState({quickSearchInput:event.target.value  });
     }
 
+    logout(){
+        this.props.searchPostingAction.logoutUserAction();
+    }
+
     render(){
         const radiusArray= ['5 miles','10 miles', '20 miles','25 miles', '50 miles', '100 miles','500 miles'];
         const orgArray= ['Child care','Child care', 'Child care','Child care', 'Child care', 'Child care','Child care'];
@@ -114,8 +119,8 @@ class SearchPosting extends Component {
                        <Col><Link to="/landingpage"><img src={doingGoodHero} width="auto" height="70px" className="imgcenter"/></Link></Col>
                        <Col><button className="btn btnPostOrange" onClick={this.gotosearchpostings}><span style={{'fontFamily':'Gotham-Book','fontSize':'16','color':'white'}}>Search Postings</span></button>
                        </Col>
-                       <Col><Link to={this.props.session.userRole === "ORGANIZATION"? "/organizationDashboard" :"/editVoluteerProfile"} className="current"><span className="textcenter">My Dashboard</span></Link></Col>
-                       <Col><Link to= "/login" className="current"><span className="textcenter logoutText">Logout</span></Link></Col>
+                       <Col><Link to={this.props.session ?this.props.session.userRole === "ORGANIZATION"? "/organizationDashboard" :"/editVoluteerProfile" : "/login"} className="current"><span className="textcenter">My Dashboard</span></Link></Col>
+                       <Col onClick={this.logout}><Link to= "/" className="current"><span className="textcenter logoutText">Logout</span></Link></Col>
                    </Row>
                </Container>
                <div>
@@ -264,21 +269,21 @@ class SearchPosting extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="container-fluid dg-slider">
+                <div className="container-fluid">
                     <div className="row">
-                        <div className="col-sm col-12">
+                        <div className="fiveimages col-sm col-12">
                             <img src={ skateImg } alt="image" className="img-fluid"/>
                         </div>
-                        <div className="col-sm col-12">
+                        <div className="fiveimages col-sm col-12">
                             <img src={teen_girl} alt="image" className="img-fluid"/>
                         </div>
-                        <div className="col-sm col-12">
+                        <div className="fiveimages col-sm col-12">
                             <img src={WalkingDog} alt="image" className="img-fluid"/>
                         </div>
-                        <div className="col-sm col-12">
+                        <div className="fiveimages col-sm col-12">
                             <img src={kid_teen_babysite} alt="image" className="img-fluid"/>
                         </div>
-                        <div className="col-sm col-12">
+                        <div className="fiveimages col-sm col-12">
                             <img src={clean_floor} alt="image" className="img-fluid"/>
                         </div>
                     </div>

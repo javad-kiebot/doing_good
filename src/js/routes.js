@@ -12,6 +12,7 @@ import EditVolunteerProfile from "./components/UserDashboard/EditVolunteerProfil
 import ActiveUser from "./components/Login/ActiveUser";
 import forgotPasswordEmailScreen from "./components/Login/forgotPasswordEmailScreen";
 import EditOrgProfile from "./components/UserDashboard/EditOrgProfile";
+import NonProfitOrgContainer from "./container/NonProfitOrgContainer";
 
 export default (
         <Route path="/" component={App}>
@@ -27,5 +28,6 @@ export default (
             <Route path="organizationDashboard" component={EditOrgProfile} />
             <Route path="activate/:email/:token" component={ActiveUser} />
             <Route path="forgotpassword/:email/:token" component={forgotPasswordEmailScreen} />
+            <Route path="findorg" component={NonProfitOrgContainer} />
         </Route>
 );

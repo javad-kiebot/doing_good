@@ -1,5 +1,7 @@
 import axios from "axios";
 import {toastr} from "react-redux-toastr";
+import loginActions from "./loginActions";
+import {hashHistory} from "react-router";
 
 export const POSTSERVICEREQUEST = 'POSTSERVICEREQUEST';
 export const POSTSERVICEREQUESTCLOSE = 'POSTSERVICEREQUESTCLOSE';
@@ -149,7 +151,33 @@ const searchPostingActions = {
                     }
                 })
         }
-    }
+    },
+    logoutUserAction: function(id, listOfOrgs) {
+        const request = {
+            method: 'post',
+            responseType: 'json',
+            url: 'https://13.127.249.79:9500/api/user/logout',
+            data: {},
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+        return (dispatch) => {
+            axios(request)
+                .then(response => {
+                    if (response.status === 200) {
+                        dispatch({
+                            type: 'LOGOUT_USER',
+                        });
+                        hashHistory.push('/')
+                    }
+                },err =>{
+                    if(err.response.data.status === 400){
+                        toastr.error('Error ', 'Occuered');
+                    }
+                })
+        }
+    },
 };
 
 export default searchPostingActions;

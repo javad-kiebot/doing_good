@@ -67,6 +67,7 @@ class EditOrgProfile extends Component{
         this.handleOfferedAssignedPosts=this.handleOfferedAssignedPosts.bind(this);
         this.handleSubmitOrg=this.handleSubmitOrg.bind(this);
         this.onOrgChange=this.onOrgChange.bind(this);
+        this.logout=this.logout.bind(this);
     }
 
     componentWillMount() {
@@ -136,6 +137,9 @@ class EditOrgProfile extends Component{
     gotosearchpostings (){
         hashHistory.push("/searchposting");
     }
+    logout(){
+        this.props.searchPostingAction.logoutUserAction();
+    }
 
     onOrgChange(event){
         if(event.target.value === "") {
@@ -160,7 +164,7 @@ class EditOrgProfile extends Component{
                             <Col><button className="btn btnPostOrange" onClick={this.gotosearchpostings}><span style={{'fontFamily':'Gotham-Book','fontSize':'16','color':'white'}}>Search Postings</span></button>
                             </Col>
                             <Col><Link to="/editVoluteerProfile" className="current"><span className="textcenter">My Dashboard</span></Link></Col>
-                            <Col><Link to= "/login" className="current"><span className="textcenter logoutText">Logout</span></Link></Col>
+                            <Col onClick={this.logout}><Link to= "" className="current"><span className="textcenter logoutText">Logout</span></Link></Col>
                         </Row>
                     </Container>
                     <Row className="bgOrgWelcomeMessage">

@@ -106,6 +106,7 @@ const memberdashboardActions = {
                 "phone": phoneNumber,
                 "state":  state,
                 "ulpId": id,
+                "email":emailId,
                 "zipCode":zipCode
             },
             headers: {

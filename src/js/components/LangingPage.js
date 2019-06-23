@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from 'react-router';
+import {hashHistory, Link} from 'react-router';
 import doingGoodImg from "../../assests/images/home/DoingGood_logo_HERO.png";
 import carWash from "../../assests/images/home/Car_Wash_Girl_607494242.jpg";
 import itsEasy from "../../assests/images/home/ITS_EASY.png";
@@ -31,12 +31,17 @@ class LandingPage extends Component {
         };
         this.handleCloseModal=this.handleCloseModal.bind(this);
         this.handleOfferedOpenModal=this.handleOfferedOpenModal.bind(this);
+        this.gotoNonProfitOrg=this.gotoNonProfitOrg.bind(this);
     }
     handleOfferedOpenModal () {
         this.setState({ showOfferedModal: true });
     }
     handleCloseModal () {
         this.setState({ showOfferedModal: false});
+    }
+
+    gotoNonProfitOrg (){
+        hashHistory.push("/findorg");
     }
     render() {
         return (
@@ -196,8 +201,9 @@ class LandingPage extends Component {
                         <div
                             className="col-sm-4 col-xs-12 d-flex flex-column align-items-center justify-content-center">
                             <div
-                                className="btn btn-primary btn-shadow btn-pill text-uppercase py-2 px-5 font-weight-bold">List
-                                of All Non-Profits
+                                className="btn btn-primary btn-shadow btn-pill text-uppercase py-2 px-5 font-weight-bold"
+                            onClick={this.gotoNonProfitOrg}>
+                                List of All Non-Profits
                             </div>
                         </div>
                     </div>

@@ -14,6 +14,8 @@ const postRequestServiceReducer = (state=initialState, action) => {
             return {...state,hideModalFlag: false};
             case ALLSERVICEREQUEST:
             return {...state,allPostData: action.data};
+        case 'LOGOUT_USER':
+            return {state:undefined};
         default:
             return state;
     }

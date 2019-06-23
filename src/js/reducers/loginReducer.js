@@ -25,7 +25,8 @@ let loginReducer = function(user = initialState, action) {
 
         case 'LOG_IN_USER':
             return {...state,loginUserDetails: action.data};
-
+        case 'LOGOUT_USER':
+            return {state:undefined};
         default:
             return user;
     }

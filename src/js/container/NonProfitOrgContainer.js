@@ -5,9 +5,9 @@ import SearchPosting from "../components/SearchPostings/SearchPosting";
 import searchPostingActions from "../actions/searchPostingActions";
 import organizationReducer from "../reducers/organizationReducer";
 import organizationActions from "../actions/organizationActions";
-import loginActions from "../actions/loginActions";
+import NonProfileOrgComponent from "../components/NonProfitOrg/NonProfileOrgComponent";
 
-class SearchPostingContainer extends Component {
+class NonProfitOrgContainer extends Component {
     constructor(props) {
         super(props);
         this.onPostServiceRequestModal=this.onPostServiceRequestModal.bind(this);
@@ -18,25 +18,23 @@ class SearchPostingContainer extends Component {
     }
 
     componentWillMount(){
-        Promise.resolve(this.props.searchPostingAction.allPostingServiceAction());
+        Promise.resolve(this.props.organizationAction.getAllOrgsAction());
     }
 
     render() {
         return (
             <div>
-                {this.props.allPostData && this.props.allPostData.offeredGoodOrService &&
-                    <SearchPosting
-                        searchPostingAction={this.props.searchPostingAction}
-                        onPostServiceRequestModal={this.onPostServiceRequestModal}
-                        allPostData={this.props.allPostData}
-                        showModalFlag={this.props.showModalFlag}
-                        hideModalFlag={this.props.hideModalFlag}
-                        organizationAction={this.props.organizationAction}
-                        getAllOrgs={this.props.getAllOrgs}
-                        session={ this.props.session}
+                <NonProfileOrgComponent
+                    searchPostingAction={this.props.searchPostingAction}
+                    onPostServiceRequestModal={this.onPostServiceRequestModal}
+                    allPostData={this.props.allPostData}
+                    showModalFlag={this.props.showModalFlag}
+                    hideModalFlag={this.props.hideModalFlag}
+                    organizationAction={this.props.organizationAction}
+                    getAllOrgs={this.props.getAllOrgs}
+                    session={ this.props.session}
 
-                    />
-                }
+                />
             </div>
         );
     }
@@ -47,16 +45,15 @@ function mapStateToProps(state) {
         allPostData: state.postRequestServiceReducer.allPostData,
         getAllOrgs:state.organizationReducer.getAllOrgs,
         session:state.loginReducer.session
-        };
+    };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         searchPostingAction: bindActionCreators(searchPostingActions, dispatch),
         organizationAction: bindActionCreators(organizationActions, dispatch),
-
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchPostingContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(NonProfitOrgContainer);
 
