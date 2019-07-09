@@ -34,7 +34,7 @@ let signUpUserActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'https://13.127.249.79:9500/api/organization/registration',
+            url: 'http://54.250.238.217:8080/api/organization/registration',
             data: {
                 "about": "string",
                 "city": orgcreds.city,
@@ -73,7 +73,7 @@ let signUpUserActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'https://13.127.249.79:9500/api/member/registration',
+            url: 'http://54.250.238.217:8080/api/member/registration',
             data: {
                 "about":  userCredentials.aboutme,
                 "address1": userCredentials.address1,
@@ -115,7 +115,7 @@ let signUpUserActions = {
     //     const request = {
     //         method: 'post',
     //         responseType: 'json',
-    //         url: 'https://13.127.249.79:9500/api/member/registration',
+    //         url: 'http://54.250.238.217:8080/api/member/registration',
     //         data: {
     //             "about": "string",
     //             "city": userCredentials.city,
@@ -160,7 +160,7 @@ let signUpUserActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'https://13.127.249.79:9500/api/user/validateNewUerToken',
+            url: 'http://54.250.238.217:8080/api/user/validateNewUerToken',
             data: {
                 "token": token,
                 "userName": email

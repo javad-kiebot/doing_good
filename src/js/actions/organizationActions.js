@@ -8,7 +8,7 @@ const organizationActions = {
         const request = {
             method: 'get',
             responseType: 'json',
-            url: 'https://13.127.249.79:9500/api/organization/getAllOrganizations',
+            url: 'http://54.250.238.217:8080/api/organization/getAllOrganizations',
             data: {},
             headers: {
                 'Content-Type': 'application/json'
@@ -34,7 +34,7 @@ const organizationActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'https://13.127.249.79:9500/api/member/linkToOrganization',
+            url: 'http://54.250.238.217:8080/api/member/linkToOrganization',
             data: {
                 "organizationsIds": listOfOrgs,
                 "ulpId": id
@@ -67,7 +67,7 @@ const organizationActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'https://13.127.249.79:9500/api/organization/organizationUpdate',
+            url: 'http://54.250.238.217:8080/api/organization/organizationUpdate',
             data: {
                 "about": aboutMe,
                 "businessAddress1": "string",

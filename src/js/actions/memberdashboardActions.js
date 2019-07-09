@@ -9,7 +9,7 @@ const memberdashboardActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'https://13.127.249.79:9500/api/posting/all-posts-by-userid',
+            url: 'http://54.250.238.217:8080/api/posting/all-posts-by-userid',
             data: {
                 "id": userId
             },
@@ -47,7 +47,7 @@ const memberdashboardActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'https://13.127.249.79:9500/api/posting/update',
+            url: 'http://54.250.238.217:8080/api/posting/update',
             data: {
                 "description":description,
                 "goodOrService":goodsOrServicesSelected,
@@ -95,7 +95,7 @@ const memberdashboardActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'https://13.127.249.79:9500/api/member/memberUpdate',
+            url: 'http://54.250.238.217:8080/api/member/memberUpdate',
             data: {
                 "aboutMe": aboutMe,
                 "address1": address1,
@@ -134,7 +134,7 @@ const memberdashboardActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'https://13.127.249.79:9500/api/posting/updatePostStatus',
+            url: 'http://54.250.238.217:8080/api/posting/updatePostStatus',
             data: {
                 "interestedMemberId": interestedMemberId,
                 "offerPrice": offerPrice,
@@ -166,7 +166,7 @@ const memberdashboardActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'https://13.127.249.79:9500/api/posting/assigenedPostsById',
+            url: 'http://54.250.238.217:8080/api/posting/assigenedPostsById',
             data: {
                 "id": interestedMemberId
             },

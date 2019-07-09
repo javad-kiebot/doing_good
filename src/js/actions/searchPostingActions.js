@@ -18,7 +18,7 @@ const searchPostingActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'https://13.127.249.79:9500/api/posting/all-posts',
+            url: 'http://54.250.238.217:8080/api/posting/all-posts',
             data: {},
             headers: {
                 'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ const searchPostingActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'https://13.127.249.79:9500/api/posting/searchPost',
+            url: 'http://54.250.238.217:8080/api/posting/searchPost',
             data: {
                 "organizationId": orgSelected,
                 "postingType": postingType,
@@ -85,7 +85,7 @@ const searchPostingActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'https://13.127.249.79:9500/api/posting/new-service-good',
+            url: 'http://54.250.238.217:8080/api/posting/new-service-good',
             data: {
                 "description": description,
                 "goodOrService":goodsOrServicesSelected,
@@ -122,7 +122,7 @@ const searchPostingActions = {
         const request = {
             method: 'post',
             responseType: 'json',
-            url: 'https://13.127.249.79:9500/api/posting/sendInterestOnPost',
+            url: 'http://54.250.238.217:8080/api/posting/sendInterestOnPost',
             data: {
                 "postId": postId,
                 "ulpId": userId,
